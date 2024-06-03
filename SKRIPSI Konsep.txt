@@ -1,0 +1,141 @@
+judul : Implementasi Metode Simple Additive Weighting (SAW)
+Dalam Menentukan Penugasan Pengerjaan Project pada Direktorat Teknologi Informasi dan Komunikasi DJP
+
+criteria :
+- kemampuan coding (newbie, advanced, expert)
+- banyaknya project yg sedang dikerjakan
+- pengalaman (banyak proyek dan tingkat kesulitan yg pernah dikerjan)
+- pelatihan (banyak nya pelatihan yg pernah diikuti)
+- penguasaan stack (database, bahasa pemrograman, container, message broker, dll)
+note : dalam menentukan nilai pada criteria tsb , menggunakan metode SAW jg 
+dengan menghitung detail dari masing2 criteria
+
+- alogritma Simple Additive Weighting (SAW)
+
+role aplikasi : 
+- role administrator
+- role analis sistem
+- role kepala seksi
+- role programmer
+
+fitur aplikasi : 
+- login -> (nip dan password pegawai) 
+
+- role sistem analis
+	-> input project berdasarkan surat ND permintaan aplikasi (project) dari BO (Buisness Owner)
+	-> ketika diinput statusnya draft, data yang diinput merupakan hasil analisis dari analis
+	-> ada tombol ajukan, untuk diajukan kepada kepala seksi
+
+- role kepala seksi
+	-> list persetujuan kemampuan programmer (sesuai criteria)
+	-> tombol setujui (ketika diklik muncul modal isinya data profil programmer dan kemampuannya, kemudian dibawah form ada tombol setujui)
+	-> list aplikasi yang sudah diajukan kepada kepala seksi
+	-> tombol detail (untuk melihat detail requirement project)
+	-> tombol tim (menentukan tim yang akan mengerjakan project, hasil yang muncul adalah list data programmer di seksi tsb
+	   berdasarkan hasil perhitungan algoritma SAW)
+	-> tombol generate surat tugas , status menjadi disetujui
+
+- role programmer
+	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui
+	-> list aplikasi yang sudah disetujui oleh kepala seksi untuk dikerjakan
+	-> tombol lihat surat tugas
+
+- role administrator
+	-> input nama pegawai
+	-> input kriteria dan nilai (data yang diolah pada algoritma SAW)
+	-> upload template surat tugas
+	-> input data referensi
+
+
+kriteria: 
+C1 : kemampuan coding (benefit)
+C2 : project yang sedang dikerjakan (cost)
+C3 : pengalaman (benefit)
+C4 : pelatihan (benefit)
+C5 : penguasaan stack (benefit)
+
+bobot:
+Sangat rendah : 1
+Rendah : 2
+Sedang : 3
+Tinggi : 4
+Sangat tinggi : 5
+
+bobot dan kriteria:
+
+C1 -> kemampuan coding : ->src : https://www.codepolitan.com/blog/tingkatan-seorang-programmer-berdasarkan-skill-level/ 
+novice		: 1
+advance 	: 2
+competent 	: 3
+proficient	: 4
+expert 		: 5
+
+C2 -> project yang sedang dikerjakan
+0 project : 1
+1 project : 2
+2 project : 3
+3 project : 4
+>=4 project : 5
+
+C3 -> pengalaman
+0-1 project : 1
+ 2  project : 2
+ 3  project : 3
+ 4  project : 4
+>=5 project : 5
+
+C4 -> pelatihan
+0-1 pelatihan IT : 1
+ 2  pelatihan IT : 2
+ 3  pelatihan IT : 3
+ 4  pelatihan IT : 4
+>=5 pelatihan IT : 5
+
+C5 -> penguasaan stack :
+1 bahasa pemrograman (frontend || backend) : 1
+1 bahasa fulstack programming, 1 database : 2
+1 bahasa fulstack programming, 2 database : 3
+>1 bahasa fulstack programming, mobile programming, >2 database, microservice : 4
+>2 bahasa fulstack programming, mobile programming, >2 database, microservice, cicd : 5
+
+
+
+database :
+ 
+tb_user: 			tb_aplikasi:			tb_tim:
+-id				-id				-id
+-id_pegawai			-nama				-id_pegawai
+-username			-bahasa_pemrograman		-role
+-password			-database			-id_aplikasi
+-role				-level				-surat_tugas
+-last_login			-bisnis_owner
+-active				-versioning
+				-tgl_nd
+				-proses (1:pengembangan, 2:testing, 3:deploy)
+				
+tb_pegawai: 			tb_kriteria_pegawai: 		
+-id				-id
+-nama				-id_pegawai
+-nip				-kemampuan_coding
+-no_hp				-project_ongoing
+-email				-pengalaman
+-alamat				-pelatihan
+-gol_pangkat			-stack
+-active
+
+
+ref_bahasa_pemrograman:		ref_database:		ref_mobile_programming:		ref_container:		ref_cicd:
+-id				-id			-id				-id			-id
+-nama				-nama			-nama				-nama			-nama
+-jenis				-jenis			-jenis				-keterangan		-keterangan
+-keterangan			-keterangan		-keterangan
+
+
+ref_skill_programming:		ref_pelatihan:
+-id				-id
+-nama				-nama
+-keterangan			-keterangan
+
+
+	
+
