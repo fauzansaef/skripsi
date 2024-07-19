@@ -1,5 +1,6 @@
-judul : Implementasi Metode Simple Additive Weighting (SAW)
-Dalam Menentukan Penugasan Pengerjaan Project pada Direktorat Teknologi Informasi dan Komunikasi DJP
+judul : Menentukan Penugasan Pengerjaan Project Menggunakan Metode Simple Additive Weighting (SAW) 
+pada Direktorat Teknologi Informasi dan Komunikasi DJP
+
 
 criteria :
 - kemampuan coding (newbie, advanced, expert)
@@ -85,11 +86,11 @@ C3 -> pengalaman
 >=5 project : 5
 
 C4 -> pelatihan
-0-1 pelatihan IT : 1
- 2  pelatihan IT : 2
- 3  pelatihan IT : 3
- 4  pelatihan IT : 4
->=5 pelatihan IT : 5
+0-1 pelatihan IT (programming) : 1
+ 2  pelatihan IT (programming, database) : 2
+ 3  pelatihan IT (programming, database, microservice): 3
+ 4  pelatihan IT (programming, database, microservice, cicd): 4
+>=5 pelatihan IT (programming, database, microservice, cicd, dll) : 5
 
 C5 -> penguasaan stack :
 1 bahasa pemrograman (frontend || backend) : 1
@@ -111,7 +112,8 @@ tb_user: 			tb_aplikasi:			tb_tim:
 -last_login			-bisnis_owner
 -active				-versioning
 				-tgl_nd
-				-proses (1:pengembangan, 2:testing, 3:deploy)
+				-proses (0:draft, 1:pengembangan, 2:testing, 3:deploy)
+				-jenis (1:services api,2:mobile,3:web)
 				
 tb_pegawai: 			tb_kriteria_pegawai: 		
 -id				-id
@@ -127,14 +129,15 @@ tb_pegawai: 			tb_kriteria_pegawai:
 ref_bahasa_pemrograman:		ref_database:		ref_mobile_programming:		ref_container:		ref_cicd:
 -id				-id			-id				-id			-id
 -nama				-nama			-nama				-nama			-nama
--jenis				-jenis			-jenis				-keterangan		-keterangan
+-jenis (1:FE, 2:BE)		-jenis(1:sql,2:noSql)	-jenis (1:IOS,2:Android)	-keterangan		-keterangan
 -keterangan			-keterangan		-keterangan
 
 
 ref_skill_programming:		ref_pelatihan:
 -id				-id
 -nama				-nama
--keterangan			-keterangan
+-keterangan			-jenis (programming:1, database:2, microservice:3, cicd:4, dll:5)
+				-keterangan
 
 
 	
