@@ -1,0 +1,27 @@
+.bg-login{
+	background: #212c5f;  /* fallback for old browsers */
+	/*background: -webkit-linear-gradient(to top, #A43931, #212c5f);  /* Chrome 10-25, Safari 5.1-6 */
+	/*background: linear-gradient(to top, #A43931, #212c5f);  W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.bg-white-login{
+	background-color: white;
+	padding: 30px;
+	border-radius: 10px;
+}
+img.logo-login{
+	width: 140px;
+}
+.kt-login__head{
+	margin-bottom: 0px !important;
+}
+.kt-login__actions{
+	margin-top: 50px !important;
+}
+button.btn-djp{
+	background: #212c5f;
+	border-color: #212c5f;
+}
+.kt-login__copy p{
+	text-align: center;
+	margin-top: 5px
+}

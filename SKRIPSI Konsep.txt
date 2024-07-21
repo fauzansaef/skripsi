@@ -126,10 +126,10 @@ tb_pegawai: 			tb_kriteria_pegawai:
 -active
 
 
-ref_bahasa_pemrograman:		ref_database:		ref_mobile_programming:		ref_container:		ref_cicd:
--id				-id			-id				-id			-id
--nama				-nama			-nama				-nama			-nama
--jenis (1:FE, 2:BE)		-jenis(1:sql,2:noSql)	-jenis (1:IOS,2:Android)	-keterangan		-keterangan
+ref_bahasa_pemrograman:		ref_database:		ref_mobile_programming:		ref_container:		
+-id				-id			-id				-id			
+-nama				-nama			-nama				-nama			
+-jenis (1:FE, 2:BE)		-jenis(1:sql,2:noSql)	-jenis (1:IOS,2:Android)	-keterangan		
 -keterangan			-keterangan		-keterangan
 
 
@@ -137,7 +137,8 @@ ref_skill_programming:		ref_pelatihan:
 -id				-id
 -nama				-nama
 -keterangan			-jenis (programming:1, database:2, microservice:3, cicd:4, dll:5)
-				-keterangan
+-bobot
+			
 
 
 	

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title>400 - Data Not Found</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Data Not Found</h3>
+        </div>
+    </div>
+
+    <div class="kt-portlet" style="margin-bottom: 0px">
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <img alt="error" th:src="@{/assets/media/error/400.jpg}" style="width: 100%; height: auto;">
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="custom-js" th:remove="tag">
+</div>
+</body>
+</html>

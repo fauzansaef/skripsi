@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/base}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <title>Office TIK - Tambah Surat</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+  <div class="toolbar mt-0" id="kt_toolbar" style="background-color: #FEC91B;">
+    <div id="kt_toolbar_container" class="container-fluid d-flex ">
+      <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+          <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Review Perencanaan Proyek</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade active show">
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+      <div class="tab-content">
+        <!--PROYEK LAMA-->
+        <div class="tab-pane fade active show" id="kt_proyek_lama" role="tab-panel">
+<!--          <form id="formTambahProyekLama" class="form" action="#">-->
+            <div class="card mb-0 p-0">
+              <div class="card p-5">
+                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                  <div class="card card-flush">
+                    <div class="card-header" style="background-color: #d3efff;">
+                      <h3 class="card-title align-items-start flex-column">
+                        <span>Review Aplikasi</span>
+                      </h3>
+                    </div>
+                    <div class="card-body pb-0" style="border-width: 0.5px;border-style: ridge;border-color: #cfe6ff;">
+                      <div class="mb-5 d-flex flex-wrap gap-5">
+                        <div class="fv-row w-100 flex-md-root" hidden="true">
+                          <input type="text" th:value="${versiAplikasi.idVersion}" id="idVersi" class="form-control form-control-solid mb-2" value="" readonly="true" hidden="hidden"/>
+                        </div>
+                        <div class="fv-row w-100 flex-md-root">
+                          <label class="required form-label">Nama Aplikasi</label>
+                          <input type="text" th:value="${versiAplikasi.aplikasi.nama}" id="inputNamaAplikasi" class="form-control form-control-solid mb-2" value="" readonly="true"/>
+                        </div>
+                      </div>
+                      <div id="kontenLama">
+                        <div class="fv-row w-100 flex-md-root">
+                          <label class="form-label">Kode Proyek</label>
+                          <input type="text" name="inputKodeProyek" id="inputKodeProyek" class="form-control form-control-solid mb-2" value="" readonly="true"/>
+                        </div>
+                        <div class="mb-5 fv-row">
+                          <label class="form-label">Keterangan</label>
+                          <textarea type="text" th:value="${versiAplikasi.aplikasi.keterangan}" name="inputKeterangan" id="inputKeterangan" class="form-control form-control-solid mb-2" rows="2" autocomplete="off" readonly="true"></textarea>
+                        </div>
+                        <div class="mb-5 d-flex flex-wrap gap-5">
+                          <div class="fv-row w-100 flex-md-root">
+                            <label class="form-label">Subdit Pengampu</label>
+                            <input type="text" th:value="${versiAplikasi.aplikasi.subdit.namaSubdit}" name="inputSubditPengampuAplikasi" id="inputSubditPengampuAplikasi" class="form-control form-control-solid mb-2" value="" readonly="true"/>
+                          </div>
+                          <div class="fv-row w-100 flex-md-root">
+                            <label class="form-label">Seksi Pengampu</label>
+                            <input type="text" th:value="${versiAplikasi.aplikasi.seksi.namaSeksi}" name="inputSeksiPengampuAplikasi" id="inputSeksiPengampuAplikasi" class="form-control form-control-solid mb-2" value="" readonly="true"/>
+                          </div>
+                        </div>
+                        <div class="mb-5 d-flex flex-wrap gap-5">
+                          <div class="fv-row w-100 flex-md-root">
+                            <label class="form-label">Perwakilan Bisnis Owner</label>
+                            <input type="text" th:value="${versiAplikasi.aplikasi.stakeholder.namaStakeholder}" name="inputPerwakilanBo" id="inputPerwakilanBo" class="form-control form-control-solid mb-2" value="" readonly="true"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card p-5">
+                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                  <div class="card card-flush">
+                    <div class="card-header" style="background-color: #d3efff;">
+                      <h3 class="card-title align-items-start flex-column">
+                        <span>Dokumen Dasar Pengembangan Proyek</span>
+                      </h3>
+                    </div>
+                    <div class="card-body pb-0" style="border-width: 0.5px;border-style: ridge;border-color: #cfe6ff;">
+                      <div class="mb-5 d-flex flex-wrap gap-5">
+                        <div class="fv-row w-50 flex-md-root">
+                          <table style="width: 60%;">
+                            <tr>
+                              <td style="width: 20%;">
+                                <div class="fw-bold"
+                                     th:text="${versiAplikasi.fileDokumenDasar} != null ?  ${versiAplikasi.noDokumenDasar} +' - '+ ${versiAplikasi.tglDokumenDasar}  : '-'"></div>
+                              </td>
+                              <td style="width: 15%;">
+                                <div class="fw-bold"
+                                th:text="${versiAplikasi.fileDokumenDasar} != null ?  ${versiAplikasi.fileDokumenDasar} : '-'"></div>
+                              </td>
+                              <td style="width: 10%"><div class="d-flex align-items-senter">
+                                <th:block th:if="${versiAplikasi.fileDokumenDasar != null}">
+<!--                                  <a href=""><img src="/assets/media/files/pdf.svg" style="width: 40px; margin-left: -5px;"></a>-->
+                                  <a th:href="@{|/pengembangan/versioning/download/${versiAplikasi.idVersion}/1|}" target="_blank"><img
+                                          src="/assets/media/files/pdf.svg"
+                                          style="width: 40px; margin-left: -5px;"></a>
+                                </th:block>
+                              </div></td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card p-5 hidden">
+                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                  <div class="card card-flush">
+                    <div class="card-header" style="background-color: #d3efff;">
+                      <h3 class="card-title align-items-start flex-column">
+                        <span>Kegiatan</span>
+                      </h3>
+                    </div>
+                    <div class="card-body pb-0" style="border-width: 0.5px;border-style: ridge;border-color: #cfe6ff;">
+                      <div class="table-responsive">
+                        <table id="viewTabelKegiatan" class="table table-striped table-row-bordered gy-5 gs-7">
+                          <thead class="fs-7 text-gray-700 text-uppercase" style="font-weight: bold">
+                          <tr>
+                            <th>Nama Kegiatan</th>
+                          </tr>
+                          </thead>
+                          <tbody class="text-gray-600 fw-semibold">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-footer d-flex justify-content-center py-6 pt-0 border-top-0">
+                <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#modalTolak" aria-haspopup="true" aria-expanded="false">Tolak</button>
+                <button class="btn btn-success" id="submitSetujui"><span class="indicator-label">Setujui</span></button>
+              </div>
+            </div>
+<!--          </form>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="modalTolak" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+      <div class="modal-content rounded">
+        <div class="modal-header">
+          <h3 class="modal-title">Alasan Tolak</h3>
+          <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                       <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+          </div>
+        </div>
+        <div class="modal-body scroll-y px-10 pt-10 pb-7">
+          <div class="d-flex flex-column">
+            <div class="card card-flush">
+              <div class="card-body ps-0 pe-0 pt-0 pb-0">
+                <textarea type="text" name="inputAlasan" id="inputAlasan" class="form-control mb-2" rows="2" autocomplete="off"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" id="submitTolak"><span class="indicator-label">Submit Tolak</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div layout:fragment="custom-js" th:remove="tag">
+  <script th:src="@{/assets/js/djp/custom/createPerencanaan.js}" type="text/javascript"></script>
+  <script th:src="@{/assets/js/djp/custom/viewPerencanaan.js}" type="text/javascript"></script>
+</div>
+</body>
+</html>

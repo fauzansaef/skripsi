@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <!--begin::Head-->
+    <head>
+        <title>OFFICE TIK</title>
+        <meta charset="utf-8" />
+        <meta name="description" content="OFFICETIK" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <link rel="shortcut icon" th:href="@{/assets/media/logos/favicon.ico}" />
+        <link th:href="@{/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css}" type="text/css" rel="stylesheet"/>
+        <link th:href="@{/assets/plugins/custom/datatables/datatables.bundle.css}" type="text/css" rel="stylesheet" />
+        <link th:href="@{/assets/plugins/global/plugins.bundle.css}" type="text/css" rel="stylesheet" />
+        <link th:href="@{/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/fonts/font.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/summernote/summernote-bs4.css}" th:rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.8/css/fixedHeader.dataTables.min.css">
+
+        <style>
+            .belum-ada-progress{
+                background-color: #f8e7ec !important;
+            }
+        </style>
+    </head>
+    <!--end::Head-->
+    <!--begin::Body-->
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+        <div class="d-flex flex-column flex-root">
+            <div class="page d-flex flex-row flex-column-fluid">
+                <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                    <div class="aside-logo flex-column-auto" id="kt_aside_logo">
+                        <!--begin::Logo-->
+                            <div class="mx-auto bgi-no-repeat bgi-size-contain bgi-position-center w-100px h-100px" style="background-image:url('/assets/media/logos/logopng.png');"></div>
+                        <!--end::Logo-->
+                        <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
+                            <span class="svg-icon svg-icon-1 rotate-180">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path opacity="0.5" d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z" fill="currentColor" />
+                                    <path d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="aside-menu flex-column-fluid" style="background-color: #02275d;">
+                        <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+                            <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
+                                <div class="menu-item">
+<!--                                    <div class="menu-item" sec:authorize="hasAuthority('ROLE_ADMIN_EOFFICE')">-->
+                                    <a class="menu-link" href="/dashboard/" id="dashboard">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="fas fa-chart-pie"></i>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Dashboard</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <div class="menu-content pt-5 pb-2">
+                                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Pengembangan</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item" sec:authorize="hasAuthority('ROLE_ADMIN_EOFFICE')">
+                                    <a class="menu-link" href="/pengembangan/aplikasi/list" id="listAplikasiMenu">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Daftar Aplikasi</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/monitoring/aplikasi/list" id="monitoringAplikasiMenu">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Monitoring Aplikasi</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/portofolio/list" id="portofolioAplikasiMenu">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <rect fill="currentColor" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
+                                                        <rect fill="currentColor" x="8" y="9" width="3" height="11" rx="1.5" ></rect>
+                                                        <rect fill="currentColor" x="18" y="11" width="3" height="9" rx="1.5"></rect>
+                                                        <rect fill="currentColor" x="3" y="13" width="3" height="7" rx="1.5"></rect>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Portofolio Aplikasi</span>
+                                    </a>
+                                </div>
+
+
+                                <div class="menu-item">
+                                    <div class="menu-content pt-5 pb-2">
+                                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Manajemen</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/perencanaan/list" id="perencanaan">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16">
+                                                  <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                                  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Perencanaan</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/perencanaan/reviewlist" id="reviewPerencanaan">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16">
+                                                  <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                                  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Review Perencanaan</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/manajemen/renker/" id="manajemenRenker">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-data-fill" viewBox="0 0 16 16">
+  <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+  <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1ZM10 8a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1Zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"/>
+</svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Manajemen Renker</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/manajemen/surat/list" id="manajemenPersuratanMenu">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="currentColor"></path>
+                                                    <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Manajemen Persuratan</span>
+                                    </a>
+                                </div>
+
+
+
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" sec:authorize="hasAuthority('ROLE_ADMIN_EOFFICE')">
+                                    <span class="menu-link" id="manajemenDataMenu">
+                                        <span class="menu-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"></path>
+                                                <path d="M14.854 11.321C14.7568 11.2282 14.6388 11.1818 14.4998 11.1818H14.3333V10.2272C14.3333 9.61741 14.1041 9.09378 13.6458 8.65628C13.1875 8.21876 12.639 8 12 8C11.361 8 10.8124 8.21876 10.3541 8.65626C9.89574 9.09378 9.66663 9.61739 9.66663 10.2272V11.1818H9.49999C9.36115 11.1818 9.24306 11.2282 9.14583 11.321C9.0486 11.4138 9 11.5265 9 11.6591V14.5227C9 14.6553 9.04862 14.768 9.14583 14.8609C9.24306 14.9536 9.36115 15 9.49999 15H14.5C14.6389 15 14.7569 14.9536 14.8542 14.8609C14.9513 14.768 15 14.6553 15 14.5227V11.6591C15.0001 11.5265 14.9513 11.4138 14.854 11.321ZM13.3333 11.1818H10.6666V10.2272C10.6666 9.87594 10.7969 9.57597 11.0573 9.32743C11.3177 9.07886 11.6319 8.9546 12 8.9546C12.3681 8.9546 12.6823 9.07884 12.9427 9.32743C13.2031 9.57595 13.3333 9.87594 13.3333 10.2272V11.1818Z" fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                        <span class="menu-title">Manajemen Data</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <div class="menu-sub menu-sub-accordion" id="listManajemenDataMenu" >
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="/manajemen/bagian/subdit" id="manajemenSubditSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Subdit</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="/manajemen/bagian/seksi" id="manajemenSeksiSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Seksi</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="/manajemen/bagian/stakeholder" id="manajemenStakeholderSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Stakeholder</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" sec:authorize="hasAuthority('ROLE_ADMIN_EOFFICE')">
+                                    <span class="menu-link" id="manajemenProyekMenu">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z" fill="currentColor"></path>
+                                                    <path opacity="0.3" d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Manajemen Proyek</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <div class="menu-sub menu-sub-accordion" id="listManajemenProyekMenu" >
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="/manajemen/proyek/kategori" id="manajemenKategoriSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Kategori Aplikasi</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="/manajemen/proyek/jenis-dokumen" id="manajemenJenisDokumenSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Jenis Dokumen</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="/manajemen/proyek/bagian-tim" id="manajemenBagianTimSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Bagian Tim</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="/manajemen/proyek/jenis-surat" id="manajemenJenisSuratSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Jenis Surat</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="/manajemen/proyek/jatuh-tempo" id="manajemenJatuhTempoSubMenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Jatuh Tempo</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="menu-item">
+                                    <div class="menu-content pt-5 pb-2">
+                                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Diskusi</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/diskusi/list-tanya-jawab" id="diskusiMenu">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="currentColor"></path>
+                                                    <rect x="6" y="12" width="7" height="2" rx="1" fill="currentColor"></rect>
+                                                    <rect x="6" y="7" width="12" height="2" rx="1" fill="currentColor"></rect>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="menu-title">Tanya Jawab
+                                            <span class="badge badge-exclusive badge-light-warning fw-bold fs-9 px-2 py-1 ms-1" id="totalTanyaJawab"></span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                    <div id="kt_header" style="" class="header align-items-stretch">
+                        <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                            <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
+                                <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
+                                            <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--end::Aside mobile toggle-->
+                            <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+
+                            </div>
+                            <!--end::Mobile logo-->
+                            <div class="d-flex align-items-stretch justify-content-between" >
+                                <div class="d-flex align-items-stretch" id="kt_header_nav" >
+                                    <div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+                                        <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
+                                            <div class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
+                                                <div class="mx-auto mt-2 me-1 bgi-no-repeat bgi-size-contain bgi-position-center w-30px h-30px" style="background-image:url('/assets/media/logos/logopngmini.png');"></div>
+                                                <span class="fs-4 fw-bold mt-2">E-Office TIK</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-stretch flex-shrink-0">
+                                    <div class="d-flex align-items-center ms-1 ms-lg-3">
+                                        <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
+                                                    <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
+                                            <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('/assets/media/misc/pattern-1.jpg')">
+                                                <h3 class="text-white fw-bold px-9 mt-10 mb-6" th:text="${#authentication.principal.nama}"></h3>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div class="" id="kt_topbar_notifications_1" role="tabpanel">
+                                                    <div class="scroll-y mh-325px my-5 px-8">
+                                                        <div class="d-flex flex-stack py-4">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="symbol symbol-35px me-4">
+                                                                    <span class="symbol-label bg-light-primary">
+                                                                        <span class="svg-icon svg-icon-2 svg-icon-primary">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                <path opacity="0.3" d="M11 6.5C11 9 9 11 6.5 11C4 11 2 9 2 6.5C2 4 4 2 6.5 2C9 2 11 4 11 6.5ZM17.5 2C15 2 13 4 13 6.5C13 9 15 11 17.5 11C20 11 22 9 22 6.5C22 4 20 2 17.5 2ZM6.5 13C4 13 2 15 2 17.5C2 20 4 22 6.5 22C9 22 11 20 11 17.5C11 15 9 13 6.5 13ZM17.5 13C15 13 13 15 13 17.5C13 20 15 22 17.5 22C20 22 22 20 22 17.5C22 15 20 13 17.5 13Z" fill="currentColor" />
+                                                                                <path d="M17.5 16C17.5 16 17.4 16 17.5 16L16.7 15.3C16.1 14.7 15.7 13.9 15.6 13.1C15.5 12.4 15.5 11.6 15.6 10.8C15.7 9.99999 16.1 9.19998 16.7 8.59998L17.4 7.90002H17.5C18.3 7.90002 19 7.20002 19 6.40002C19 5.60002 18.3 4.90002 17.5 4.90002C16.7 4.90002 16 5.60002 16 6.40002V6.5L15.3 7.20001C14.7 7.80001 13.9 8.19999 13.1 8.29999C12.4 8.39999 11.6 8.39999 10.8 8.29999C9.99999 8.19999 9.20001 7.80001 8.60001 7.20001L7.89999 6.5V6.40002C7.89999 5.60002 7.19999 4.90002 6.39999 4.90002C5.59999 4.90002 4.89999 5.60002 4.89999 6.40002C4.89999 7.20002 5.59999 7.90002 6.39999 7.90002H6.5L7.20001 8.59998C7.80001 9.19998 8.19999 9.99999 8.29999 10.8C8.39999 11.5 8.39999 12.3 8.29999 13.1C8.19999 13.9 7.80001 14.7 7.20001 15.3L6.5 16H6.39999C5.59999 16 4.89999 16.7 4.89999 17.5C4.89999 18.3 5.59999 19 6.39999 19C7.19999 19 7.89999 18.3 7.89999 17.5V17.4L8.60001 16.7C9.20001 16.1 9.99999 15.7 10.8 15.6C11.5 15.5 12.3 15.5 13.1 15.6C13.9 15.7 14.7 16.1 15.3 16.7L16 17.4V17.5C16 18.3 16.7 19 17.5 19C18.3 19 19 18.3 19 17.5C19 16.7 18.3 16 17.5 16Z" fill="currentColor" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="mb-0 me-2">
+                                                                    <a class="fs-6 text-gray-800 text-hover-primary fw-bolder">Jabatan</a>
+                                                                    <div class="text-gray-400 fs-7" th:text="${#authentication.principal.jabatan_name}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex flex-stack py-4" th:if="${#authentication.principal.unit_name != null}">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="symbol symbol-35px me-4">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <span class="svg-icon svg-icon-2 svg-icon-danger">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                                                <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="currentColor" />
+                                                                                <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="currentColor" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="mb-0 me-2">
+                                                                    <a class="fs-6 text-gray-800 text-hover-primary fw-bolder">Unit</a>
+                                                                    <div class="text-gray-400 fs-7" th:text="${#authentication.principal.unit_name}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex flex-stack py-4">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="symbol symbol-35px me-4">
+                                                                    <span class="symbol-label bg-light-warning">
+                                                                        <span class="svg-icon svg-icon-2 svg-icon-warning">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                <path opacity="0.3" d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z" fill="currentColor" />
+                                                                                <path d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z" fill="currentColor" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="mb-0 me-2">
+                                                                    <a class="fs-6 text-gray-800 text-hover-primary fw-bolder">Kantor</a>
+                                                                    <div class="text-gray-400 fs-7" th:text="${#authentication.principal.kantor_name}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="separator my-2"></div>
+                                                        <div class="menu-item">
+                                                            <a th:href="@{/logoutsso}" class="btn btn-light-primary mb-2 menu-link">Logout</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        <div class="toolbar" id="kt_toolbar" style="background-color: #FEC91B;">
+                        </div>
+                        <div class="post d-flex flex-column-fluid" id="kt_post">
+                            <div id="kt_content_container" class="container-xxl">
+                                <div layout:fragment="menu">
+                                    <div layout:insert="~{layout/page}" th:remove="tag"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                        <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                            <div class="text-dark order-2 order-md-1">
+                                <span class="text-muted fw-bold me-1">2023 ©</span>
+                                <a href="" target="_blank" class="text-gray-800 text-hover-primary">Direktorat Jenderal Pajak</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+            <span class="svg-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor" />
+                    <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor" />
+                </svg>
+            </span>
+        </div>
+
+        <!--begin::Javascript-->
+        <script th:src="@{/assets/plugins/global/plugins.bundle.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/scripts.bundle.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/djp/pages/jquery-ui.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/djp/pages/jquery-1.12.4.js}" type="text/javascript"></script>
+
+        <script th:src="@{/assets/js/widgets.bundle.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/custom/widgets.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/vendors/general/jquery-validation/dist/jquery.validate.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/vendors/general/jquery-validation/dist/localization/messages_id.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/vendors/general/jquery-validation/dist/additional-methods.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/vendors/custom/js/vendors/jquery-validation.init.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/vendors/general/jquery.maskedinput.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/djp/custom/dashboardGlobal.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/djp/custom/baseGlobal.js}" type="text/javascript"></script>
+
+        <script th:src="@{/assets/js/bootbox/bootbox.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/bootbox/bootbox.locales.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/summernote/summernote-bs4.js}"></script>
+        <div layout:fragment="custom-js"></div>
+        <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
+        <!--end::Javascript-->
+    </body>
+    <!--end::Body-->
+</html>

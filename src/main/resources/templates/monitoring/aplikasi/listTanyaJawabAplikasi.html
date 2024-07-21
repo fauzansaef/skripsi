@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/base}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Office TIK - Tanya Jawab</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+    <div class="toolbar mt-0" id="kt_toolbar" style="background-color: #FEC91B;">
+        <div id="kt_toolbar_container" class="container-fluid d-flex ">
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                 data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                 class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1"
+                        th:text="${'Tanya Jawab Aplikasi ' + aplikasi.getNama() + ' - Ver. ' + versiAplikasi.getVersioning()}"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex flex-column flex-xl-row">
+                <div class="flex-lg-row-fluid me-xl-5 mb-20 mb-xl-0">
+                    <div class="mb-0">
+                        <div class="card-header mt-0 ps-0 pe-0 border-bottom-0 mb-10">
+                            <div class="card-toolbar my-1">
+                                <!--begin::Search-->
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <input type="text" data-tanyajawab-aplikasi="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari..." id="cariTabelTanyaJawabAplikasi"/>
+                                </div>
+                                <!--end::Search-->
+                            </div>
+                            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPertanyaan"><i class="fas fa-plus fs-4 me-2"></i> Ajukan Pertanyaan</button>
+                            </div>
+                            <div class="card-toolbar my-1">
+                                <select class="form-select mb-2" onchange="getStatusPertanyaan()" id="cariPertanyaanAplikasiByStatus" name="cariPertanyaanAplikasiByStatus" data-control="select2" data-hide-search="true" data-placeholder="Semua Pertanyaan">
+                                    <option value="">Semua Pertanyaan</option>
+                                    <option value="0">Belum Solved</option>
+                                    <option value="1">Solved</option>
+                                </select>
+                            </div>
+                        </div>
+                        <table id="tabelTanyaJawabAplikasi" >
+                            <tbody class="text-gray-600 fw-semibold">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="flex-column flex-lg-row-auto w-100 mw-lg-300px mw-xxl-350px">
+                    <div class="card-rounded bg-primary bg-opacity-5 p-5 mb-5">
+                        <h2 class="text-dark fw-bolder mb-5">List Pertanyaanmu</h2>
+                        <div class="card-toolbar my-1">
+                            <!--begin::Search-->
+                            <div class="d-flex align-items-center position-relative my-1">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                <input type="text" data-pertanyaan-aplikasi="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari..." id="cariTabelPertanyaanAplikasi"/>
+                            </div>
+                            <!--end::Search-->
+                        </div>
+                        <table id="tabelPertanyaanAplikasi">
+                            <tbody class="text-gray-600 fw-semibold">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalTambahPertanyaan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content rounded">
+                <div class="modal-header">
+                    <h3 class="modal-title">Tambah Pertanyaan</h3>
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                       <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <form id="formTambahPertanyaan" class="form" action="#">
+                    <input type="text" id="inputAplikasiTanyaJawab" th:value="${versiAplikasi.getId_aplikasi()}" disabled hidden="hidden"/>
+                    <input type="text" id="inputVersionAplikasiTanyaJawab" th:value="${versiAplikasi.getId_version()}" disabled hidden="hidden"/>
+                    <div class="modal-body scroll-y px-10 pt-10 pb-7">
+                        <div class="d-flex flex-column">
+                            <div class="card card-flush">
+                                <div class="card-body ps-0 pe-0 pt-0 pb-0">
+                                    <div class="mb-5 fv-row">
+                                        <label class="form-label required">Pertanyaan</label>
+                                        <textarea type="text" name="inputPertanyaan" id="inputPertanyaan" class="form-control mb-2" rows="2" autocomplete="off"></textarea>
+                                    </div>
+                                    <div class="mb-5 fv-row">
+                                        <label class="form-label">Detail Pertanyaan</label>
+                                        <textarea type="text" name="inputDetailPertanyaan" id="inputDetailPertanyaan" class="form-control" rows="4" autocomplete="off"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-light me-3">Reset</button>
+                        <button type="submit" class="btn btn-primary"><span class="indicator-label">Simpan</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditPertanyaan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content rounded">
+                <div class="modal-header">
+                    <h3 class="modal-title">Edit Pertanyaan</h3>
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                       <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <form id="formEditPertanyaan" class="form" action="#">
+                    <input type="text" name="idPertanyaan" id="idPertanyaan" hidden/>
+                    <input type="text" id="editAplikasiTanyaJawab" th:value="${versiAplikasi.getId_aplikasi()}" disabled hidden="hidden"/>
+                    <input type="text" id="editVersionAplikasiTanyaJawab" th:value="${versiAplikasi.getId_version()}" disabled hidden="hidden"/>
+                    <div class="modal-body scroll-y px-10 pt-10 pb-7">
+                        <div class="d-flex flex-column">
+                            <div class="card card-flush">
+                                <div class="card-body ps-0 pe-0 pt-0 pb-0">
+                                    <div class="mb-5 fv-row">
+                                        <label class="form-label required">Pertanyaan</label>
+                                        <textarea type="text" name="editPertanyaan" id="editPertanyaan" class="form-control mb-2" rows="2" autocomplete="off"></textarea>
+                                    </div>
+                                    <div class="mb-5 fv-row">
+                                        <label class="form-label">Detail Pertanyaan</label>
+                                        <textarea type="text" name="editDetailPertanyaan" id="editDetailPertanyaan" class="form-control" rows="4" autocomplete="off"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-light me-3">Reset</button>
+                        <button type="submit" class="btn btn-primary"><span class="indicator-label">Simpan</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <input th:id="nipPegawai" th:name="nipPegawai" th:value="${nipPegawai}" hidden/>
+    <input type="text" id="idVersion" th:value="${versiAplikasi.getId_version()}" disabled hidden="hidden"/>
+    <input type="text" id="idAplikasi" th:value="${versiAplikasi.getId_aplikasi()}" disabled hidden="hidden"/>
+
+</div>
+<div layout:fragment="custom-js" th:remove="tag">
+    <script th:src="@{/assets/js/djp/custom/baseDiskusi.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/js/djp/custom/dashboardDiskusi.js}" type="text/javascript"></script>
+</div>
+</body>
+</html>

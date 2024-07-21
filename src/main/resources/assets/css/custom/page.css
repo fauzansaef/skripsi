@@ -1,0 +1,33 @@
+h1.title-page, h2.title-page, h3.title-page, h4.title-page, h5.title-page, h6.title-page{
+	color: white;
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+h1.title-page-d, h2.title-page-d, h3.title-page-d, h4.title-page-d, h5.title-page-d, h6.title-page-d{
+	color: white;
+	margin: auto 25px;
+	/*padding: 22.5px 0px;*/
+}
+img.logo-dashboard{
+	width: 150px;
+	margin: 0px 30px -30px 30px;
+}
+img.logo-dashboard-m{
+	width: 90px;
+	margin: 10px 0px;
+}
+#kt_header{
+	background: #212c5f;
+}
+#kt_content{
+	background: #183D73;
+}
+div.kt-widget24__details{
+	display: block !important;
+}
+span.kt-widget24__stats{
+	text-align: right;
+}
+.thead-dark tr th {
+	color: white !important;
+}
