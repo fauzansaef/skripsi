@@ -2,57 +2,58 @@ package com.skripsi.skripsi.configuration;
 
 import com.skripsi.skripsi.auth.CustomAccessDeniedHandler;
 import com.skripsi.skripsi.auth.CustomAuthenticationProvider;
-import com.skripsi.skripsi.auth.UserDetailService;
+import com.skripsi.skripsi.auth.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 @ComponentScan("com.skripsi.skripsi")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomAuthenticationProvider customAuthentication;
-    private final UserDetailService userDetailsService;
+    private final UserDetailServiceImpl userDetailsService;
     private final CustomAccessDeniedHandler accessDeniedHandler;
-
+    private final CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
-    public SecurityConfig(CustomAuthenticationProvider customAuthentication, UserDetailService userDetailsService, CustomAccessDeniedHandler accessDeniedHandler) {
-        this.customAuthentication = customAuthentication;
+    public SecurityConfig(UserDetailServiceImpl userDetailsService, CustomAccessDeniedHandler accessDeniedHandler, CustomAuthenticationProvider customAuthenticationProvider) {
         this.userDetailsService = userDetailsService;
         this.accessDeniedHandler = accessDeniedHandler;
+        this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-       authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        authenticationManagerBuilder.authenticationProvider(customAuthentication);
+        authenticationManagerBuilder.authenticationProvider(daoAuthenticationProvider());
+        authenticationManagerBuilder.authenticationProvider(customAuthenticationProvider);
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -65,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/img/**",
                         "/webjars/**").permitAll()
-                .antMatchers("/").hasAnyRole("ROLE_ANALIS", "ROLE_PROGRAMMER", "ROLE_KEPALA_SEKSI", "ROLE_ADMINISTRATOR")
-                .antMatchers("/home").hasAnyRole("ROLE_ANALIS", "ROLE_PROGRAMMER", "ROLE_KEPALA_SEKSI", "ROLE_ADMINISTRATOR")
+                .antMatchers("/").hasAnyRole("ANALIS", "PROGRAMMER", "KEPALA_SEKSI", "ADMINISTRATOR")
+                .antMatchers("/home").hasAnyRole("ANALIS", "PROGRAMMER", "KEPALA_SEKSI", "ADMINISTRATOR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -90,9 +91,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and().headers().xssProtection();
-
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
+
+
 
 
 }

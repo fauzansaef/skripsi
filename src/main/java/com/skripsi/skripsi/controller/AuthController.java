@@ -8,29 +8,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public AuthController(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
 
     @GetMapping("/login")
-    String login(HttpServletRequest request)  {
+    String login(HttpServletRequest request) {
         String referer = request.getHeader("Referer");
-
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        if(username == null && password == null) {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetailsImpl) {
@@ -38,6 +26,7 @@ public class AuthController {
             request.getSession().setAttribute("userDetails", userDetails);
         }
         request.getSession().setAttribute("previousURL", referer);
+
         return principal == "anonymousUser" ? "login" : "redirect:/home";
 
 
@@ -47,6 +36,7 @@ public class AuthController {
     public String home() {
         return "redirect:/home";
     }
+
     @GetMapping("/home")
     public String homePage() {
         return "home";

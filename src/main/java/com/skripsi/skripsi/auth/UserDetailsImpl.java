@@ -14,62 +14,55 @@ import java.util.HashSet;
 @Data
 public class UserDetailsImpl implements UserDetails {
 
-    private Integer id;
-    private String username;
-    @JsonIgnore
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
-    private Integer active;
+
+    private TbUser user;
     private TbPegawai pegawai;
 
-    public UserDetailsImpl(Integer id, String username, Collection<? extends GrantedAuthority> authorities, TbPegawai pegawai, Integer active) {
-        this.id = id;
-        this.username = username;
-        this.authorities = authorities;
+    public UserDetailsImpl(TbUser user, TbPegawai pegawai) {
+        this.user = user;
         this.pegawai = pegawai;
-        this.active = active;
     }
 
     public static UserDetailsImpl build(TbUser user) {
-        GrantedAuthority role = new SimpleGrantedAuthority(user.getRefRole().getNamaRole());
-        Collection<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(role);
-        return new UserDetailsImpl(user.getId(), user.getUsername(), authorities, user.getPegawai(), user.getActive());
+        return new UserDetailsImpl(user, user.getPegawai());
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        GrantedAuthority role = new SimpleGrantedAuthority(user.getRefRole().getNamaRole());
+        Collection<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(role);
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return user.getUsername();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

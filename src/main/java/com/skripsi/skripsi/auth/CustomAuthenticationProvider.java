@@ -6,17 +6,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailServiceImpl userDetailsService;
 
     @Autowired
-    public CustomAuthenticationProvider(UserDetailsService userDetailsService) {
+    public CustomAuthenticationProvider(UserDetailServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -26,26 +25,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-
-
-
-
-        if (password.equals("admin")) {
-
-            System.out.println("username : " + username);
-            System.out.println("password : " + password);
+        Authentication auth = null;
+        if (password.equals("admin123")) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
             usernamePasswordAuthenticationToken.setDetails(userDetails);
-            authentication = usernamePasswordAuthenticationToken;
+            auth = usernamePasswordAuthenticationToken;
         }
-
-
-        return authentication;
+        return auth;
     }
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return aClass.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
