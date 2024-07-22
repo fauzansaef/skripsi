@@ -27,5 +27,8 @@ public class TbUser {
     @ManyToOne
     @JoinColumn(name = "role", insertable = false, updatable = false)
     private RefRole refRole;
+    @ManyToOne
+    @JoinColumn(name = "id_pegawai", insertable = false, updatable = false)
+    private TbPegawai pegawai;
 
 }

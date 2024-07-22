@@ -1,4 +1,4 @@
-package com.skripsi.skripsi.configuration;
+package com.skripsi.skripsi.auth;
 
 import org.springframework.stereotype.Component;
 

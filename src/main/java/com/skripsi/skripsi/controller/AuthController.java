@@ -1,0 +1,59 @@
+package com.skripsi.skripsi.controller;
+
+import com.skripsi.skripsi.auth.UserDetailsImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpServletRequest;
+
+@Controller
+public class AuthController {
+    private final AuthenticationManager authenticationManager;
+
+    @Autowired
+    public AuthController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    @GetMapping("/login")
+    String login(HttpServletRequest request)  {
+        String referer = request.getHeader("Referer");
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if(username == null && password == null) {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetailsImpl) {
+            UserDetailsImpl userDetails = (UserDetailsImpl) principal;
+            request.getSession().setAttribute("userDetails", userDetails);
+        }
+        request.getSession().setAttribute("previousURL", referer);
+        return principal == "anonymousUser" ? "login" : "redirect:/home";
+
+
+    }
+
+    @GetMapping(value = "/")
+    public String home() {
+        return "redirect:/home";
+    }
+    @GetMapping("/home")
+    public String homePage() {
+        return "home";
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";
+    }
+}
