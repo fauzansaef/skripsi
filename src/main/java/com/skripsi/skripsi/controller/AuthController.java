@@ -2,6 +2,7 @@ package com.skripsi.skripsi.controller;
 
 import com.skripsi.skripsi.auth.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,18 +27,17 @@ public class AuthController {
             request.getSession().setAttribute("userDetails", userDetails);
         }
         request.getSession().setAttribute("previousURL", referer);
-
         return principal == "anonymousUser" ? "login" : "redirect:/home";
-
-
     }
 
     @GetMapping(value = "/")
+    @PreAuthorize("hasAnyRole('ROLE_PROGRAMMER', 'ROLE_ANALIS', 'ROLE_KEPALA_SEKSI', 'ROLE_ADMINISTRATOR')")
     public String home() {
         return "redirect:/home";
     }
 
     @GetMapping("/home")
+    @PreAuthorize("hasAnyRole('ROLE_PROGRAMMER', 'ROLE_ANALIS', 'ROLE_KEPALA_SEKSI', 'ROLE_ADMINISTRATOR')")
     public String homePage() {
         return "home";
     }
