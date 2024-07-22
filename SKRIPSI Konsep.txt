@@ -94,10 +94,10 @@ C4 -> pelatihan
 
 C5 -> penguasaan stack :
 1 bahasa pemrograman (frontend || backend) : 1
-1 bahasa fulstack programming, 1 database : 2
-1 bahasa fulstack programming, 2 database : 3
->1 bahasa fulstack programming, mobile programming, >2 database, microservice : 4
->2 bahasa fulstack programming, mobile programming, >2 database, microservice, cicd : 5
+1 bahasa fulstack programming :  2
+1 bahasa fulstack programming, 1 database : 3
+>1 bahasa fulstack programming, >1 database, microservice : 4
+>2 bahasa fulstack programming, >2 database, microservice, devops: 5
 
 
 
