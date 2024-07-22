@@ -24,5 +24,8 @@ public class TbUser {
     private LocalDateTime lastLogin;
     @Column(name = "active")
     private Integer active;
+    @ManyToOne
+    @JoinColumn(name = "role", insertable = false, updatable = false)
+    private RefRole refRole;
 
 }
