@@ -78,7 +78,6 @@ var KTLoginGeneral = function() {
                 rules: {
                     username: {
                         required: true,
-                        number: true,
                     },
                     password: {
                         required: true
@@ -97,10 +96,10 @@ var KTLoginGeneral = function() {
                 success: function(response, status, xhr, $form) {
                     btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
                     var title = response.match("<title>(.*?)</title>")[1];
-                    if(title == "Sistem Informasi Penyuluhan - Login") {
+                    if(title == "Office TIK - Login") {
                         swal.fire({
                             title: "ERROR",
-                            text: "NIP dan Password Salah",
+                            text: "Username dan Password Salah",
                             type: "error"
                         })
                     }else{

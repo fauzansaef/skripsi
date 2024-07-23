@@ -22,10 +22,11 @@ role aplikasi :
 fitur aplikasi : 
 - login -> (nip dan password pegawai) 
 
-- role sistem analis
+- role sistem analis-> menu project
 	-> input project berdasarkan surat ND permintaan aplikasi (project) dari BO (Buisness Owner)
 	-> ketika diinput statusnya draft, data yang diinput merupakan hasil analisis dari analis
 	-> ada tombol ajukan, untuk diajukan kepada kepala seksi
+
 
 - role kepala seksi
 	-> list persetujuan kemampuan programmer (sesuai criteria)

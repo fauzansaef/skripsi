@@ -25,5 +25,11 @@ public class TbPegawai {
     private String golPangkat;
     @Column(name = "active")
     private Integer active;
+    @Column(name = "kantor")
+    private String kantor;
+    @Column(name = "unit")
+    private String unit;
+    @Column(name = "jabatan")
+    private String jabatan;
 
 }
