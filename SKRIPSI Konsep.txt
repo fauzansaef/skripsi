@@ -22,24 +22,24 @@ role aplikasi :
 fitur aplikasi : 
 - login -> (nip dan password pegawai) 
 
-- role sistem analis-> menu project
+- role sistem analis-> menu project -> request aplikasi
 	-> input project berdasarkan surat ND permintaan aplikasi (project) dari BO (Buisness Owner)
 	-> ketika diinput statusnya draft, data yang diinput merupakan hasil analisis dari analis
 	-> ada tombol ajukan, untuk diajukan kepada kepala seksi
 
 
 - role kepala seksi
-	-> list persetujuan kemampuan programmer (sesuai criteria)
+	-> list persetujuan kemampuan programmer (sesuai criteria) / menu manajemen->assessment
 	-> tombol setujui (ketika diklik muncul modal isinya data profil programmer dan kemampuannya, kemudian dibawah form ada tombol setujui)
-	-> list aplikasi yang sudah diajukan kepada kepala seksi
+	-> list aplikasi yang sudah diajukan kepada kepala seksi/ menu project-> request aplikasi
 	-> tombol detail (untuk melihat detail requirement project)
 	-> tombol tim (menentukan tim yang akan mengerjakan project, hasil yang muncul adalah list data programmer di seksi tsb
 	   berdasarkan hasil perhitungan algoritma SAW)
 	-> tombol generate surat tugas , status menjadi disetujui
 
 - role programmer
-	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui
-	-> list aplikasi yang sudah disetujui oleh kepala seksi untuk dikerjakan
+	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui / menu manajemen-> skill
+	-> list aplikasi yang sudah disetujui oleh kepala seksi untuk dikerjakan ->menu project task 
 	-> tombol lihat surat tugas
 
 - role administrator
