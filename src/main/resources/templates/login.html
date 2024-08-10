@@ -51,11 +51,8 @@
                         </div>
                         <form class="kt-form login-djp" th:action="@{/login}" method="POST"
                               style="margin-top: 0px;margin-bottom: 0">
-                            <div th:if="${param.error}">
-                                <div class="alert alert-danger">
-                                    Invalid username or password.
-                                </div>
-                            </div>
+                            <div style="color: red;text-align: center" th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null and session[SPRING_SECURITY_LAST_EXCEPTION].message != null}"
+                                 th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}">Invalid credentials</div>
                             <div th:if="${param.logout}">
                                 <div class="alert alert-info">
                                     You have been logged out.
