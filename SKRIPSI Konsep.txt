@@ -108,7 +108,7 @@ tb_user: 			tb_aplikasi:			tb_tim:
 -id				-id				-id
 -id_pegawai			-nama				-id_pegawai
 -username			-bahasa_pemrograman		-role
--password			-database			-id_aplikasi
+-password			-jenis_database			-id_aplikasi
 -role				-level				-surat_tugas
 -last_login			-bisnis_owner
 -active				-versioning

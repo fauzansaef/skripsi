@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Office TIK - Edit Portofolio Aplikasi</title>
+    <title>SPK TIK - Home</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -15,7 +15,7 @@
         <div id="kt_toolbar_container" class="container-fluid d-flex ">
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Edit Portofolio Aplikasi</h1>
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Home</h1>
                 </div>
             </div>
         </div>
@@ -32,8 +32,7 @@
 
 </div>
 <div layout:fragment="custom-js" th:remove="tag">
-    <script th:src="@{/assets/js/djp/custom/baseAplikasi.js}" type="text/javascript"></script>
-    <script th:src="@{/assets/js/djp/custom/portofolioAplikasi.js}" type="text/javascript"></script>
+
 </div>
 </body>
 </html>

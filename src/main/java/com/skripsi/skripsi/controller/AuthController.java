@@ -5,7 +5,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
@@ -33,7 +36,13 @@ public class AuthController {
 
     @GetMapping("/home")
     @PreAuthorize("hasAnyRole('ROLE_PROGRAMMER', 'ROLE_ANALIS', 'ROLE_KEPALA_SEKSI', 'ROLE_ADMINISTRATOR')")
-    public String homePage() {
+    public String homePage(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        session.setAttribute("nama", userDetails.getPegawai().getNama());
+        session.setAttribute("jabatan", userDetails.getPegawai().getJabatan());
+        session.setAttribute("unit", userDetails.getPegawai().getUnit());
+        session.setAttribute("kantor", userDetails.getPegawai().getKantor());
         return "home";
     }
 

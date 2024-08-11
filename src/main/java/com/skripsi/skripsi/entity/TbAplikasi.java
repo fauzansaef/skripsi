@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_aplikasi")
@@ -14,10 +15,6 @@ public class TbAplikasi {
     private Integer id;
     @Column(name = "nama")
     private String nama;
-    @Column(name = "bahasa_pemrograman")
-    private Integer bahasaPemrograman;
-    @Column(name = "database")
-    private Integer database;
     @Column(name = "bisnis_owner")
     private String bisnisOwner;
     @Column(name = "versioning")
@@ -28,10 +25,9 @@ public class TbAplikasi {
     private Integer proses;
     @Column(name = "jenis")
     private Integer jenis;
-    @ManyToOne
-    @JoinColumn(name = "bahasa_pemrograman", insertable = false, updatable = false)
-    private RefBahasaPemrograman refBahasaPemrograman;
-    @ManyToOne
-    @JoinColumn(name = "database", insertable = false, updatable = false)
-    private RefDatabase refDatabase;
+    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrxBahasaPemrograman> bahasaPemrograman;
+    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrxJenisDatabase> jenisDatabase;
+
 }
