@@ -32,6 +32,11 @@ public class ProjectRest {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
 
+    @GetMapping("/proses/{proses}")
+    public List<TbAplikasi> getAllProjectByProses(@PathVariable int proses) {
+        return projectService.getAllProjectByProses(proses);
+    }
+
     @PostMapping
     ResponseEntity<?> saveProject(@RequestBody AplikasiDTO aplikasiDTO) {
         return ResponseEntity.ok(projectService.saveProject(aplikasiDTO));

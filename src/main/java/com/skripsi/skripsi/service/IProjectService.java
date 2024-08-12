@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IProjectService {
     List<TbAplikasi> getAllProject();
+    List<TbAplikasi> getAllProjectByProses(int proses);
     MessageResponse getProjectById(int id);
     MessageResponse saveProject(AplikasiDTO aplikasiDTO);
     MessageResponse updateProject(int id, AplikasiDTO aplikasiDTO);

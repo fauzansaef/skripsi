@@ -40,6 +40,11 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
+    public List<TbAplikasi> getAllProjectByProses(int proses) {
+        return tbAplikasiRepo.findAllByProses(proses);
+    }
+
+    @Override
     public MessageResponse getProjectById(int id) {
         if (!tbAplikasiRepo.existsById(id)) {
             return new MessageResponse(0, "Project tidak ditemukan", null);

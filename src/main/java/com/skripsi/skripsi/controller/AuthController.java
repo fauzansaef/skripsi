@@ -43,6 +43,7 @@ public class AuthController {
         session.setAttribute("jabatan", userDetails.getPegawai().getJabatan());
         session.setAttribute("unit", userDetails.getPegawai().getUnit());
         session.setAttribute("kantor", userDetails.getPegawai().getKantor());
+        session.setAttribute("role", userDetails.getUser().getRefRole().getNamaRole());
         return "home";
     }
 
