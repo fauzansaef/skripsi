@@ -1,16 +1,14 @@
 package com.skripsi.skripsi.service;
 
+import com.skripsi.skripsi.auth.UserDetailsImpl;
 import com.skripsi.skripsi.dto.AplikasiDTO;
-import com.skripsi.skripsi.entity.RefBahasaPemrograman;
-import com.skripsi.skripsi.entity.TbAplikasi;
-import com.skripsi.skripsi.entity.TrxBahasaPemrograman;
-import com.skripsi.skripsi.entity.TrxJenisDatabase;
-import com.skripsi.skripsi.repository.TbAplikasiRepo;
-import com.skripsi.skripsi.repository.TrxBahasaPemrogramanRepo;
-import com.skripsi.skripsi.repository.TrxJenisDatabaseRepo;
+import com.skripsi.skripsi.entity.*;
+import com.skripsi.skripsi.repository.*;
+import com.skripsi.skripsi.utility.SAWUtil;
 import com.skripsi.skripsi.utility.MessageResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +22,20 @@ public class ProjectService implements IProjectService {
     private final TbAplikasiRepo tbAplikasiRepo;
     private final TrxBahasaPemrogramanRepo trxBahasaPemrogramanRepo;
     private final TrxJenisDatabaseRepo trxJenisDatabaseRepo;
+    private final TbKriteriaPegawaiMatrixRepo tbKriteriaPegawaiMatrixRepo;
+    private final TbTimRepo tbTimRepo;
     private final ModelMapper modelMapper;
+    private final SAWUtil SAWUtil;
 
     @Autowired
-    public ProjectService(TbAplikasiRepo tbAplikasiRepo, TrxBahasaPemrogramanRepo trxBahasaPemrogramanRepo, TrxJenisDatabaseRepo trxJenisDatabaseRepo, ModelMapper modelMapper) {
+    public ProjectService(TbAplikasiRepo tbAplikasiRepo, TrxBahasaPemrogramanRepo trxBahasaPemrogramanRepo, TrxJenisDatabaseRepo trxJenisDatabaseRepo, TbKriteriaPegawaiMatrixRepo tbKriteriaPegawaiMatrixRepo, TbTimRepo tbTimRepo, ModelMapper modelMapper, SAWUtil SAWUtil) {
         this.tbAplikasiRepo = tbAplikasiRepo;
         this.trxBahasaPemrogramanRepo = trxBahasaPemrogramanRepo;
         this.trxJenisDatabaseRepo = trxJenisDatabaseRepo;
+        this.tbKriteriaPegawaiMatrixRepo = tbKriteriaPegawaiMatrixRepo;
+        this.tbTimRepo = tbTimRepo;
         this.modelMapper = modelMapper;
+        this.SAWUtil = SAWUtil;
     }
 
     @Override
@@ -55,10 +59,11 @@ public class ProjectService implements IProjectService {
 
     @Override
     public MessageResponse saveProject(AplikasiDTO aplikasiDTO) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
         TbAplikasi tbAplikasi = modelMapper.map(aplikasiDTO, TbAplikasi.class);
         tbAplikasi.setProses(0);//0:draft, 1:pengembangan, 2:testing, 3:deploy
+        tbAplikasi.setAnalis(userDetails.getPegawai().getId());
         tbAplikasiRepo.save(tbAplikasi);
-
 
         setListBahasaPemrogramanDanDatabase(aplikasiDTO, tbAplikasi);
 
@@ -135,5 +140,39 @@ public class ProjectService implements IProjectService {
         tbAplikasi.setProses(1);
         tbAplikasiRepo.save(tbAplikasi);
         return new MessageResponse(1, "Project berhasil diajukan pengembangan", tbAplikasi);
+    }
+
+    @Override
+    public MessageResponse perhitunganSaw(int id) {
+        TbAplikasi tbAplikasi = tbAplikasiRepo.findById(id).orElse(null);
+        if (tbAplikasi == null) {
+            return new MessageResponse(0, "Project tidak ditemukan", null);
+        }
+        List<TbKriteriaPegawaiMatrix> tbKriteriaPegawaiMatrixList = tbKriteriaPegawaiMatrixRepo.findAll();
+        return SAWUtil.metodeSAW(tbKriteriaPegawaiMatrixList);
+    }
+
+    @Override
+    public MessageResponse generateTimProject(List<Integer> idPegawais, int idAplikasi) {
+
+        TbAplikasi tbAplikasi = tbAplikasiRepo.findById(idAplikasi).orElse(null);
+        if (tbAplikasi == null) {
+            return new MessageResponse(0, "Project tidak ditemukan", null);
+        }
+
+        tbAplikasi.setProses(2);
+        tbAplikasiRepo.save(tbAplikasi);
+
+        idPegawais.forEach(idPegawai -> {
+            TbTim tbTim = new TbTim();
+            tbTim.setIdAplikasi(idAplikasi);
+            tbTim.setIdPegawai(idPegawai);
+            tbTim.setRoleProject("Programmer");
+            tbTimRepo.save(tbTim);
+        });
+
+
+
+        return new MessageResponse(1, "Tim project berhasil dibuat", null);
     }
 }

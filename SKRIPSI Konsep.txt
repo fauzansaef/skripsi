@@ -50,11 +50,11 @@ fitur aplikasi :
 
 
 kriteria: 
-C1 : kemampuan coding (benefit)
-C2 : project yang sedang dikerjakan (cost)
-C3 : pengalaman (benefit)
-C4 : pelatihan (benefit)
-C5 : penguasaan stack (benefit)
+C1 : kemampuan coding (benefit)-> 0,35
+C2 : project yang sedang dikerjakan (cost) -> 0,25
+C3 : pengalaman (benefit)->0,15
+C4 : pelatihan (benefit)->0,05
+C5 : penguasaan stack (benefit)->0,2
 
 bobot:
 Sangat rendah : 1
@@ -63,7 +63,7 @@ Sedang : 3
 Tinggi : 4
 Sangat tinggi : 5
 
-bobot dan kriteria:
+bobot dan kriteria: insert kriteria pegawai pada tb_kriteria pegawai
 
 C1 -> kemampuan coding : ->src : https://www.codepolitan.com/blog/tingkatan-seorang-programmer-berdasarkan-skill-level/ 
 novice		: 1
@@ -140,6 +140,12 @@ ref_skill_programming:		ref_pelatihan:
 -keterangan			-jenis (programming:1, database:2, microservice:3, cicd:4, dll:5)
 -bobot
 			
+
+kalau sudah di pilih dari list data pegawai yang akan mengerjakan project, nnti di update projec_on goinng di tb kriteria_pegawai bobot projectnya
+ketika generate tim kebentuk nd penugasannya
+ketika generate tim setelah di pilih pegawai dan di generate, harusnya mempengaruhi penilaian SAW nya, karena beban project jadi bertambah, harus di tambahkan jumlah project di tb 
+buat input kriteria pegawai pada menu role programmer
+pembobotan pegawai pada tb_kriteria_pegawai_matrix untuk kolom project_ongoing dan pengalaman, bobot nya harus selalu diupdate menyesuaikan jumlah project pada kolom jumlah_pengalaman dan jumlah_project_ongoing pada tb_kriteria_pegawai
 
 
 	

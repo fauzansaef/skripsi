@@ -2,13 +2,16 @@ package com.skripsi.skripsi.controller.api;
 
 import com.skripsi.skripsi.dto.AplikasiDTO;
 import com.skripsi.skripsi.entity.TbAplikasi;
+import com.skripsi.skripsi.dto.TbPerangkinganDTO;
 import com.skripsi.skripsi.service.ProjectService;
-import com.skripsi.skripsi.utility.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -56,4 +59,18 @@ public class ProjectRest {
     ResponseEntity<?> ajukanProject(@PathVariable int id) {
         return ResponseEntity.ok(projectService.ajukanProject(id));
     }
+
+    @GetMapping("/perhitungan/{id}")
+    List<TbPerangkinganDTO> perhitunganSaw(@PathVariable int id) {
+        List<TbPerangkinganDTO> tbPerangkinganDTOS = (List<TbPerangkinganDTO>) projectService.perhitunganSaw(id).getData();
+        Collections.sort(tbPerangkinganDTOS, Comparator.comparingDouble(TbPerangkinganDTO::getPerhitunganAlternatif).reversed());
+        return tbPerangkinganDTOS;
+    }
+
+    @PostMapping("/{id}/generate-tim")
+    ResponseEntity<?> generateTimProject(@PathVariable int id, @RequestParam List<Integer> idPegawais) {
+        return ResponseEntity.ok(projectService.generateTimProject(idPegawais, id));
+    }
+
+
 }

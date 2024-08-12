@@ -8,11 +8,20 @@ import java.util.List;
 
 public interface IProjectService {
     List<TbAplikasi> getAllProject();
+
     List<TbAplikasi> getAllProjectByProses(int proses);
+
     MessageResponse getProjectById(int id);
+
     MessageResponse saveProject(AplikasiDTO aplikasiDTO);
+
     MessageResponse updateProject(int id, AplikasiDTO aplikasiDTO);
+
     MessageResponse deleteProject(int id);
+
     MessageResponse ajukanProject(int id);
+
+    MessageResponse perhitunganSaw(int id);
+    MessageResponse generateTimProject(List<Integer> idPegawais, int idAplikasi);
 
 }

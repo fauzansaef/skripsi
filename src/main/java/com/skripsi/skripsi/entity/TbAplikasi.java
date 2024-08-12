@@ -25,6 +25,11 @@ public class TbAplikasi {
     private Integer proses;
     @Column(name = "jenis")
     private Integer jenis;
+    @Column(name = "analis")
+    private Integer analis;
+    @ManyToOne
+    @JoinColumn(name = "analis", insertable = false, updatable = false)
+    private TbPegawai tbPegawaiAnalis;
     @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrxBahasaPemrograman> bahasaPemrograman;
     @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)

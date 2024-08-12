@@ -14,7 +14,7 @@ public class TbTim {
     @Column(name = "id_pegawai")
     private Integer idPegawai;
     @Column(name = "role_project")
-    private Integer roleProject;
+    private String roleProject;
     @Column(name = "id_aplikasi")
     private Integer idAplikasi;
     @Column(name = "surat_tugas")

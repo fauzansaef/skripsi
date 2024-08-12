@@ -134,8 +134,10 @@ var project = function () {
                         if (data == 0) {
                             return '<span class="kt-badge  kt-badge--primary kt-badge--inline kt-badge--pill"><b> DRAFT </b></span>';
                         } else if (data == 1) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PENGEMBANGAN </b></span>';
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
                         } else if (data == 2) {
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PENGEMBANGAN </b></span>';
+                        } else if (data == 3) {
                             return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> TESTING </b></span>';
                         } else if (data == 4) {
                             return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> DEPLOYMENT </b></span>';
@@ -256,8 +258,10 @@ var project = function () {
                         if (data == 0) {
                             return '<span class="kt-badge  kt-badge--primary kt-badge--inline kt-badge--pill"><b> DRAFT </b></span>';
                         } else if (data == 1) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PENGEMBANGAN </b></span>';
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
                         } else if (data == 2) {
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PENGEMBANGAN </b></span>';
+                        } else if (data == 3) {
                             return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> TESTING </b></span>';
                         } else if (data == 4) {
                             return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> DEPLOYMENT </b></span>';
@@ -273,18 +277,15 @@ var project = function () {
 
                         var userAuthority = $('#roleSession').val();
 
-                        console.log(userAuthority);
-                        console.log()
-
-                        if (row.proses > 0 && userAuthority === 'ROLE_KEPALA_SEKSI') {
-                            return '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="Generate Team" onclick="generateTeam(' + row['id'] + ')">\n' +
+                        if ((row.proses > 0 && row.proses <= 2) && userAuthority === 'ROLE_KEPALA_SEKSI') {
+                            return '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="View" onclick="viewProject(' + row['id'] + ')">\n' +
                                 '<span class="svg-icon svg-icon-3">' +
                                 '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">' +
                                 '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path> ' +
                                 '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>' +
                                 '</svg></span>\n' +
                                 '</button>\n' +
-                                '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="View" onclick="viewProject(' + row['id'] + ')">\n' +
+                                '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="Generate Team" onclick="generateTeam(' + row['id'] + ')">\n' +
                                 '<span className="svg-icon svg-icon-3">' +
                                 '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-cpu" viewBox="0 0 16 16"> ' +
                                 '<path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"> ' +
@@ -293,8 +294,6 @@ var project = function () {
                                 '</span>' +
                                 '</button>';
                         }
-
-
 
 
                     }
@@ -534,6 +533,162 @@ function editProject(id) {
     });
 }
 
-function generateTeam(id){
-    alert('generate team')
+function generateTeam(id) {
+
+    $('#tbPerhitunganSAW').DataTable({
+        "ajax": {
+            "url": "/api/project/perhitungan/" + id,
+            "headers": {"X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")}
+        },
+        "sAjaxDataProp": "",
+        "order": [[0, "asc"]],
+        "processing": true,
+        "bDestroy": true,
+        "oLanguage": {
+            "sLengthMenu": "Tampilkan _MENU_ data",
+            "sZeroRecords": "Tidak ada data",
+            "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+            "sLoadingRecords": "Sedang memuat...",
+            "sProcessing": "Sedang memproses...",
+            "sSearch": "Cari:"
+        },
+        "columns": [
+            {
+                "data": "idPegawai",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {
+                "data": "null",
+                render: function (data, type, row, meta) {
+                    return row.tbPegawai.nama;
+                },
+            },
+            {
+                "data": "null",
+                render: function (data, type, row, meta) {
+                    return row.tbPegawai.nip;
+                },
+            },
+            {
+                "data": "null",
+                render: function (data, type, row, meta) {
+                    return row.tbPegawai.jabatan;
+                },
+            },
+            {"data": "perhitunganAlternatif"}
+
+
+        ],
+
+        columnDefs: [
+            {
+                targets: 5,
+                render: function (data, type, row, meta) {
+                    return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input class="CheckBox" type="checkbox" id="idCbGenerate" value="' + row.idPegawai + '"/><span></span></label>';
+                },
+            },
+
+        ],
+    });
+
+
+    $(document).on("change", "input[id='checkbox_all']", function () {
+        if (this.checked) {
+            $('.CheckBox').prop('checked', true);
+        } else {
+            $('.CheckBox').prop('checked', false);
+        }
+    });
+
+    $(document).on("change", "input[type=checkbox]", function () {
+        if (this.checked) {
+            $('#btnGenerateTeam').removeAttr("disabled");
+        }
+
+        var value = $('input[class="CheckBox"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+
+        if (value == '') {
+            $("#btnGenerateTeam").attr("disabled", true);
+        }
+
+        $('#btnGenerateTeam').unbind("click").click(function (e) {
+            e.preventDefault();
+
+            var stringArray = value;
+            var listIdPegawai = $.map(stringArray, function (value, index) {
+                return parseInt(value, 10);
+            });
+
+            btnGenerateTeam(id, listIdPegawai);
+
+        });
+
+    });
+
+
+    $('#teamProjectModal').modal('show');
+}
+
+function btnGenerateTeam(id, val) {
+
+    swal.fire({
+        title: "Generate Team?",
+        icon: "warning",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: "Yes, Generate",
+        cancelButtonText: 'No',
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: 'btn btn-light'
+        }
+    }).then(function (e) {
+        if (e.isConfirmed === true) {
+            showLoading();
+            var token = $("meta[name='_csrf']").attr("content");
+            $.ajax({
+                url: "/api/project/" + id + "/generate-tim",
+                type: "post",
+                traditional: true,
+                data: {
+                    'idPegawais': val
+                },
+                headers: {"X-CSRF-TOKEN": token},
+                success: function (data) {
+                    if (data.status == 1) {
+                        swal.fire({
+                            title: "SUKSES",
+                            text: data.message,
+                            icon: "success",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then(function () {
+                            $('#teamProjectModal').modal('hide');
+                            $('#tbListProjectAjukan').DataTable().ajax.reload(null, false);
+                        });
+                    } else if (data.status == 0) {
+                        swal.fire({
+                            title: "GAGAL",
+                            text: data.message,
+                            icon: "failed",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then(function () {
+                            $('#teamProjectModal').modal('hide');
+                            $('#tbListProjectAjukan').DataTable().ajax.reload(null, false);
+                        });
+                    } else {
+                        errorResult();
+                    }
+                }
+            });
+        }
+    });
 }
