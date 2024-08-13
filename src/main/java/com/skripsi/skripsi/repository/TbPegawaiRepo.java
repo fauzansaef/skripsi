@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TbPegawaiRepo extends JpaRepository<TbPegawai, Integer> {
-    List<TbPegawai> findAllByUnit(String unit);
+    List<TbPegawai> findAllByUnitAndJabatan(String unit, String jabatan);
 
 }

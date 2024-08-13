@@ -6,6 +6,6 @@ import lombok.Data;
 public class KriteriaPegawaiDTO {
     private Integer idPegawai;
     private Integer kemampuanCoding;
-    private Integer jumlahPelatihan;
-    private Integer penguasaanStack;
+    private Integer [] jumlahPelatihan;
+    private Integer [] penguasaanStack;
 }

@@ -10,6 +10,7 @@ public interface IProjectService {
     List<TbAplikasi> getAllProject();
 
     List<TbAplikasi> getAllProjectByProses(int proses);
+    List<TbAplikasi> getAllProjectByProsesPegawai(int proses);
 
     MessageResponse getProjectById(int id);
 
@@ -20,8 +21,10 @@ public interface IProjectService {
     MessageResponse deleteProject(int id);
 
     MessageResponse ajukanProject(int id);
+    MessageResponse ajukanDeployment(int id);
 
     MessageResponse perhitunganSaw(int id);
+
     MessageResponse generateTimProject(List<Integer> idPegawais, int idAplikasi);
 
 }

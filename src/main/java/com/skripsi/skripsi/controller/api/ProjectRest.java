@@ -40,6 +40,11 @@ public class ProjectRest {
         return projectService.getAllProjectByProses(proses);
     }
 
+    @GetMapping("/proses/{proses}/pegawai")
+    public List<TbAplikasi> getAllProjectByProsesPegawai(@PathVariable int proses) {
+        return projectService.getAllProjectByProsesPegawai(proses);
+    }
+
     @PostMapping
     ResponseEntity<?> saveProject(@RequestBody AplikasiDTO aplikasiDTO) {
         return ResponseEntity.ok(projectService.saveProject(aplikasiDTO));
@@ -58,6 +63,11 @@ public class ProjectRest {
     @PutMapping("/ajukan/{id}")
     ResponseEntity<?> ajukanProject(@PathVariable int id) {
         return ResponseEntity.ok(projectService.ajukanProject(id));
+    }
+
+    @PutMapping("/deployment/{id}")
+    ResponseEntity<?> ajukanDeployment(@PathVariable int id) {
+        return ResponseEntity.ok(projectService.ajukanDeployment(id));
     }
 
     @GetMapping("/perhitungan/{id}")

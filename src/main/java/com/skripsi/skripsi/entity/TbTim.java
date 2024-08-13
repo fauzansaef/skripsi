@@ -1,5 +1,6 @@
 package com.skripsi.skripsi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class TbTim {
     private Integer idPegawai;
     @Column(name = "role_project")
     private String roleProject;
+    @JsonIgnore
     @Column(name = "id_aplikasi")
     private Integer idAplikasi;
     @Column(name = "surat_tugas")
@@ -22,6 +24,8 @@ public class TbTim {
     @ManyToOne
     @JoinColumn(name = "id_pegawai", insertable = false, updatable = false)
     private TbPegawai tbPegawai;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_aplikasi", insertable = false, updatable = false)
     private TbAplikasi tbAplikasi;

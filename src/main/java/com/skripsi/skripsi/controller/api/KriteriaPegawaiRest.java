@@ -1,6 +1,7 @@
 package com.skripsi.skripsi.controller.api;
 
 import com.skripsi.skripsi.dto.KriteriaPegawaiDTO;
+import com.skripsi.skripsi.dto.TbKriteriaPegawaiDTO;
 import com.skripsi.skripsi.entity.TbKriteriaPegawai;
 import com.skripsi.skripsi.service.KriteriaPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class KriteriaPegawaiRest {
     }
 
     @GetMapping
-    public List<TbKriteriaPegawai> getKriteriaPegawai() {
+    public List<TbKriteriaPegawaiDTO> getKriteriaPegawai() {
         return kriteriaPegawaiService.getKriteriaPegawai();
     }
 

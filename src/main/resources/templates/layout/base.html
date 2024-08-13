@@ -115,25 +115,17 @@
                                         <span class="menu-title">Request Project</span>
                                     </a>
                                 </div>
-                                <div class="menu-item">
-                                    <a class="menu-link py-3" href="/project/task" id="taskProjectSubmenu">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                        <span class="menu-title">Task</span>
-                                    </a>
+                            </div>
+                        </div>
+
+                        <div class="menu-item" sec:authorize="hasAnyAuthority('ROLE_ANALIS','ROLE_KEPALA_SEKSI')">
+                            <div class="menu-item">
+                                <div class="menu-content pt-5 pb-2">
+                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Manajemen</span>
                                 </div>
                             </div>
-                        </div>
 
-
-                        <div class="menu-item">
-                            <div class="menu-content pt-5 pb-2">
-                                <span class="menu-section text-muted text-uppercase fs-8 ls-1">Manajemen</span>
-                            </div>
-                        </div>
-
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                     <span class="menu-link" id="manajemenProjectMenu">
                                         <span class="menu-icon">
                                             <span class="svg-icon svg-icon-2">
@@ -150,19 +142,21 @@
                                         <span class="menu-title">Manajemen Project</span>
                                         <span class="menu-arrow"></span>
                                     </span>
-                            <div class="menu-sub menu-sub-accordion" id="listManajemenProject">
-                                <div class="menu-item">
-                                    <a class="menu-link" href="/manajemen-project/kriteria-pegawai"
-                                       id="manajemenKriteriaSubMenu">
+                                <div class="menu-sub menu-sub-accordion" id="listManajemenProject">
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="/manajemen-project/kriteria-pegawai"
+                                           id="manajemenKriteriaSubMenu">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                        <span class="menu-title">Kriteria Developer</span>
-                                    </a>
+                                            <span class="menu-title">Kriteria Developer</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="menu-item" sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')">
                         <div class="menu-item">
                             <div class="menu-content pt-5 pb-2">
                                 <span class="menu-section text-muted text-uppercase fs-8 ls-1">Administrator</span>
@@ -211,7 +205,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -356,7 +350,8 @@
                                                         </div>
                                                         <div class="mb-0 me-2">
                                                             <a class="fs-6 text-gray-800 text-hover-primary fw-bolder">Kantor</a>
-                                                            <div class="text-gray-400 fs-7" th:text="${session.kantor}"></div>
+                                                            <div class="text-gray-400 fs-7"
+                                                                 th:text="${session.kantor}"></div>
                                                         </div>
                                                     </div>
                                                 </div>

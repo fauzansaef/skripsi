@@ -39,9 +39,9 @@ public class ReferensiService implements IReferensiService{
     }
 
     @Override
-    public List<TbPegawai> getPegawai() {
+    public List<TbPegawai> getListProgrammer() {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
-        return tbPegawaiRepo.findAllByUnit(userDetails.getPegawai().getUnit());
+        return tbPegawaiRepo.findAllByUnitAndJabatan(userDetails.getPegawai().getUnit(),"Programmer");
     }
 
     @Override

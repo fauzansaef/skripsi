@@ -34,5 +34,7 @@ public class TbAplikasi {
     private List<TrxBahasaPemrograman> bahasaPemrograman;
     @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrxJenisDatabase> jenisDatabase;
+    @OneToMany(mappedBy = "tbAplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TbTim> tim;
 
 }

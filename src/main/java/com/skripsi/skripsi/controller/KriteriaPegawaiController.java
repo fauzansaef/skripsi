@@ -20,7 +20,7 @@ public class KriteriaPegawaiController {
 
     @GetMapping("/kriteria-pegawai")
     public String kriteriaPegawai(Model model) {
-        model.addAttribute("listPegawai", referensiService.getPegawai());
+        model.addAttribute("listProgrammer", referensiService.getListProgrammer());
         model.addAttribute("listSkill", referensiService.getSkillProgramming());
         model.addAttribute("listStack", referensiService.getStack());
         model.addAttribute("listPelatihan", referensiService.getRefPelatihan());

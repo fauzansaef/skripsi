@@ -26,7 +26,7 @@ fitur aplikasi :
 	-> input project berdasarkan surat ND permintaan aplikasi (project) dari BO (Buisness Owner) (done)
 	-> ketika diinput statusnya draft, data yang diinput merupakan hasil analisis dari analis (done)
 	-> ada tombol ajukan, untuk diajukan kepada kepala seksi (done)
-	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui / menu manajemen-> skill
+	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui / menu manajemen-> skill ->tidak jadi
 
 
 - role kepala seksi
@@ -37,7 +37,7 @@ fitur aplikasi :
 	-> tombol generate surat tugas , status menjadi disetujui
 
 - role programmer
-	-> list aplikasi yang sudah disetujui oleh kepala seksi untuk dikerjakan ->menu project task 
+	-> list aplikasi yang sudah disetujui oleh kepala seksi untuk dikerjakan ->menu project - request project (done)
 	-> tombol lihat surat tugas
 
 - role administrator
@@ -137,12 +137,16 @@ ref_skill_programming:		ref_pelatihan:
 -bobot
 			
 
-kalau sudah di pilih dari list data pegawai yang akan mengerjakan project, nnti di update projec_on goinng di tb kriteria_pegawai bobot projectnya
-ketika generate tim kebentuk nd penugasannya
-ketika generate tim setelah di pilih pegawai dan di generate, harusnya mempengaruhi penilaian SAW nya, karena beban project jadi bertambah, harus di tambahkan jumlah project di tb 
-buat input kriteria pegawai pada menu role programmer
-pembobotan pegawai pada tb_kriteria_pegawai_matrix untuk kolom project_ongoing dan pengalaman, bobot nya harus selalu diupdate menyesuaikan jumlah project pada kolom jumlah_pengalaman dan jumlah_project_ongoing pada tb_kriteria_pegawai
+kalau sudah di pilih dari list data pegawai yang akan mengerjakan project, nnti di update projec_on goinng di tb kriteria_pegawai bobot projectnya (done)
+ketika generate tim kebentuk nd penugasannya (belum)
+ketika generate tim setelah di pilih pegawai dan di generate, harusnya mempengaruhi penilaian SAW nya, karena beban project jadi bertambah, harus di tambahkan jumlah project di tb (done)
+buat input kriteria pegawai pada menu role analis (done)
+pembobotan pegawai pada tb_kriteria_pegawai_matrix untuk kolom project_ongoing dan pengalaman, bobot nya harus selalu diupdate menyesuaikan jumlah project pada kolom jumlah_pengalaman dan jumlah_project_ongoing pada tb_kriteria_pegawai(done)
 
 
+task selanjutnya : - generate surat penugasan
+		   - generate laporan (monitoring, dan hasil perhitungan saw)
+		   - edit, delete, view kriteria pegawai
+             	   - menu admin
 	
 

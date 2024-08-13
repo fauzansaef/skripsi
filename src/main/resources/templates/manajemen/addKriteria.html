@@ -15,16 +15,16 @@
       </div>
 
       <div class="modal-body">
-        <form id="formAddProject">
+        <form id="formAddKriteria">
           <div class="card-body pb-0">
             <div class="mb-10 d-flex flex-wrap gap-5">
               <div class="fv-row w-100 flex-md-root">
                 <label class="required form-label">Nama Developer</label>
                 <select class="form-select mb-2" name="inputNamaDeveloper" id="inputNamaDeveloper" data-control="select2" data-hide-search="true" data-placeholder="Pilih Developer">
                   <option value=0>Pilih Developer</option>
-                  <option th:each="listPegawai : ${listPegawai}"
-                          th:value="${listPegawai.id}"
-                          th:text="${listPegawai.nama}">
+                  <option th:each="listProgrammer : ${listProgrammer}"
+                          th:value="${listProgrammer.id}"
+                          th:text="${listProgrammer.nama}">
                   </option>
                 </select>
               </div>
@@ -45,7 +45,7 @@
                 <label class="required form-label">Penguasaan Stack</label>
                 <select class="form-select mb-2" name="inputStack" id="inputStack" data-control="select2" data-hide-search="true" data-placeholder="Pilih Stack" multiple="multiple">
                   <option th:each="listStack : ${listStack}"
-                          th:value="${listStack.jenis}"
+                          th:value="${listStack.id}"
                           th:text="${listStack.nama}">
                   </option>
                 </select>
@@ -54,7 +54,7 @@
                 <label class="required form-label">Pelatihan</label>
                 <select class="form-select mb-2" name="inputPelatihan" id="inputPelatihan" data-control="select2" data-hide-search="true" data-placeholder="Pilih Pelatihan" multiple="multiple">
                   <option th:each="listPelatihan : ${listPelatihan}"
-                          th:value="${listPelatihan.jenis}"
+                          th:value="${listPelatihan.id}"
                           th:text="${listPelatihan.nama}">
                   </option>
                 </select>

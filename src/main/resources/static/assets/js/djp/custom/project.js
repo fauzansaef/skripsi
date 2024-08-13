@@ -49,7 +49,7 @@ var project = function () {
                         text: data.message,
                         icon: "success"
                     }).then(function () {
-                        $('#tbRequestPrject').DataTable().ajax.reload(null, false);
+                        $('#tbRequestProject').DataTable().ajax.reload(null, false);
                         $('#formAddProject')[0].reset();
                         $('#inputBahasaPemrograman').val([]);
                         $('#inputDatabase').val([]);
@@ -69,7 +69,7 @@ var project = function () {
 
     var tableRequestProject = function () {
 
-        $('#tbRequestPrject').DataTable({
+        $('#tbRequestProject').DataTable({
             "ajax": {
                 "url": "/api/project",
                 "headers": {"X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")}
@@ -136,11 +136,11 @@ var project = function () {
                         } else if (data == 1) {
                             return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
                         } else if (data == 2) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PENGEMBANGAN </b></span>';
+                            return '<span class="kt-badge  btn-warning"><b> PENGEMBANGAN </b></span>';
                         } else if (data == 3) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> TESTING </b></span>';
+                            return '<span class="kt-badge  btn-danger"><b> TESTING </b></span>';
                         } else if (data == 4) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> DEPLOYMENT </b></span>';
+                            return '<span class="kt-badge btn-success"><b> DEPLOYMENT </b></span>';
                         } else {
                             return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><b> ERROR </b></span>';
                         }
@@ -260,11 +260,11 @@ var project = function () {
                         } else if (data == 1) {
                             return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
                         } else if (data == 2) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PENGEMBANGAN </b></span>';
+                            return '<span class="kt-badge  btn-warning"><b> PENGEMBANGAN </b></span>';
                         } else if (data == 3) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> TESTING </b></span>';
+                            return '<span class="kt-badge  btn-danger"><b> TESTING </b></span>';
                         } else if (data == 4) {
-                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> DEPLOYMENT </b></span>';
+                            return '<span class="kt-badge btn-success"><b> DEPLOYMENT </b></span>';
                         } else {
                             return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><b> ERROR </b></span>';
                         }
@@ -302,11 +302,209 @@ var project = function () {
         });
     }
 
+    var tbListProjectKerjakan = function () {
+
+        $('#tbListProjectKerjakan').DataTable({
+            "ajax": {
+                "url": "/api/project/proses/" + 2 + "/pegawai",
+                "headers": {"X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")}
+            },
+            "sAjaxDataProp": "",
+            "order": [[0, "asc"]],
+            "processing": true,
+            "bDestroy": true,
+            "oLanguage": {
+                "sLengthMenu": "Tampilkan _MENU_ data",
+                "sZeroRecords": "Tidak ada data",
+                "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                "sLoadingRecords": "Sedang memuat...",
+                "sProcessing": "Sedang memproses...",
+                "sSearch": "Cari:"
+            },
+            "columns": [
+                {
+                    "data": "id",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    "data": "nama",
+                    render: function (data, type, row, meta) {
+                        var jenis;
+                        switch (row.jenis) {
+                            case 1:
+                                jenis = 'Service API';
+                                break;
+                            case 2:
+                                jenis = 'Mobile Apps';
+                                break;
+                            case 3:
+                                jenis = 'Web Apps';
+                                break;
+                            case 4:
+                                jenis = 'Desktop';
+                                break;
+                        }
+
+
+                        var bahasaPemrogramanNames = row.bahasaPemrograman.map(function (item) {
+                            return item.bahasaPemrograman.nama;
+                        }).join(', ');
+
+                        var databaseNames = row.jenisDatabase.map(function (item) {
+                            return item.jenisDatabase.nama;
+                        }).join(', ');
+
+                        return '<b>' + row.nama + '</b>' + '<br>' + '<b>Bahasa Pemrograman: </b>  ' + bahasaPemrogramanNames + '<br>' + '<b>Database: </b>  ' + databaseNames
+                            + '<br>' + '<b>Jenis: </b>  ' + jenis;
+                    },
+                },
+                {"data": "bisnisOwner"},
+                {"data": "versioning"},
+                {"data": "tglNd"},
+                {
+                    "data": "proses", "render": function (data) {
+                        if (data == 0) {
+                            return '<span class="kt-badge  kt-badge--primary kt-badge--inline kt-badge--pill"><b> DRAFT </b></span>';
+                        } else if (data == 1) {
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
+                        } else if (data == 2) {
+                            return '<span class="kt-badge  btn-warning"><b> PENGEMBANGAN </b></span>';
+                        } else if (data == 3) {
+                            return '<span class="kt-badge  btn-danger"><b> TESTING </b></span>';
+                        } else if (data == 4) {
+                            return '<span class="kt-badge btn-success"><b> DEPLOYMENT </b></span>';
+                        } else {
+                            return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><b> ERROR </b></span>';
+                        }
+                    }
+                },
+
+                {
+                    "data": "null",
+                    render: function (data, type, row) {
+                        var userAuthority = $('#roleSession').val();
+
+                        if ((row.proses == 2) && userAuthority === 'ROLE_PROGRAMMER') {
+                            return '<button class="btn btn-icon btn-bg-light btn-active-color-success btn-sm" title="Ajukan Deployment" onclick="ajukanDeployment(' + row['id'] + ')">\n' +
+                                '<span class="svg-icon svg-icon-3"> \n' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">\n' +
+                                ' <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"></path>\n' +
+                                '<path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"></path>\n' +
+                                ' <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"></path>\n' +
+                                ' </svg>\n' +
+                                '</span>\n' +
+                                '</button>';
+                        }
+
+
+                    }
+                }
+            ]
+        });
+    }
+
+    var tbMonitoringProject = function () {
+        $('#tbMonitoringProject').DataTable({
+            "ajax": {
+                "url": "/api/project",
+                "headers": {"X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")}
+            },
+            "sAjaxDataProp": "",
+            "order": [[0, "asc"]],
+            "processing": true,
+            "bDestroy": true,
+            "oLanguage": {
+                "sLengthMenu": "Tampilkan _MENU_ data",
+                "sZeroRecords": "Tidak ada data",
+                "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                "sLoadingRecords": "Sedang memuat...",
+                "sProcessing": "Sedang memproses...",
+                "sSearch": "Cari:"
+            },
+            "columns": [
+                {
+                    "data": "id",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    "data": "nama",
+                    render: function (data, type, row, meta) {
+                        var jenis;
+                        switch (row.jenis) {
+                            case 1:
+                                jenis = 'Service API';
+                                break;
+                            case 2:
+                                jenis = 'Mobile Apps';
+                                break;
+                            case 3:
+                                jenis = 'Web Apps';
+                                break;
+                            case 4:
+                                jenis = 'Desktop';
+                                break;
+                        }
+
+
+                        var bahasaPemrogramanNames = row.bahasaPemrograman.map(function (item) {
+                            return item.bahasaPemrograman.nama;
+                        }).join(', ');
+
+                        var databaseNames = row.jenisDatabase.map(function (item) {
+                            return item.jenisDatabase.nama;
+                        }).join(', ');
+
+                        return '<b>' + row.nama + '</b>' + '<br>' + '<b>Bahasa Pemrograman: </b>  ' + bahasaPemrogramanNames + '<br>' + '<b>Database: </b>  ' + databaseNames
+                            + '<br>' + '<b>Jenis: </b>  ' + jenis;
+                    },
+                },
+                {
+                    "data": null,
+                    render: function (data, type, row, meta) {
+                        return 'Sistem Analis :' + '<b>' + row.tbPegawaiAnalis.nama + '</b>' + '<br>' + 'Tim:  ' +
+                            '<ul>' + row.tim.map(function (item) {
+                                return '<li>' + item.tbPegawai.nama + '</li>';
+                            }).join('') + '</ul>';
+                    }
+                },
+                {"data": "bisnisOwner"},
+                {"data": "versioning"},
+                {"data": "tglNd"},
+                {
+                    "data": "proses", "render": function (data) {
+                        if (data == 0) {
+                            return '<span class="kt-badge  kt-badge--primary kt-badge--inline kt-badge--pill"><b> DRAFT </b></span>';
+                        } else if (data == 1) {
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
+                        } else if (data == 2) {
+                            return '<span class="kt-badge  btn-warning"><b> PENGEMBANGAN </b></span>';
+                        } else if (data == 3) {
+                            return '<span class="kt-badge  btn-danger"><b> TESTING </b></span>';
+                        } else if (data == 4) {
+                            return '<span class="kt-badge btn-success"><b> DEPLOYMENT </b></span>';
+                        } else {
+                            return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> ERROR </b></span>';
+                        }
+                    }
+                },
+
+            ]
+        });
+    }
+
 
     return {
         init: function () {
             tableRequestProject();
             tbListProjectAjukan();
+            tbListProjectKerjakan();
+            tbMonitoringProject();
         },
     };
 
@@ -346,7 +544,7 @@ function hapusProject(id) {
                                 confirmButton: "btn btn-primary"
                             }
                         }).then(function () {
-                            $('#tbRequestPrject').DataTable().ajax.reload(null, false);
+                            $('#tbRequestProject').DataTable().ajax.reload(null, false);
                         });
                     } else {
                         errorResult();
@@ -387,7 +585,7 @@ function ajukanProject(id) {
                                 confirmButton: "btn btn-primary"
                             }
                         }).then(function () {
-                            $('#tbRequestPrject').DataTable().ajax.reload(null, false);
+                            $('#tbRequestProject').DataTable().ajax.reload(null, false);
                         });
                     } else if (data.status == 0) {
                         swal.fire({
@@ -398,7 +596,59 @@ function ajukanProject(id) {
                                 confirmButton: "btn btn-primary"
                             }
                         }).then(function () {
-                            $('#tbRequestPrject').DataTable().ajax.reload(null, false);
+                            $('#tbRequestProject').DataTable().ajax.reload(null, false);
+                        });
+                    } else {
+                        errorResult();
+                    }
+                }
+            });
+        }
+    });
+}
+
+function ajukanDeployment(id) {
+    swal.fire({
+        title: "Ajukan Project?",
+        icon: "warning",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: "Yes, Ajukan",
+        cancelButtonText: 'No',
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: 'btn btn-light'
+        }
+    }).then(function (e) {
+        if (e.isConfirmed === true) {
+            showLoading();
+            var token = $("meta[name='_csrf']").attr("content");
+            $.ajax({
+                url: "/api/project/deployment/" + id,
+                type: "put",
+                headers: {"X-CSRF-TOKEN": token},
+                success: function (data) {
+                    if (data.status == 1) {
+                        swal.fire({
+                            title: "SUKSES",
+                            text: data.message,
+                            icon: "success",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then(function () {
+                            $('#tbListProjectKerjakan').DataTable().ajax.reload(null, false);
+                        });
+                    } else if (data.status == 0) {
+                        swal.fire({
+                            title: "GAGAL",
+                            text: data.message,
+                            icon: "failed",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then(function () {
+                            $('#tbRequestProject').DataTable().ajax.reload(null, false);
                         });
                     } else {
                         errorResult();
@@ -516,7 +766,7 @@ function editProject(id) {
                         text: data.message,
                         icon: "success"
                     }).then(function () {
-                        $('#tbRequestPrject').DataTable().ajax.reload(null, false);
+                        $('#tbRequestProject').DataTable().ajax.reload(null, false);
                         $('#formEditProject')[0].reset();
                         $('#editBahasaPemrograman').val([]);
                         $('#editDatabase').val([]);
@@ -578,7 +828,13 @@ function generateTeam(id) {
                     return row.tbPegawai.jabatan;
                 },
             },
-            {"data": "perhitunganAlternatif"}
+            {
+                "data": "perhitunganAlternatif",
+                render: function (data, type, row, meta) {
+                    var color = getColor(data);
+                    return '<span style="color:' + color + ';">' + data + '</span>';
+                },
+            }
 
 
         ],
@@ -691,4 +947,10 @@ function btnGenerateTeam(id, val) {
             });
         }
     });
+}
+
+function getColor(value){
+    //value from 0 to 1
+    var hue=((value)*120).toString(10);
+    return ["hsl(",hue,",100%,50%)"].join("");
 }

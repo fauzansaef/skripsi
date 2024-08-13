@@ -7,7 +7,7 @@ import java.util.List;
 public interface IReferensiService {
     List<RefBahasaPemrograman> getBahasaPemrograman();
     List<RefDatabase> getDatabase();
-    List<TbPegawai> getPegawai();
+    List<TbPegawai> getListProgrammer();
     List<RefSkillProgramming> getSkillProgramming();
     List<RefStack> getStack();
     List<RefPelatihan> getRefPelatihan();
