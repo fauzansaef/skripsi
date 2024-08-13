@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
-    private final ProjectService projectService;
+
     private final ReferensiService referensiService;
 
     @Autowired
-    public ProjectController(ProjectService projectService, ReferensiService referensiService) {
-        this.projectService = projectService;
+    public ProjectController(ReferensiService referensiService) {
         this.referensiService = referensiService;
     }
 

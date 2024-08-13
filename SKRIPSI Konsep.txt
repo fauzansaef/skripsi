@@ -23,22 +23,20 @@ fitur aplikasi :
 - login -> (nip dan password pegawai) 
 
 - role sistem analis-> menu project -> request aplikasi
-	-> input project berdasarkan surat ND permintaan aplikasi (project) dari BO (Buisness Owner)
-	-> ketika diinput statusnya draft, data yang diinput merupakan hasil analisis dari analis
-	-> ada tombol ajukan, untuk diajukan kepada kepala seksi
+	-> input project berdasarkan surat ND permintaan aplikasi (project) dari BO (Buisness Owner) (done)
+	-> ketika diinput statusnya draft, data yang diinput merupakan hasil analisis dari analis (done)
+	-> ada tombol ajukan, untuk diajukan kepada kepala seksi (done)
+	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui / menu manajemen-> skill
 
 
 - role kepala seksi
-	-> list persetujuan kemampuan programmer (sesuai criteria) / menu manajemen->assessment
-	-> tombol setujui (ketika diklik muncul modal isinya data profil programmer dan kemampuannya, kemudian dibawah form ada tombol setujui)
-	-> list aplikasi yang sudah diajukan kepada kepala seksi/ menu project-> request aplikasi
-	-> tombol detail (untuk melihat detail requirement project)
+	-> list aplikasi yang sudah diajukan kepada kepala seksi/ menu project-> request aplikasi (done)
+	-> tombol detail (untuk melihat detail requirement project) (done)
 	-> tombol tim (menentukan tim yang akan mengerjakan project, hasil yang muncul adalah list data programmer di seksi tsb
-	   berdasarkan hasil perhitungan algoritma SAW)
+	   berdasarkan hasil perhitungan algoritma SAW) (done)
 	-> tombol generate surat tugas , status menjadi disetujui
 
 - role programmer
-	-> menu input kemampuan programmer (sesuai criteria), ketika diinput data masuk ke kepala seksi untuk disetujui / menu manajemen-> skill
 	-> list aplikasi yang sudah disetujui oleh kepala seksi untuk dikerjakan ->menu project task 
 	-> tombol lihat surat tugas
 
@@ -87,20 +85,18 @@ C3 -> pengalaman
 >=5 project : 5
 
 C4 -> pelatihan
-0-1 pelatihan IT (programming) : 1
- 2  pelatihan IT (programming, database) : 2
- 3  pelatihan IT (programming, database, microservice): 3
- 4  pelatihan IT (programming, database, microservice, cicd): 4
->=5 pelatihan IT (programming, database, microservice, cicd, dll) : 5
+0-1  pelatihan IT  : 1
+2-3  pelatihan IT  : 2
+4-5  pelatihan IT  : 3
+6-7  pelatihan IT  : 4
+>=7  pelatihan IT  : 5
 
 C5 -> penguasaan stack :
-1 bahasa pemrograman (frontend || backend) : 1
-1 bahasa fulstack programming :  2
-1 bahasa fulstack programming, 1 database : 3
->1 bahasa fulstack programming, >1 database, microservice : 4
->2 bahasa fulstack programming, >2 database, microservice, devops: 5
-
-
+1 framework pemrograman  : 1
+>=1 framework pemrograman  :  2
+>=1 framework pemrograman, >=1 database : 3
+>=1 framework pemrograman, >=1 database , 1 dll(devops,microservice,dll) : 4
+>=1 framework pemrograman, >=1 database , >=1 dll(devops,microservice,dll): 5
 
 database :
  

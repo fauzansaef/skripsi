@@ -1,10 +1,10 @@
 package com.skripsi.skripsi.service;
 
-import com.skripsi.skripsi.entity.RefBahasaPemrograman;
-import com.skripsi.skripsi.entity.RefDatabase;
-import com.skripsi.skripsi.repository.RefBahasaPemrogramanRepo;
-import com.skripsi.skripsi.repository.RefDatabaseRepo;
+import com.skripsi.skripsi.auth.UserDetailsImpl;
+import com.skripsi.skripsi.entity.*;
+import com.skripsi.skripsi.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +13,19 @@ import java.util.List;
 public class ReferensiService implements IReferensiService{
     private final RefBahasaPemrogramanRepo refBahasaPemrogramanRepo;
     private final RefDatabaseRepo refDatabaseRepo;
+    private final TbPegawaiRepo tbPegawaiRepo;
+    private final RefSkillProgrammingRepo refSkillProgrammingRepo;
+    private final RefStackRepo refStackRepo;
+    private final RefPelatihanRepo refPelatihanRepo;
 
     @Autowired
-    public ReferensiService(RefBahasaPemrogramanRepo refBahasaPemrogramanRepo, RefDatabaseRepo refDatabaseRepo) {
+    public ReferensiService(RefBahasaPemrogramanRepo refBahasaPemrogramanRepo, RefDatabaseRepo refDatabaseRepo, TbPegawaiRepo tbPegawaiRepo, RefSkillProgrammingRepo refSkillProgrammingRepo, RefStackRepo refStackRepo, RefPelatihanRepo refPelatihanRepo) {
         this.refBahasaPemrogramanRepo = refBahasaPemrogramanRepo;
         this.refDatabaseRepo = refDatabaseRepo;
+        this.tbPegawaiRepo = tbPegawaiRepo;
+        this.refSkillProgrammingRepo = refSkillProgrammingRepo;
+        this.refStackRepo = refStackRepo;
+        this.refPelatihanRepo = refPelatihanRepo;
     }
 
     @Override
@@ -28,5 +36,26 @@ public class ReferensiService implements IReferensiService{
     @Override
     public List<RefDatabase> getDatabase() {
         return refDatabaseRepo.findAll();
+    }
+
+    @Override
+    public List<TbPegawai> getPegawai() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        return tbPegawaiRepo.findAllByUnit(userDetails.getPegawai().getUnit());
+    }
+
+    @Override
+    public List<RefSkillProgramming> getSkillProgramming() {
+        return refSkillProgrammingRepo.findAll();
+    }
+
+    @Override
+    public List<RefStack> getStack() {
+        return refStackRepo.findAll();
+    }
+
+    @Override
+    public List<RefPelatihan> getRefPelatihan() {
+        return refPelatihanRepo.findAll();
     }
 }

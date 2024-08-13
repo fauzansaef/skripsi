@@ -17,18 +17,18 @@ CREATE TABLE `ref_database` (
                                 `keterangan` varchar(255) DEFAULT NULL,
                                 `nama` varchar(255) DEFAULT NULL,
                                 PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 
 -- db_saw_project.ref_pelatihan definition
 
 CREATE TABLE `ref_pelatihan` (
                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                                 `jenis` int(11) DEFAULT NULL,
+                                 `jenis` int(11) DEFAULT NULL COMMENT 'programming:1, database:2, microservice:3, cicd:4, dll:5',
                                  `keterangan` varchar(255) DEFAULT NULL,
                                  `nama` varchar(255) DEFAULT NULL,
                                  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 
 -- db_saw_project.ref_penguasaan_stack definition
@@ -59,7 +59,7 @@ CREATE TABLE `ref_skill_programming` (
                                          `keterangan` varchar(255) DEFAULT NULL,
                                          `nama` varchar(255) DEFAULT NULL,
                                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 
 -- db_saw_project.tb_pegawai definition
@@ -80,7 +80,7 @@ CREATE TABLE `tb_pegawai` (
                               UNIQUE KEY `UK_s8gvh7hj2s1edmmsxakot6qr8` (`email`),
                               UNIQUE KEY `UK_gkn75h4ywopmct42fkm8r4ksu` (`nip`),
                               UNIQUE KEY `UK_9fb1y9rmt07dq8rukjdstop4c` (`no_hp`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 
 -- db_saw_project.tb_pembobotan definition
@@ -115,14 +115,16 @@ CREATE TABLE `tb_aplikasi` (
 CREATE TABLE `tb_kriteria_pegawai` (
                                        `id` int(11) NOT NULL AUTO_INCREMENT,
                                        `id_pegawai` int(11) NOT NULL,
-                                       `kemampuan_coding` varchar(100) DEFAULT NULL COMMENT 'C1 -> kemampuan coding : ->src : https://www.codepolitan.com/blog/tingkatan-seorang-programmer-berdasarkan-skill-level/ \r\nnovice		: 1\r\nadvance 	: 2\r\ncompetent 	: 3\r\nproficient	: 4\r\nexpert 		: 5',
+                                       `kemampuan_coding` int(11) DEFAULT NULL COMMENT 'C1 -> kemampuan coding : ->src : https://www.codepolitan.com/blog/tingkatan-seorang-programmer-berdasarkan-skill-level/ \r\nnovice		: 1\r\nadvance 	: 2\r\ncompetent 	: 3\r\nproficient	: 4\r\nexpert 		: 5',
                                        `jumlah_pelatihan` int(11) DEFAULT NULL COMMENT 'C4 -> pelatihan\r\n0-1 pelatihan IT (programming) : 1\r\n 2  pelatihan IT (programming, database) : 2\r\n 3  pelatihan IT (programming, database, microservice): 3\r\n 4  pelatihan IT (programming, database, microservice, cicd): 4\r\n>=5 pelatihan IT (programming, database, microservice, cicd, dll) : 5',
                                        `jumlah_pengalaman` int(11) DEFAULT NULL COMMENT 'C3 -> pengalaman\r\n0-1 project : 1\r\n 2  project : 2\r\n 3  project : 3\r\n 4  project : 4\r\n>=5 project : 5',
                                        `jumlah_project_ongoing` int(11) DEFAULT NULL COMMENT 'C2 -> project yang sedang dikerjakan\r\n0 project : 1\r\n1 project : 2\r\n2 project : 3\r\n3 project : 4\r\n>=4 project : 5',
                                        `penguasaan_stack` int(11) DEFAULT NULL COMMENT 'C5 -> penguasaan stack :\r\n1 bahasa pemrograman (frontend || backend) : 1\r\n1 bahasa fulstack programming :  2\r\n1 bahasa fulstack programming, 1 database : 3\r\n>1 bahasa fulstack programming, >1 database, microservice : 4\r\n>2 bahasa fulstack programming, >2 database, microservice, devops: 5',
                                        PRIMARY KEY (`id`),
-                                       KEY `tb_kriteria_pegawai_FK` (`penguasaan_stack`),
-                                       CONSTRAINT `tb_kriteria_pegawai_FK` FOREIGN KEY (`penguasaan_stack`) REFERENCES `ref_penguasaan_stack` (`id`)
+                                       KEY `tb_kriteria_pegawai_FK_1` (`kemampuan_coding`),
+                                       KEY `tb_kriteria_pegawai_FK_2` (`id_pegawai`),
+                                       CONSTRAINT `tb_kriteria_pegawai_FK_1` FOREIGN KEY (`kemampuan_coding`) REFERENCES `ref_skill_programming` (`id`),
+                                       CONSTRAINT `tb_kriteria_pegawai_FK_2` FOREIGN KEY (`id_pegawai`) REFERENCES `tb_pegawai` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -171,7 +173,7 @@ CREATE TABLE `tb_user` (
                            KEY `FKei9ed810kpur04nqefpej9d19` (`role`),
                            CONSTRAINT `FKei9ed810kpur04nqefpej9d19` FOREIGN KEY (`role`) REFERENCES `ref_role` (`id`),
                            CONSTRAINT `FKinp4cnsm6v40wj9xx0g8txl0h` FOREIGN KEY (`id_pegawai`) REFERENCES `tb_pegawai` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 
 -- db_saw_project.trx_bahasa_pemrograman definition
