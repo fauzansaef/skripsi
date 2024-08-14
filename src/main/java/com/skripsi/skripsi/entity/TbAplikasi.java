@@ -27,13 +27,18 @@ public class TbAplikasi {
     private Integer jenis;
     @Column(name = "analis")
     private Integer analis;
+    @Column(name = "nd_request")
+    private String ndRequest;
+    @Column(name = "stack")
+    private String stack;
     @ManyToOne
     @JoinColumn(name = "analis", insertable = false, updatable = false)
     private TbPegawai tbPegawaiAnalis;
-    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrxBahasaPemrograman> bahasaPemrograman;
-    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrxJenisDatabase> jenisDatabase;
+
+    //    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<TrxBahasaPemrograman> bahasaPemrograman;
+//    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<TrxJenisDatabase> jenisDatabase;
     @OneToMany(mappedBy = "tbAplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TbTim> tim;
 

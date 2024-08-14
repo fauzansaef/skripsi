@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface IProjectService {
     List<TbAplikasi> getAllProject();
-
     List<TbAplikasi> getAllProjectByProses(int proses);
     List<TbAplikasi> getAllProjectByProsesPegawai(int proses);
 

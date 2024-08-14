@@ -2,9 +2,11 @@ package com.skripsi.skripsi.controller.api;
 
 import com.skripsi.skripsi.entity.RefBahasaPemrograman;
 import com.skripsi.skripsi.entity.RefDatabase;
+import com.skripsi.skripsi.entity.RefStack;
 import com.skripsi.skripsi.service.ReferensiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,5 +30,10 @@ public class ReferensiRest {
     @GetMapping("/database")
     public List<RefDatabase> getDatabase() {
         return referensiService.getDatabase();
+    }
+
+    @GetMapping("/stack/{id}")
+    public RefStack getStackById(@PathVariable int id) {
+        return referensiService.getStackById(id);
     }
 }

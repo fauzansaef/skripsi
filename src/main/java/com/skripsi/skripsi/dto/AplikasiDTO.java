@@ -16,4 +16,6 @@ public class AplikasiDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate tglNd;
     private Integer jenis;
+    private String ndRequest;
+    private Integer [] listStack;
 }

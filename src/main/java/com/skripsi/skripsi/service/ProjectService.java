@@ -8,6 +8,7 @@ import com.skripsi.skripsi.utility.SAWUtil;
 import com.skripsi.skripsi.utility.MessageResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public List<TbAplikasi> getAllProject() {
-        return tbAplikasiRepo.findAll();
+        return tbAplikasiRepo.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Override
@@ -59,7 +60,7 @@ public class ProjectService implements IProjectService {
         List<TbAplikasi> tbAplikasiList = new ArrayList<>();
         if (!tbTimList.isEmpty()) {
             tbTimList.forEach(tbTim -> {
-                if(tbTim.getTbAplikasi().getProses()==proses)
+                if (tbTim.getTbAplikasi().getProses() == proses)
                     tbAplikasiList.add(tbTim.getTbAplikasi());
             });
             return tbAplikasiList;
@@ -81,10 +82,11 @@ public class ProjectService implements IProjectService {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
         TbAplikasi tbAplikasi = modelMapper.map(aplikasiDTO, TbAplikasi.class);
         tbAplikasi.setProses(0);//0:draft, 1:pengembangan, 2:testing, 3:deploy
+        tbAplikasi.setStack(Arrays.toString(aplikasiDTO.getListStack()));
         tbAplikasi.setAnalis(userDetails.getPegawai().getId());
         tbAplikasiRepo.save(tbAplikasi);
 
-        setListBahasaPemrogramanDanDatabase(aplikasiDTO, tbAplikasi);
+//        setListBahasaPemrogramanDanDatabase(aplikasiDTO, tbAplikasi);
 
         return new MessageResponse(1, "Project berhasil disimpan", tbAplikasi);
     }
@@ -111,8 +113,8 @@ public class ProjectService implements IProjectService {
             });
         }
 
-        setListBahasaPemrogramanDanDatabase(aplikasiDTO, tbAplikasi);
-
+//        setListBahasaPemrogramanDanDatabase(aplikasiDTO, tbAplikasi);
+        tbAplikasi.setStack(Arrays.toString(aplikasiDTO.getListStack()));
         modelMapper.map(aplikasiDTO, tbAplikasi);
         tbAplikasiRepo.save(tbAplikasi);
 
@@ -211,6 +213,43 @@ public class ProjectService implements IProjectService {
             return new MessageResponse(0, "Project tidak ditemukan", null);
         }
         List<TbKriteriaPegawaiMatrix> tbKriteriaPegawaiMatrixList = tbKriteriaPegawaiMatrixRepo.findAll();
+
+        tbKriteriaPegawaiMatrixList.forEach(tbKriteriaPegawaiMatrix -> {
+            TbKriteriaPegawai tbKriteriaPegawai = tbKriteriaPegawaiRepo.findByIdPegawai(tbKriteriaPegawaiMatrix.getIdPegawai()).orElse(null);
+            String[] arrayStackAplikasi = tbAplikasi.getStack().replace("[", "").replace("]", "").split(",");
+            String[] arrayStackPegawai = new String[0];
+            if (tbKriteriaPegawai != null) {
+                arrayStackPegawai = tbKriteriaPegawai.getPenguasaanStack().replace("[", "").replace("]", "").split(",");
+            }
+
+            ArrayList<String> listStackPegawai = new ArrayList<>(Arrays.asList(arrayStackPegawai));
+            ArrayList<String> listStackAplikasi = new ArrayList<>(Arrays.asList(arrayStackAplikasi));
+
+
+            listStackPegawai.retainAll(listStackAplikasi);
+
+            System.out.println("pegawai = " + tbKriteriaPegawai.getTbPegawai().getNama());
+            System.out.println("arrayAplikasi = " + tbAplikasi.getStack());
+            System.out.println("arrayPegawai = " + tbKriteriaPegawai.getPenguasaanStack());
+            System.out.println("listStackAplikasi = " + listStackPegawai);
+            System.out.println("listStackPegawai = " + listStackPegawai.size()+ "\n");
+
+            //C5
+            if (listStackPegawai.size() <= 1) {
+                tbKriteriaPegawaiMatrix.setStack(1);
+            } else if (listStackPegawai.size() == 2) {
+                tbKriteriaPegawaiMatrix.setStack(2);
+            } else if (listStackPegawai.size() == 3) {
+                tbKriteriaPegawaiMatrix.setStack(3);
+            } else if (listStackPegawai.size() == 4) {
+                tbKriteriaPegawaiMatrix.setStack(4);
+            } else if (listStackPegawai.size() > 4) {
+                tbKriteriaPegawaiMatrix.setStack(5);
+            } else {
+               throw new RuntimeException("Error set C5");
+            }
+            tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
+        });
         return SAWUtil.metodeSAW(tbKriteriaPegawaiMatrixList);
     }
 

@@ -58,4 +58,9 @@ public class ReferensiService implements IReferensiService{
     public List<RefPelatihan> getRefPelatihan() {
         return refPelatihanRepo.findAll();
     }
+
+    @Override
+    public RefStack getStackById(int id) {
+        return refStackRepo.findById(id).orElse(null);
+    }
 }

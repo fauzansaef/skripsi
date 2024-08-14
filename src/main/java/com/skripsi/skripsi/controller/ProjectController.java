@@ -28,6 +28,7 @@ public class ProjectController {
     public String request(Model model) {
         model.addAttribute("listBahasa", referensiService.getBahasaPemrograman());
         model.addAttribute("listDatabase", referensiService.getDatabase());
+        model.addAttribute("listStack",referensiService.getStack());
         return "/project/request";
     }
 

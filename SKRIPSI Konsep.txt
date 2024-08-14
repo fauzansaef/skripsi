@@ -92,11 +92,11 @@ C4 -> pelatihan
 >=7  pelatihan IT  : 5
 
 C5 -> penguasaan stack :
-1 framework pemrograman  : 1
->=1 framework pemrograman  :  2
->=1 framework pemrograman, >=1 database : 3
->=1 framework pemrograman, >=1 database , 1 dll(devops,microservice,dll) : 4
->=1 framework pemrograman, >=1 database , >=1 dll(devops,microservice,dll): 5
+0-1 stack developer = 0-1 stack project  : 1
+2 stack developer = 2 stack project  :  2
+3 stack developer = 3 stack project : 3
+4 stack developer = 4 stack project : 4
+>4 stack developer = >4 stack project: 5
 
 database :
  
@@ -146,7 +146,8 @@ pembobotan pegawai pada tb_kriteria_pegawai_matrix untuk kolom project_ongoing d
 
 task selanjutnya : - generate surat penugasan
 		   - generate laporan (monitoring, dan hasil perhitungan saw)
-		   - edit, delete, view kriteria pegawai
-             	   - menu admin
+		   - edit, delete, view kriteria pegawai (done)
+             	   - menu admin (gausah)
+		   - ganti bahasa pemrograman di aplikasi dengan stack, kemudian bandingkan dengan stack pada pegawai
 	
 

@@ -19,15 +19,23 @@ var project = function () {
     });
 
     $('#btnSimpanProject').on('click', function () {
+        var stack = $('#inputStack').val();
+        var intArrStack = $.map(stack, function (value, index) {
+            return parseInt(value, 10);
+        });
+
         var data = {
             nama: $('#inputNamaProject').val(),
-            listBahasaPemrograman: $('#inputBahasaPemrograman').val(),
-            listJenisDatabase: $('#inputDatabase').val(),
+            // listBahasaPemrograman: $('#inputBahasaPemrograman').val(),
+            // listJenisDatabase: $('#inputDatabase').val(),
             bisnisOwner: $('#inputBO').val(),
             versioning: $('#inputVersi').val(),
+            ndRequest: $('#inputNd').val(),
             tglNd: $('#inputTglNd').val(),
-            jenis: $('#inputJenis').val()
+            jenis: $('#inputJenis').val(),
+            listStack: intArrStack
         };
+
 
         $('#addProjectModal').modal('hide');
 
@@ -112,18 +120,9 @@ var project = function () {
                                 jenis = 'Desktop';
                                 break;
                         }
-
-
-                        var bahasaPemrogramanNames = row.bahasaPemrograman.map(function (item) {
-                            return item.bahasaPemrograman.nama;
-                        }).join(', ');
-
-                        var databaseNames = row.jenisDatabase.map(function (item) {
-                            return item.jenisDatabase.nama;
-                        }).join(', ');
-
-                        return '<b>' + row.nama + '</b>' + '<br>' + '<b>Bahasa Pemrograman: </b>  ' + bahasaPemrogramanNames + '<br>' + '<b>Database: </b>  ' + databaseNames
-                            + '<br>' + '<b>Jenis: </b>  ' + jenis;
+                        return '<b>' + row.nama + '</b>' + '<br>' +
+                            '<b>Jenis: </b>  ' + jenis + '<br>' +
+                            '<b>ND Permintaan: </b>  ' + row.ndRequest;
                     },
                 },
                 {"data": "bisnisOwner"},
@@ -238,16 +237,9 @@ var project = function () {
                         }
 
 
-                        var bahasaPemrogramanNames = row.bahasaPemrograman.map(function (item) {
-                            return item.bahasaPemrograman.nama;
-                        }).join(', ');
-
-                        var databaseNames = row.jenisDatabase.map(function (item) {
-                            return item.jenisDatabase.nama;
-                        }).join(', ');
-
-                        return '<b>' + row.nama + '</b>' + '<br>' + '<b>Bahasa Pemrograman: </b>  ' + bahasaPemrogramanNames + '<br>' + '<b>Database: </b>  ' + databaseNames
-                            + '<br>' + '<b>Jenis: </b>  ' + jenis;
+                        return '<b>' + row.nama + '</b>' + '<br>' +
+                            '<b>Jenis: </b>  ' + jenis + '<br>' +
+                            '<b>ND Permintaan: </b>  ' + row.ndRequest;
                     },
                 },
                 {"data": "bisnisOwner"},
@@ -348,17 +340,10 @@ var project = function () {
                                 break;
                         }
 
+                        return '<b>' + row.nama + '</b>' + '<br>' +
+                            '<b>Jenis: </b>  ' + jenis + '<br>' +
+                            '<b>ND Permintaan: </b>  ' + row.ndRequest;
 
-                        var bahasaPemrogramanNames = row.bahasaPemrograman.map(function (item) {
-                            return item.bahasaPemrograman.nama;
-                        }).join(', ');
-
-                        var databaseNames = row.jenisDatabase.map(function (item) {
-                            return item.jenisDatabase.nama;
-                        }).join(', ');
-
-                        return '<b>' + row.nama + '</b>' + '<br>' + '<b>Bahasa Pemrograman: </b>  ' + bahasaPemrogramanNames + '<br>' + '<b>Database: </b>  ' + databaseNames
-                            + '<br>' + '<b>Jenis: </b>  ' + jenis;
                     },
                 },
                 {"data": "bisnisOwner"},
@@ -396,8 +381,17 @@ var project = function () {
                                 ' <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"></path>\n' +
                                 ' </svg>\n' +
                                 '</span>\n' +
+                                '</button>' +
+                                '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="View" onclick="viewProject(' + row['id'] + ')">\n' +
+                                '<span class="svg-icon svg-icon-3">' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">' +
+                                '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path> ' +
+                                '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>' +
+                                '</svg></span>\n' +
                                 '</button>';
                         }
+
+
 
 
                     }
@@ -452,16 +446,9 @@ var project = function () {
                         }
 
 
-                        var bahasaPemrogramanNames = row.bahasaPemrograman.map(function (item) {
-                            return item.bahasaPemrograman.nama;
-                        }).join(', ');
-
-                        var databaseNames = row.jenisDatabase.map(function (item) {
-                            return item.jenisDatabase.nama;
-                        }).join(', ');
-
-                        return '<b>' + row.nama + '</b>' + '<br>' + '<b>Bahasa Pemrograman: </b>  ' + bahasaPemrogramanNames + '<br>' + '<b>Database: </b>  ' + databaseNames
-                            + '<br>' + '<b>Jenis: </b>  ' + jenis;
+                        return '<b>' + row.nama + '</b>' + '<br>' +
+                            '<b>Jenis: </b>  ' + jenis + '<br>' +
+                            '<b>ND Permintaan: </b>  ' + row.ndRequest;
                     },
                 },
                 {
@@ -493,6 +480,7 @@ var project = function () {
                         }
                     }
                 },
+
 
             ]
         });
@@ -667,13 +655,13 @@ function viewProject(id) {
         headers: {"X-CSRF-TOKEN": token},
         success: function (data) {
             if (data.status == 1) {
-                var bahasaPemrogramanId = data.data.bahasaPemrograman.map(function (item) {
-                    return item.bahasaPemrograman.id;
-                });
-
-                var databaseId = data.data.jenisDatabase.map(function (item) {
-                    return item.jenisDatabase.id;
-                });
+                // var bahasaPemrogramanId = data.data.bahasaPemrograman.map(function (item) {
+                //     return item.bahasaPemrograman.id;
+                // });
+                //
+                // var databaseId = data.data.jenisDatabase.map(function (item) {
+                //     return item.jenisDatabase.id;
+                // });
 
 
                 var date = new Date(data.data.tglNd);
@@ -681,14 +669,27 @@ function viewProject(id) {
                 var month = ("0" + (date.getMonth() + 1)).slice(-2);
                 var formattedDate = day + "-" + month + "-" + date.getFullYear();
 
+                if (data.data.stack == null) {
+                    data.data.stack = [];
+                }
+
+                var arrayStack = data.data.stack;
+                arrayStack = arrayStack.substring(1, arrayStack.length - 1); // remove brackets
+                var strArrayStack = arrayStack.split(", ");
+                var intArrayStack = $.map(strArrayStack, function (value, index) {
+                    return parseInt(value, 10);
+                });
+
 
                 $('#viewNamaProject').val(data.data.nama).prop('disabled', true);
-                $('#viewBahasaPemrograman').val(bahasaPemrogramanId).change().prop('disabled', true);
-                $('#viewDatabase').val(databaseId).change().prop('disabled', true);
+                // $('#viewBahasaPemrograman').val(bahasaPemrogramanId).change().prop('disabled', true);
+                // $('#viewDatabase').val(databaseId).change().prop('disabled', true);
                 $('#viewBO').val(data.data.bisnisOwner).prop('disabled', true);
                 $('#viewVersi').val(data.data.versioning).prop('disabled', true);
+                $('#viewNd').val(data.data.ndRequest).prop('disabled', true);
                 $('#viewTglNd').val(formattedDate).prop('disabled', true);
                 $('#viewJenis').val(data.data.jenis).change().prop('disabled', true);
+                $('#viewStack').val(intArrayStack).change().prop('disabled', true);
             } else {
                 errorResult();
             }
@@ -705,14 +706,13 @@ function editProject(id) {
         headers: {"X-CSRF-TOKEN": token},
         success: function (data) {
             if (data.status == 1) {
-                var bahasaPemrogramanId = data.data.bahasaPemrograman.map(function (item) {
-                    return item.bahasaPemrograman.id;
-                });
-
-                var databaseId = data.data.jenisDatabase.map(function (item) {
-                    return item.jenisDatabase.id;
-                });
-
+                // var bahasaPemrogramanId = data.data.bahasaPemrograman.map(function (item) {
+                //     return item.bahasaPemrograman.id;
+                // });
+                //
+                // var databaseId = data.data.jenisDatabase.map(function (item) {
+                //     return item.jenisDatabase.id;
+                // });
 
                 var date = new Date(data.data.tglNd);
                 var day = ("0" + date.getDate()).slice(-2);
@@ -720,11 +720,21 @@ function editProject(id) {
                 var formattedDate = day + "-" + month + "-" + date.getFullYear();
 
 
+                var arrayStack = data.data.stack;
+                arrayStack = arrayStack.substring(1, arrayStack.length - 1); // remove brackets
+                var strArrayStack = arrayStack.split(", ");
+                var intArrayStack = $.map(strArrayStack, function (value, index) {
+                    return parseInt(value, 10);
+                });
+
+
                 $('#editNamaProject').val(data.data.nama);
-                $('#editBahasaPemrograman').val(bahasaPemrogramanId).change();
-                $('#editDatabase').val(databaseId).change();
+                // $('#editBahasaPemrograman').val(bahasaPemrogramanId).change();
+                // $('#editDatabase').val(databaseId).change();
+                $('#editStack').val(intArrayStack).change();
                 $('#editBO').val(data.data.bisnisOwner);
                 $('#editVersi').val(data.data.versioning);
+                $('#editNd').val(data.data.ndRequest);
                 $('#editTglNd').val(formattedDate);
                 $('#editJenis').val(data.data.jenis).change();
             } else {
@@ -736,14 +746,22 @@ function editProject(id) {
 
 
     $('#btnEditProject').on('click', function () {
+        var stack = $('#editStack').val();
+        var intArrStack = $.map(stack, function (value, index) {
+            return parseInt(value, 10);
+        });
+
+
         var data = {
             nama: $('#editNamaProject').val(),
             listBahasaPemrograman: $('#editBahasaPemrograman').val(),
             listJenisDatabase: $('#editDatabase').val(),
             bisnisOwner: $('#editBO').val(),
             versioning: $('#editVersi').val(),
+            ndRequest: $('#editNd').val(),
             tglNd: $('#editTglNd').val(),
-            jenis: $('#editJenis').val()
+            jenis: $('#editJenis').val(),
+            listStack: intArrStack
         };
 
         $('#editProjectModal').modal('hide');
@@ -768,8 +786,9 @@ function editProject(id) {
                     }).then(function () {
                         $('#tbRequestProject').DataTable().ajax.reload(null, false);
                         $('#formEditProject')[0].reset();
-                        $('#editBahasaPemrograman').val([]);
-                        $('#editDatabase').val([]);
+                        // $('#editBahasaPemrograman').val([]);
+                        // $('#editDatabase').val([]);
+                        $('#editStack').val([]);
                         $('#editJenis').val(0);
                     });
                 } else {
@@ -949,8 +968,8 @@ function btnGenerateTeam(id, val) {
     });
 }
 
-function getColor(value){
+function getColor(value) {
     //value from 0 to 1
-    var hue=((value)*120).toString(10);
-    return ["hsl(",hue,",100%,50%)"].join("");
+    var hue = ((value) * 120).toString(10);
+    return ["hsl(", hue, ",100%,50%)"].join("");
 }

@@ -197,6 +197,196 @@ public class KriteriaPegawaiService implements IKriteriaPegawaiService {
             }
 
 
+
+            tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
+        } else {
+            TbKriteriaPegawaiMatrix tbKriteriaPegawaiMatrix = new TbKriteriaPegawaiMatrix();
+            tbKriteriaPegawaiMatrix.setIdPegawai(kriteriaPegawaiDTO.getIdPegawai());
+
+            //C1
+            switch (tbKriteriaPegawai.getKemampuanCoding()) {
+                case 1:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(1);
+                    break;
+                case 2:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(2);
+                    break;
+                case 3:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(3);
+                    break;
+                case 4:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(4);
+                    break;
+                case 5:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(5);
+                    break;
+            }
+
+            //C2
+            switch (tbKriteriaPegawai.getJumlahProjectOngoing()) {
+                case 0:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(1);
+                    break;
+                case 1:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(2);
+                    break;
+                case 2:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(3);
+                    break;
+                case 3:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(4);
+                    break;
+                default:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(5);
+                    break;
+            }
+
+            //C3
+            if (tbKriteriaPegawai.getJumlahPengalaman() <= 1) {
+                tbKriteriaPegawaiMatrix.setPengalaman(1);
+            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 2) {
+                tbKriteriaPegawaiMatrix.setPengalaman(2);
+            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 3) {
+                tbKriteriaPegawaiMatrix.setPengalaman(3);
+            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 4) {
+                tbKriteriaPegawaiMatrix.setPengalaman(4);
+            } else {
+                tbKriteriaPegawaiMatrix.setPengalaman(5);
+            }
+
+            //C4
+            String strArrPelatihan = tbKriteriaPegawai.getJumlahPelatihan();
+            strArrPelatihan = strArrPelatihan.substring(1, strArrPelatihan.length() - 1); // Remove the brackets
+            String[] strArrayPelatihan = strArrPelatihan.split(", "); // Split the string into an array of strings
+            int[] intIdPelatihan = new int[strArrayPelatihan.length]; // Create an int array of the same length
+
+            // Parse the strings into integers and store them in the int array
+            for (int i = 0; i < strArrayPelatihan.length; i++) {
+                intIdPelatihan[i] = Integer.parseInt(strArrayPelatihan[i]);
+            }
+
+            if (intIdPelatihan.length <= 1) {
+                tbKriteriaPegawaiMatrix.setPelatihan(1);
+            } else if (intIdPelatihan.length > 1 && intIdPelatihan.length <= 3) {
+                tbKriteriaPegawaiMatrix.setPelatihan(2);
+            } else if (intIdPelatihan.length > 3 && intIdPelatihan.length <= 5) {
+                tbKriteriaPegawaiMatrix.setPelatihan(3);
+            } else if (intIdPelatihan.length > 5 && intIdPelatihan.length <= 7) {
+                tbKriteriaPegawaiMatrix.setPelatihan(4);
+            } else if (intIdPelatihan.length > 7) {
+                tbKriteriaPegawaiMatrix.setPelatihan(5);
+            } else {
+                return new MessageResponse(0, "Pilihan pelatihan tidak sesuai", null);
+            }
+
+
+
+            tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
+        }
+
+        tbKriteriaPegawaiRepo.save(tbKriteriaPegawai);
+
+        return new MessageResponse(1, "Kriteria Pegawai berhasil disimpan", tbKriteriaPegawai);
+    }
+
+    @Override
+    public MessageResponse updateKriteriaPegawai(int id, KriteriaPegawaiDTO kriteriaPegawaiDTO) {
+        Integer projectDeploy = tbTimRepo.jumlahProjectByStatusProses(kriteriaPegawaiDTO.getIdPegawai(), 4);
+        Integer projectOngoing = tbTimRepo.jumlahProjectByStatusProses(kriteriaPegawaiDTO.getIdPegawai(), 2);
+
+        TbKriteriaPegawai tbKriteriaPegawai = tbKriteriaPegawaiRepo.findById(id).orElse(null);
+        if (tbKriteriaPegawai == null) {
+            return new MessageResponse(0, "Kriteria Pegawai tidak ditemukan", null);
+        }
+        tbKriteriaPegawai.setIdPegawai(kriteriaPegawaiDTO.getIdPegawai());
+        tbKriteriaPegawai.setKemampuanCoding(kriteriaPegawaiDTO.getKemampuanCoding());
+        tbKriteriaPegawai.setJumlahPengalaman(projectDeploy);
+        tbKriteriaPegawai.setJumlahProjectOngoing(projectOngoing);
+        tbKriteriaPegawai.setJumlahPelatihan(Arrays.toString(kriteriaPegawaiDTO.getJumlahPelatihan()));
+        tbKriteriaPegawai.setPenguasaanStack(Arrays.toString(kriteriaPegawaiDTO.getPenguasaanStack()));
+
+
+        if (tbKriteriaPegawaiMatrixRepo.findByIdPegawai(kriteriaPegawaiDTO.getIdPegawai()).isPresent()) {
+            TbKriteriaPegawaiMatrix tbKriteriaPegawaiMatrix = tbKriteriaPegawaiMatrixRepo.findByIdPegawai(kriteriaPegawaiDTO.getIdPegawai()).get();
+
+            //C1
+            switch (tbKriteriaPegawai.getKemampuanCoding()) {
+                case 1:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(1);
+                    break;
+                case 2:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(2);
+                    break;
+                case 3:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(3);
+                    break;
+                case 4:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(4);
+                    break;
+                case 5:
+                    tbKriteriaPegawaiMatrix.setKemampuanCoding(5);
+                    break;
+            }
+
+            //C2
+            switch (tbKriteriaPegawai.getJumlahProjectOngoing()) {
+                case 0:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(1);
+                    break;
+                case 1:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(2);
+                    break;
+                case 2:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(3);
+                    break;
+                case 3:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(4);
+                    break;
+                default:
+                    tbKriteriaPegawaiMatrix.setProjectOngoing(5);
+                    break;
+            }
+
+            //C3
+            if (tbKriteriaPegawai.getJumlahPengalaman() <= 1) {
+                tbKriteriaPegawaiMatrix.setPengalaman(1);
+            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 2) {
+                tbKriteriaPegawaiMatrix.setPengalaman(2);
+            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 3) {
+                tbKriteriaPegawaiMatrix.setPengalaman(3);
+            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 4) {
+                tbKriteriaPegawaiMatrix.setPengalaman(4);
+            } else {
+                tbKriteriaPegawaiMatrix.setPengalaman(5);
+            }
+
+
+            //C4
+            String strArrPelatihan = tbKriteriaPegawai.getJumlahPelatihan();
+            strArrPelatihan = strArrPelatihan.substring(1, strArrPelatihan.length() - 1); // Remove the brackets
+            String[] strArrayPelatihan = strArrPelatihan.split(", "); // Split the string into an array of strings
+            int[] intIdPelatihan = new int[strArrayPelatihan.length]; // Create an int array of the same length
+
+            // Parse the strings into integers and store them in the int array
+            for (int i = 0; i < strArrayPelatihan.length; i++) {
+                intIdPelatihan[i] = Integer.parseInt(strArrayPelatihan[i]);
+            }
+
+            if (intIdPelatihan.length <= 1) {
+                tbKriteriaPegawaiMatrix.setPelatihan(1);
+            } else if (intIdPelatihan.length > 1 && intIdPelatihan.length <= 3) {
+                tbKriteriaPegawaiMatrix.setPelatihan(2);
+            } else if (intIdPelatihan.length > 3 && intIdPelatihan.length <= 5) {
+                tbKriteriaPegawaiMatrix.setPelatihan(3);
+            } else if (intIdPelatihan.length > 5 && intIdPelatihan.length <= 7) {
+                tbKriteriaPegawaiMatrix.setPelatihan(4);
+            } else if (intIdPelatihan.length > 7) {
+                tbKriteriaPegawaiMatrix.setPelatihan(5);
+            } else {
+                return new MessageResponse(0, "Pilihan pelatihan tidak sesuai", null);
+            }
+
+
             //C5
             String strArrPenguasaanStack = tbKriteriaPegawai.getPenguasaanStack();
             strArrPenguasaanStack = strArrPenguasaanStack.substring(1, strArrPenguasaanStack.length() - 1); // Remove the brackets
@@ -374,160 +564,24 @@ public class KriteriaPegawaiService implements IKriteriaPegawaiService {
 
         tbKriteriaPegawaiRepo.save(tbKriteriaPegawai);
 
-        return new MessageResponse(1, "Kriteria Pegawai berhasil disimpan", tbKriteriaPegawai);
-    }
-
-    @Override
-    public MessageResponse updateKriteriaPegawai(int id, KriteriaPegawaiDTO kriteriaPegawaiDTO) {
-        Integer projectDeploy = tbTimRepo.jumlahProjectByStatusProses(kriteriaPegawaiDTO.getIdPegawai(), 4);
-        Integer projectOngoing = tbTimRepo.jumlahProjectByStatusProses(kriteriaPegawaiDTO.getIdPegawai(), 2);
-
-        TbKriteriaPegawai tbKriteriaPegawai = tbKriteriaPegawaiRepo.findById(id).orElse(null);
-        if (tbKriteriaPegawai == null) {
-            return new MessageResponse(0, "Kriteria Pegawai tidak ditemukan", null);
-        }
-        tbKriteriaPegawai.setIdPegawai(kriteriaPegawaiDTO.getIdPegawai());
-        tbKriteriaPegawai.setKemampuanCoding(kriteriaPegawaiDTO.getKemampuanCoding());
-        tbKriteriaPegawai.setJumlahPengalaman(projectDeploy);
-        tbKriteriaPegawai.setJumlahProjectOngoing(projectOngoing);
-        tbKriteriaPegawaiRepo.save(tbKriteriaPegawai);
-
-        if (tbKriteriaPegawaiMatrixRepo.findByIdPegawai(kriteriaPegawaiDTO.getIdPegawai()).isPresent()) {
-            TbKriteriaPegawaiMatrix tbKriteriaPegawaiMatrix = tbKriteriaPegawaiMatrixRepo.findByIdPegawai(kriteriaPegawaiDTO.getIdPegawai()).get();
-
-            //C1
-            switch (tbKriteriaPegawai.getKemampuanCoding()) {
-                case 1:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(1);
-                    break;
-                case 2:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(2);
-                    break;
-                case 3:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(3);
-                    break;
-                case 4:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(4);
-                    break;
-                case 5:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(5);
-                    break;
-            }
-
-            //C2
-            switch (tbKriteriaPegawai.getJumlahProjectOngoing()) {
-                case 0:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(1);
-                    break;
-                case 1:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(2);
-                    break;
-                case 2:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(3);
-                    break;
-                case 3:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(4);
-                    break;
-                default:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(5);
-                    break;
-            }
-
-            //C3
-            if (tbKriteriaPegawai.getJumlahPengalaman() <= 1) {
-                tbKriteriaPegawaiMatrix.setPengalaman(1);
-            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 2) {
-                tbKriteriaPegawaiMatrix.setPengalaman(2);
-            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 3) {
-                tbKriteriaPegawaiMatrix.setPengalaman(3);
-            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 4) {
-                tbKriteriaPegawaiMatrix.setPengalaman(4);
-            } else {
-                tbKriteriaPegawaiMatrix.setPengalaman(5);
-            }
-
-
-            //C4
-
-
-            //C5
-
-
-            tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
-        } else {
-            TbKriteriaPegawaiMatrix tbKriteriaPegawaiMatrix = new TbKriteriaPegawaiMatrix();
-            tbKriteriaPegawaiMatrix.setIdPegawai(kriteriaPegawaiDTO.getIdPegawai());
-
-            //C1
-            switch (tbKriteriaPegawai.getKemampuanCoding()) {
-                case 1:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(1);
-                    break;
-                case 2:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(2);
-                    break;
-                case 3:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(3);
-                    break;
-                case 4:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(4);
-                    break;
-                case 5:
-                    tbKriteriaPegawaiMatrix.setKemampuanCoding(5);
-                    break;
-            }
-
-            //C2
-            switch (tbKriteriaPegawai.getJumlahProjectOngoing()) {
-                case 0:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(1);
-                    break;
-                case 1:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(2);
-                    break;
-                case 2:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(3);
-                    break;
-                case 3:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(4);
-                    break;
-                default:
-                    tbKriteriaPegawaiMatrix.setProjectOngoing(5);
-                    break;
-            }
-
-            //C3
-            if (tbKriteriaPegawai.getJumlahPengalaman() <= 1) {
-                tbKriteriaPegawaiMatrix.setPengalaman(1);
-            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 2) {
-                tbKriteriaPegawaiMatrix.setPengalaman(2);
-            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 3) {
-                tbKriteriaPegawaiMatrix.setPengalaman(3);
-            } else if (tbKriteriaPegawai.getJumlahPengalaman() == 4) {
-                tbKriteriaPegawaiMatrix.setPengalaman(4);
-            } else {
-                tbKriteriaPegawaiMatrix.setPengalaman(5);
-            }
-
-
-            //C4
-
-
-            //C5
-
-
-            tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
-        }
-
-        return new MessageResponse(1, "Kriteria Pegawai berhasil disimpan", tbKriteriaPegawai);
+        return new MessageResponse(1, "Kriteria Pegawai berhasil diupdate", tbKriteriaPegawai);
     }
 
     @Override
     public MessageResponse hapusKriteriaPegawai(int id) {
+        TbKriteriaPegawai tbKriteriaPegawai = (TbKriteriaPegawai) getKriteriaPegawaiById(id).getData();
+
         if (!tbKriteriaPegawaiRepo.existsById(id)) {
             return new MessageResponse(0, "Kriteria Pegawai tidak ditemukan", null);
         } else {
             tbKriteriaPegawaiRepo.deleteById(id);
+
+            if (tbKriteriaPegawaiMatrixRepo.findByIdPegawai(tbKriteriaPegawai.getIdPegawai()).isPresent()) {
+                tbKriteriaPegawaiMatrixRepo.deleteById(tbKriteriaPegawaiMatrixRepo.findByIdPegawai(tbKriteriaPegawai.getIdPegawai()).get().getId());
+            } else {
+                return new MessageResponse(0, "Kriteria Pegawai Matrix tidak ditemukan", null);
+            }
+
             return new MessageResponse(1, "Kriteria Pegawai berhasil dihapus", null);
         }
     }

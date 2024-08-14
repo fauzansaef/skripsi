@@ -22,24 +22,33 @@
               <input type="text" name="viewNamaProject" id="viewNamaProject" class="form-control mb-2" value="" readonly=""/>
             </div>
             <div class="mb-10 d-flex flex-wrap gap-5">
+              <!--                            <div class="fv-row w-100 flex-md-root">-->
+              <!--                                <label class="required form-label">Bahasa Pemrograman</label>-->
+              <!--                                <select class="form-select mb-2" name="inputBahasaPemrograman" id="inputBahasaPemrograman" data-control="select2" data-hide-search="true" data-placeholder="Pilih Bahasa Pemrograman" multiple="multiple">-->
+              <!--                                    <option th:each="listBahasa : ${listBahasa}"-->
+              <!--                                            th:value="${listBahasa.id}"-->
+              <!--                                            th:text="${listBahasa.nama}">-->
+              <!--                                    </option>-->
+              <!--                                </select>-->
+              <!--                            </div>-->
               <div class="fv-row w-100 flex-md-root">
-                <label class="required form-label">Bahasa Pemrograman</label>
-                <select class="form-select mb-2" name="viewBahasaPemrograman" id="viewBahasaPemrograman" data-control="select2" data-hide-search="true" data-placeholder="Pilih Bahasa Pemrograman" multiple="multiple" readonly="">
-                  <option th:each="listBahasa : ${listBahasa}"
-                          th:value="${listBahasa.id}"
-                          th:text="${listBahasa.nama}">
+                <label class="required form-label">Stack yang digunakan</label>
+                <select class="form-select mb-2" name="viewStack" id="viewStack" data-control="select2" data-hide-search="true" data-placeholder="Pilih Stack" multiple="multiple">
+                  <option th:each="listStack : ${listStack}"
+                          th:value="${listStack.id}"
+                          th:text="${listStack.nama}">
                   </option>
                 </select>
               </div>
-              <div class="fv-row w-100 flex-md-root">
-                <label class="required form-label">Database</label>
-                <select class="form-select mb-2" name="viewDatabase" id="viewDatabase" data-control="select2" data-hide-search="true" data-placeholder="Pilih Database" multiple="multiple" readonly="">
-                  <option th:each="listDatabase : ${listDatabase}"
-                          th:value="${listDatabase.id}"
-                          th:text="${listDatabase.nama}">
-                  </option>
-                </select>
-              </div>
+<!--              <div class="fv-row w-100 flex-md-root">-->
+<!--                <label class="required form-label">Database</label>-->
+<!--                <select class="form-select mb-2" name="viewDatabase" id="viewDatabase" data-control="select2" data-hide-search="true" data-placeholder="Pilih Database" multiple="multiple" readonly="">-->
+<!--                  <option th:each="listDatabase : ${listDatabase}"-->
+<!--                          th:value="${listDatabase.id}"-->
+<!--                          th:text="${listDatabase.nama}">-->
+<!--                  </option>-->
+<!--                </select>-->
+<!--              </div>-->
             </div>
             <div class="mb-10 d-flex flex-wrap gap-5">
               <div class="fv-row w-100 flex-md-root">
@@ -49,6 +58,10 @@
               <div class="fv-row w-100 flex-md-root">
                 <label class="required form-label">Versi</label>
                 <input type="text" name="viewVersi" id="viewVersi" class="form-control mb-2" value="" readonly=""/>
+              </div>
+              <div class="fv-row w-100 flex-md-root">
+                <label class="required form-label">No ND Permintaan</label>
+                <input type="text" name="viewNd" id="viewNd" class="form-control mb-2" value="" />
               </div>
             </div>
             <div class="mb-10 d-flex flex-wrap gap-5">

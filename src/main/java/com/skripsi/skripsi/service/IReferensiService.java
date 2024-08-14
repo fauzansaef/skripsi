@@ -11,4 +11,5 @@ public interface IReferensiService {
     List<RefSkillProgramming> getSkillProgramming();
     List<RefStack> getStack();
     List<RefPelatihan> getRefPelatihan();
+    RefStack getStackById(int id);
 }

@@ -1,0 +1,79 @@
+<!-- Modal Form Input Perkara -->
+<div th:fragment="modal(id)" th:id="${id}" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;" >
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+    <div class="modal-content rounded">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Kriteria Developer</h3>
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                       <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <form id="formEditKriteria">
+          <div class="card-body pb-0">
+            <div class="mb-10 d-flex flex-wrap gap-5">
+              <div class="fv-row w-100 flex-md-root">
+                <label class="required form-label">Nama Developer</label>
+                <select class="form-select mb-2" name="editNamaDeveloper" id="editNamaDeveloper" data-control="select2" data-hide-search="true" data-placeholder="Pilih Developer">
+                  <option value=0>Pilih Developer</option>
+                  <option th:each="listProgrammer : ${listProgrammer}"
+                          th:value="${listProgrammer.id}"
+                          th:text="${listProgrammer.nama}">
+                  </option>
+                </select>
+              </div>
+              <div class="fv-row w-100 flex-md-root">
+                <label class="required form-label">Skill Programming Level</label>
+                <select class="form-select mb-2" name="editSkillProgramming" id="editSkillProgramming" data-control="select2" data-hide-search="true" data-placeholder="Pilih Level Skill">
+                  <option value=0>Pilih Level Skill</option>
+                  <option th:each="listSkill : ${listSkill}"
+                          th:value="${listSkill.id}"
+                          th:text="${listSkill.nama}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-10 d-flex flex-wrap gap-5">
+              <div class="fv-row w-100 flex-md-root">
+                <label class="required form-label">Penguasaan Stack</label>
+                <select class="form-select mb-2" name="editStack" id="editStack" data-control="select2" data-hide-search="true" data-placeholder="Pilih Stack" multiple="multiple">
+                  <option th:each="listStack : ${listStack}"
+                          th:value="${listStack.id}"
+                          th:text="${listStack.nama}">
+                  </option>
+                </select>
+              </div>
+              <div class="fv-row w-100 flex-md-root">
+                <label class="required form-label">Pelatihan</label>
+                <select class="form-select mb-2" name="editPelatihan" id="editPelatihan" data-control="select2" data-hide-search="true" data-placeholder="Pilih Pelatihan" multiple="multiple">
+                  <option th:each="listPelatihan : ${listPelatihan}"
+                          th:value="${listPelatihan.id}"
+                          th:text="${listPelatihan.nama}">
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer d-flex justify-content-end py-6 pt-0 border-top-0">
+            <button type="reset" class="btn btn-light btn-active-light-primary">Reset</button>&nbsp;
+            <button type="button" id="btnEditKriteria" class="btn btn-primary">Simpan</button>&nbsp;
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
