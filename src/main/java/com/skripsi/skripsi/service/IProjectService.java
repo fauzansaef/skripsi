@@ -4,11 +4,14 @@ import com.skripsi.skripsi.dto.AplikasiDTO;
 import com.skripsi.skripsi.entity.TbAplikasi;
 import com.skripsi.skripsi.utility.MessageResponse;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IProjectService {
     List<TbAplikasi> getAllProject();
+
     List<TbAplikasi> getAllProjectByProses(int proses);
+
     List<TbAplikasi> getAllProjectByProsesPegawai(int proses);
 
     MessageResponse getProjectById(int id);
@@ -20,6 +23,7 @@ public interface IProjectService {
     MessageResponse deleteProject(int id);
 
     MessageResponse ajukanProject(int id);
+
     MessageResponse ajukanDeployment(int id);
 
     MessageResponse perhitunganSaw(int id);
@@ -27,5 +31,9 @@ public interface IProjectService {
     MessageResponse generateTimProject(List<Integer> idPegawais, int idAplikasi);
 
     byte[] generateSKep(int id) throws Exception;
+
+    byte[] generateReport(LocalDate tglAwal, LocalDate tglAkhir) throws Exception;
+
+    byte[] generateReportPegawai(int id) throws Exception;
 
 }

@@ -14,8 +14,25 @@ var project = function () {
         dateFormat: "d-m-Y"
     });
 
+    $("#tglAwal").flatpickr({
+        todayBtn: 1,
+        autoclose: true,
+        dateFormat: "d-m-Y"
+    });
+
+    $("#tglAkhir").flatpickr({
+        todayBtn: 1,
+        autoclose: true,
+        dateFormat: "d-m-Y"
+    });
+
     $('#btnAddProject').on('click', function () {
         $('#addProjectModal').modal('show');
+    });
+
+
+    $('#btnReport').on('click', function () {
+        reportProject();
     });
 
     $('#btnSimpanProject').on('click', function () {
@@ -1125,6 +1142,10 @@ function generateTeam(id) {
     });
 
 
+    $('#btnPrintTim').on('click', function () {
+        reportPegawai(id);
+    });
+
     $('#teamProjectModal').modal('show');
 }
 
@@ -1226,4 +1247,78 @@ function getColor(value) {
     //value from 0 to 1
     var hue = ((value) * 120).toString(10);
     return ["hsl(", hue, ",100%,50%)"].join("");
+}
+
+function reportProject (){
+   var tglAwal =  $('#tglAwal').val();
+   var tglAkhir = $('#tglAkhir').val();
+
+    Swal.fire({
+        title: "Mohon Menunggu",
+        text: "Data sedang diproses...",
+        icon: "info",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false
+    });
+    Swal.showLoading();
+    $.ajax({
+        url: '/api/project/generate-report',
+        method: 'GET',
+        traditional : true,
+        data :{
+            tglAwal : tglAwal,
+            tglAkhir : tglAkhir
+        },
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (data) {
+            var blob = new Blob([data], {type: 'application/pdf'});
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "report_project.pdf";
+
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                $('#reportModal .modal-body').html('<iframe width="100%" height="500" src="' + reader.result + '"></iframe>');
+                $('#reportModal').modal('show');
+                Swal.close();
+            }
+            reader.readAsDataURL(blob);
+        }
+    });
+}
+
+function reportPegawai(id) {
+    Swal.fire({
+        title: "Mohon Menunggu",
+        text: "Data sedang diproses...",
+        icon: "info",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false
+    });
+    Swal.showLoading();
+    $.ajax({
+        url: '/api/project/generate-report-pegawai/' + id,
+        method: 'GET',
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (data) {
+            var blob = new Blob([data], {type: 'application/pdf'});
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "report_project.pdf";
+
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                $('#reportPegawaiModal .modal-body').html('<iframe width="100%" height="500" src="' + reader.result + '"></iframe>');
+                $('#reportPegawaiModal').modal('show');
+                Swal.close();
+            }
+            reader.readAsDataURL(blob);
+        }
+    });
 }

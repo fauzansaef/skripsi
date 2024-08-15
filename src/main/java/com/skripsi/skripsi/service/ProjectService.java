@@ -2,7 +2,9 @@ package com.skripsi.skripsi.service;
 
 import com.skripsi.skripsi.auth.UserDetailsImpl;
 import com.skripsi.skripsi.dto.AplikasiDTO;
+import com.skripsi.skripsi.dto.ReportDTO;
 import com.skripsi.skripsi.dto.SKepDTO;
+import com.skripsi.skripsi.dto.TbPerangkinganDTO;
 import com.skripsi.skripsi.entity.*;
 import com.skripsi.skripsi.repository.*;
 import com.skripsi.skripsi.utility.ReportUtil;
@@ -16,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -395,4 +398,99 @@ public class ProjectService implements IProjectService {
 
         return reportUtil.generateSKep(skepDTO);
     }
+
+    @Override
+    public byte[] generateReport(LocalDate tglAwal, LocalDate tglAkhir) throws Exception {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        List<ReportDTO> reportDTOList = new ArrayList<>();
+        if (userDetails.getUser().getRefRole().getNamaRole().equals("ROLE_PROGRAMMER")) {
+            System.out.println("cek");
+            List<TbTim> tbTimList = tbTimRepo.findAllByIdPegawai(userDetails.getPegawai().getId());
+
+            List<TbAplikasi> tbAplikasiList = new ArrayList<>();
+
+            if (!tbTimList.isEmpty()) {
+                tbTimList.forEach(tbTim -> {
+                    tbAplikasiList.add(tbTim.getTbAplikasi());
+                });
+            }
+
+            for (TbAplikasi tbAplikasi : tbAplikasiList) {
+                if (tbAplikasi.getCreatedAt().isAfter(tglAwal) && tbAplikasi.getCreatedAt().isBefore(tglAkhir)) {
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setNamaAplikasi(tbAplikasi.getNama());
+                    reportDTO.setNoNd(tbAplikasi.getNdRequest());
+                    reportDTO.setTanggalNd(tbAplikasi.getTglNd().toString());
+                    switch (tbAplikasi.getProses()) {
+                        case 0:
+                            reportDTO.setProses("Draft");
+                            break;
+                        case 1:
+                            reportDTO.setProses("Pembentukan Tim");
+                            break;
+                        case 2:
+                            reportDTO.setProses("Pengembangan");
+                            break;
+                        case 3:
+                            reportDTO.setProses("Testing");
+                            break;
+                        case 4:
+                            reportDTO.setProses("Deploy");
+                            break;
+                        default:
+                            reportDTO.setProses("Unknown");
+                            break;
+                    }
+                    reportDTOList.add(reportDTO);
+                }
+            }
+            return reportUtil.generateReport(reportDTOList, tglAwal, tglAkhir);
+
+        } else {
+
+            List<TbAplikasi> tbAplikasiList = tbAplikasiRepo.findAll();
+            for (TbAplikasi tbAplikasi : tbAplikasiList) {
+                if (tbAplikasi.getCreatedAt().isAfter(tglAwal) && tbAplikasi.getCreatedAt().isBefore(tglAkhir)) {
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setNamaAplikasi(tbAplikasi.getNama());
+                    reportDTO.setNoNd(tbAplikasi.getNdRequest());
+                    reportDTO.setTanggalNd(tbAplikasi.getTglNd().toString());
+                    switch (tbAplikasi.getProses()) {
+                        case 0:
+                            reportDTO.setProses("Draft");
+                            break;
+                        case 1:
+                            reportDTO.setProses("Pembentukan Tim");
+                            break;
+                        case 2:
+                            reportDTO.setProses("Pengembangan");
+                            break;
+                        case 3:
+                            reportDTO.setProses("Testing");
+                            break;
+                        case 4:
+                            reportDTO.setProses("Deploy");
+                            break;
+                        default:
+                            reportDTO.setProses("Unknown");
+                            break;
+                    }
+                    reportDTOList.add(reportDTO);
+                }
+            }
+            return reportUtil.generateReport(reportDTOList, tglAwal, tglAkhir);
+        }
+    }
+
+    @Override
+    public byte[] generateReportPegawai(int id) throws Exception {
+        MessageResponse messageResponse = perhitunganSaw(id);
+        TbAplikasi tbAplikasi = tbAplikasiRepo.findById(id).orElse(null);
+        if (messageResponse.getStatus() == 0) {
+            throw new RuntimeException("Error generate report pegawai");
+        }
+        List<TbPerangkinganDTO> tbPerangkinganDTOList = (List<TbPerangkinganDTO>) messageResponse.getData();
+        return reportUtil.generateReportPegawai(tbPerangkinganDTOList,tbAplikasi.getNama());
+    }
+
 }

@@ -13,4 +13,5 @@ public interface TbTimRepo extends JpaRepository<TbTim, Integer> {
     Integer jumlahProjectByStatusProses(Integer idPegawai, Integer proses);
 
     List<TbTim> findAllByIdPegawai(Integer idPegawai);
+
 }

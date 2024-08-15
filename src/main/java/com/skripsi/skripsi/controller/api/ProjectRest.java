@@ -5,15 +5,12 @@ import com.skripsi.skripsi.entity.TbAplikasi;
 import com.skripsi.skripsi.dto.TbPerangkinganDTO;
 import com.skripsi.skripsi.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -94,6 +91,18 @@ public class ProjectRest {
 //        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 //        response.setHeader("Content-Disposition", "attachment; filename=skep.pdf");
 //        response.getOutputStream().write(fileData);
+    }
+
+    @GetMapping("/generate-report")
+    public byte[] generateReport(@RequestParam @DateTimeFormat String tglAwal,
+                                 @RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")String tglAkhir) throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return projectService.generateReport(LocalDate.parse(tglAwal, formatter), LocalDate.parse(tglAkhir, formatter));
+    }
+
+    @GetMapping("/generate-report-pegawai/{id}")
+    public byte[] generateReportPegawai(@PathVariable int id) throws Exception {
+        return projectService.generateReportPegawai(id);
     }
 
 
