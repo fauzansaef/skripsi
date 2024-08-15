@@ -32,8 +32,8 @@ public class ProjectController {
         return "/project/request";
     }
 
-    @GetMapping("/task")
-    public String task() {
-        return "/project/task";
+    @GetMapping("/report")
+    public String report() {
+        return "/project/report";
     }
 }

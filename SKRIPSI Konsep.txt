@@ -148,6 +148,21 @@ task selanjutnya : - generate surat penugasan
 		   - generate laporan (monitoring, dan hasil perhitungan saw)
 		   - edit, delete, view kriteria pegawai (done)
              	   - menu admin (gausah)
-		   - ganti bahasa pemrograman di aplikasi dengan stack, kemudian bandingkan dengan stack pada pegawai
-	
+		   - ganti bahasa pemrograman di aplikasi dengan stack, kemudian bandingkan dengan stack pada pegawai (done)
 
+
+yang harus dibereskan besok :menambahkan menu report (monitoring project->report)
+				-role analis -> menampilkan datatable list seluruh project, dan ada tombol cetak diatas table 
+						untuk mencetak rekapitulasi permintaan aplikasi
+				-role kepala seksi -> menampilkan datatable list seluruh project, dan ada tombol cetak diatas table 
+						untuk mencetak rekapitulasi permintaan aplikasi
+				-role programmer -> menampilkan datatable list project yang ditugaskan saja, dan ada tombol cetak diatas table 
+						untuk mencetak rekapitulasi permintaan aplikasi
+	
+				-role programmer -> menu monitoring project-> request project
+						menambahkan tombol aksi untuk menampilkan dan mencetak surat penugasan (iframe pdf)
+				-role analis -> menu monitoring project-> request project
+						menambahkan tombol aksi untuk menampilkan dan mencetak surat penugasan (iframe pdf)
+				-role kepala seksi -> menu monitoring project -> request project
+						menambahkan tombol cetak list pegawai hasil perhitungan saw di atas table hasil perhitungan
+						

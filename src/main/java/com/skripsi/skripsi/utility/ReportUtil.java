@@ -9,13 +9,19 @@ import org.docx4j.model.fields.merge.DataFieldName;
 import org.docx4j.model.fields.merge.MailMerger;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -26,17 +32,14 @@ import static org.docx4j.model.fields.merge.MailMerger.setMERGEFIELDInOutput;
 @Component
 public class ReportUtil {
 
-
-    private final ResourceLoader resourceLoader;
-
-    @Autowired
-    public ReportUtil(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
+    @Value("${file.dir}")
+    private String fileDir;
 
     public byte[] generateSKep(SKepDTO skepDTO) throws Exception {
 
-        Resource resource = resourceLoader.getResource("classpath:resources/report/SKEP_TEMP.docx");
+        Path path = Paths.get(fileDir + "SKEP_TEMP.docx");
+        InputStream fileStream = Files.newInputStream(new UrlResource(path.toUri()).getFile().toPath());
+        Resource resource = new InputStreamResource(fileStream);
 
         LocalDate date = LocalDate.now(); // current date
         Locale locale = new Locale("id", "ID"); // Locale for Indonesian
@@ -56,6 +59,7 @@ public class ReportUtil {
         variables.put(new DataFieldName("analis"), skepDTO.getAnalis());
         variables.put(new DataFieldName("programmer"), skepDTO.getProgrammer());
         variables.put(new DataFieldName("kepalaSeksi"), skepDTO.getKepalaSeksi());
+        variables.put(new DataFieldName("namaSeksi"), skepDTO.getNamaSeksi());
 
 
         setMERGEFIELDInOutput(MailMerger.OutputField.KEEP_MERGEFIELD);

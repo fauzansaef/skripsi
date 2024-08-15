@@ -2,10 +2,13 @@ package com.skripsi.skripsi.service;
 
 import com.skripsi.skripsi.auth.UserDetailsImpl;
 import com.skripsi.skripsi.dto.AplikasiDTO;
+import com.skripsi.skripsi.dto.SKepDTO;
 import com.skripsi.skripsi.entity.*;
 import com.skripsi.skripsi.repository.*;
+import com.skripsi.skripsi.utility.ReportUtil;
 import com.skripsi.skripsi.utility.SAWUtil;
 import com.skripsi.skripsi.utility.MessageResponse;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -28,11 +31,14 @@ public class ProjectService implements IProjectService {
     private final TbTimRepo tbTimRepo;
     private final ModelMapper modelMapper;
     private final SAWUtil SAWUtil;
+    private final ReportUtil reportUtil;
     private final TbKriteriaPegawaiRepo tbKriteriaPegawaiRepo;
+    private final RefStackRepo refStackRepo;
 
 
     @Autowired
-    public ProjectService(TbAplikasiRepo tbAplikasiRepo, TrxBahasaPemrogramanRepo trxBahasaPemrogramanRepo, TrxJenisDatabaseRepo trxJenisDatabaseRepo, TbKriteriaPegawaiMatrixRepo tbKriteriaPegawaiMatrixRepo, TbTimRepo tbTimRepo, ModelMapper modelMapper, SAWUtil SAWUtil, TbKriteriaPegawaiRepo tbKriteriaPegawaiRepo) {
+    public ProjectService(TbAplikasiRepo tbAplikasiRepo, TrxBahasaPemrogramanRepo trxBahasaPemrogramanRepo, TrxJenisDatabaseRepo trxJenisDatabaseRepo, TbKriteriaPegawaiMatrixRepo tbKriteriaPegawaiMatrixRepo, TbTimRepo tbTimRepo, ModelMapper modelMapper, SAWUtil SAWUtil, ReportUtil reportUtil, TbKriteriaPegawaiRepo tbKriteriaPegawaiRepo,
+                          RefStackRepo refStackRepo) {
         this.tbAplikasiRepo = tbAplikasiRepo;
         this.trxBahasaPemrogramanRepo = trxBahasaPemrogramanRepo;
         this.trxJenisDatabaseRepo = trxJenisDatabaseRepo;
@@ -40,7 +46,9 @@ public class ProjectService implements IProjectService {
         this.tbTimRepo = tbTimRepo;
         this.modelMapper = modelMapper;
         this.SAWUtil = SAWUtil;
+        this.reportUtil = reportUtil;
         this.tbKriteriaPegawaiRepo = tbKriteriaPegawaiRepo;
+        this.refStackRepo = refStackRepo;
     }
 
     @Override
@@ -58,13 +66,26 @@ public class ProjectService implements IProjectService {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
         List<TbTim> tbTimList = tbTimRepo.findAllByIdPegawai(userDetails.getPegawai().getId());
         List<TbAplikasi> tbAplikasiList = new ArrayList<>();
-        if (!tbTimList.isEmpty()) {
-            tbTimList.forEach(tbTim -> {
-                if (tbTim.getTbAplikasi().getProses() == proses)
+
+
+        if (proses == 0) {
+            System.out.println(tbTimList.size());
+            if (!tbTimList.isEmpty()) {
+                tbTimList.forEach(tbTim -> {
                     tbAplikasiList.add(tbTim.getTbAplikasi());
-            });
-            return tbAplikasiList;
+                });
+                return tbAplikasiList;
+            }
+        } else {
+            if (!tbTimList.isEmpty()) {
+                tbTimList.forEach(tbTim -> {
+                    if (tbTim.getTbAplikasi().getProses() == proses)
+                        tbAplikasiList.add(tbTim.getTbAplikasi());
+                });
+                return tbAplikasiList;
+            }
         }
+
         return tbAplikasiList;
     }
 
@@ -84,6 +105,7 @@ public class ProjectService implements IProjectService {
         tbAplikasi.setProses(0);//0:draft, 1:pengembangan, 2:testing, 3:deploy
         tbAplikasi.setStack(Arrays.toString(aplikasiDTO.getListStack()));
         tbAplikasi.setAnalis(userDetails.getPegawai().getId());
+        tbAplikasi.setCreatedAt(java.time.LocalDate.now());
         tbAplikasiRepo.save(tbAplikasi);
 
 //        setListBahasaPemrogramanDanDatabase(aplikasiDTO, tbAplikasi);
@@ -232,7 +254,7 @@ public class ProjectService implements IProjectService {
             System.out.println("arrayAplikasi = " + tbAplikasi.getStack());
             System.out.println("arrayPegawai = " + tbKriteriaPegawai.getPenguasaanStack());
             System.out.println("listStackAplikasi = " + listStackPegawai);
-            System.out.println("listStackPegawai = " + listStackPegawai.size()+ "\n");
+            System.out.println("listStackPegawai = " + listStackPegawai.size() + "\n");
 
             //C5
             if (listStackPegawai.size() <= 1) {
@@ -246,7 +268,7 @@ public class ProjectService implements IProjectService {
             } else if (listStackPegawai.size() > 4) {
                 tbKriteriaPegawaiMatrix.setStack(5);
             } else {
-               throw new RuntimeException("Error set C5");
+                throw new RuntimeException("Error set C5");
             }
             tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
         });
@@ -255,6 +277,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public MessageResponse generateTimProject(List<Integer> idPegawais, int idAplikasi) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
 
         TbAplikasi tbAplikasi = tbAplikasiRepo.findById(idAplikasi).orElse(null);
         if (tbAplikasi == null) {
@@ -262,6 +285,7 @@ public class ProjectService implements IProjectService {
         }
 
         tbAplikasi.setProses(2);
+        tbAplikasi.setIdApproval(userDetails.getPegawai().getId());
         tbAplikasiRepo.save(tbAplikasi);
 
         idPegawais.forEach(idPegawai -> {
@@ -305,5 +329,70 @@ public class ProjectService implements IProjectService {
 
 
         return new MessageResponse(1, "Tim project berhasil dibuat", null);
+    }
+
+    @Override
+    public byte[] generateSKep(int id) throws Exception {
+        TbAplikasi tbAplikasi = tbAplikasiRepo.findById(id).orElse(null);
+
+        String[] arrayStackAplikasi = tbAplikasi.getStack().trim().replace("[", "").replace("]", "").split(",");
+
+        int[] intArrayStackAplikasi = Arrays.stream(arrayStackAplikasi).map(String::trim).mapToInt(Integer::parseInt).toArray();
+
+
+        SKepDTO skepDTO = new SKepDTO();
+        skepDTO.setAnalis(tbAplikasi.getTbPegawaiAnalis().getNama());
+
+        switch (tbAplikasi.getJenis()) {
+            case 1:
+                skepDTO.setJenis("Services API");
+                break;
+            case 2:
+                skepDTO.setJenis("Mobile");
+                break;
+            case 3:
+                skepDTO.setJenis("Web");
+                break;
+            case 4:
+                skepDTO.setJenis("Desktop");
+                break;
+            default:
+                skepDTO.setJenis("Unknown");
+                break;
+        }
+        skepDTO.setNoNd(tbAplikasi.getNdRequest());
+        skepDTO.setTanggalNd(tbAplikasi.getTglNd().toString());
+        skepDTO.setNamaAplikasi(tbAplikasi.getNama());
+        skepDTO.setKepalaSeksi(tbAplikasi.getTbPegawaiApproval().getNama());
+
+        List<String> bahasa = new ArrayList<>();
+        List<String> database = new ArrayList<>();
+        List<String> programmer = new ArrayList<>();
+
+        for (int i = 0; i < intArrayStackAplikasi.length; i++) {
+            RefStack refStack = refStackRepo.findById(intArrayStackAplikasi[i]).orElseThrow(() -> new RuntimeException("Stack not found"));
+
+            if (refStack.getJenis() == 1) {
+                bahasa.add(refStack.getNama());
+            } else if (refStack.getJenis() == 2) {
+                database.add(refStack.getNama());
+            }
+        }
+
+        tbAplikasi.getTim().forEach(tbTim -> {
+            if (tbTim.getRoleProject().equals("Programmer")) {
+                programmer.add(tbTim.getTbPegawai().getNama());
+            }
+        });
+
+        String resultBahasa = String.join(", ", bahasa);
+        String resultDatabase = String.join(", ", database);
+        String resultProgrammer = String.join(", ", programmer);
+        skepDTO.setBahasa(resultBahasa);
+        skepDTO.setDatabase(resultDatabase);
+        skepDTO.setProgrammer(resultProgrammer);
+        skepDTO.setNamaSeksi(tbAplikasi.getTbPegawaiApproval().getUnit());
+
+        return reportUtil.generateSKep(skepDTO);
     }
 }

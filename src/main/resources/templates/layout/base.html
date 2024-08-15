@@ -115,6 +115,14 @@
                                         <span class="menu-title">Request Project</span>
                                     </a>
                                 </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="/project/report" id="reportPorjectSubmenu">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                        <span class="menu-title">Report</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -248,7 +256,7 @@
                                     <div class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
                                         <div class="mx-auto mt-2 me-1 bgi-no-repeat bgi-size-contain bgi-position-center w-30px h-30px"
                                              style="background-image:url('/assets/media/logos/logopngmini.png');"></div>
-                                        <span class="fs-4 fw-bold mt-2">E-Office TIK</span>
+                                        <span class="fs-4 fw-bold mt-2" th:text=" 'Login,' + ${session.jabatan}"></span>
                                     </div>
                                 </div>
                             </div>

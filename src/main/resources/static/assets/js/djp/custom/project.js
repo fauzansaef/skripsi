@@ -150,12 +150,31 @@ var project = function () {
                     "data": "null",
                     render: function (data, type, row) {
 
-                        if (row.proses > 0) {
+
+
+                        if (row.proses == 1 ) {
                             return '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="View" onclick="viewProject(' + row['id'] + ')">\n' +
                                 '<span class="svg-icon svg-icon-3">' +
                                 '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">' +
                                 '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path> ' +
                                 '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>' +
+                                '</svg></span>\n' +
+                                '</button>';
+                        }
+
+                        if (row.proses > 1) {
+                            return '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="View" onclick="viewProject(' + row['id'] + ')">\n' +
+                                '<span class="svg-icon svg-icon-3">' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">' +
+                                '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path> ' +
+                                '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>' +
+                                '</svg></span>\n' +
+                                '</button>\n' +
+                                '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="Surat Penugasan" onclick="viewSkepTim(' + row['id'] + ')">\n' +
+                                '<span class="svg-icon svg-icon-3">\n' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                                '<path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="currentColor"></path>\n' +
+                                '<path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor"></path>\n' +
                                 '</svg></span>\n' +
                                 '</button>';
                         }
@@ -388,10 +407,15 @@ var project = function () {
                                 '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path> ' +
                                 '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>' +
                                 '</svg></span>\n' +
+                                '</button>\n' +
+                                '<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" title="Surat Penugasan" onclick="viewSkepTim(' + row['id'] + ')">\n' +
+                                '<span class="svg-icon svg-icon-3">\n' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                                '<path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="currentColor"></path>\n' +
+                                '<path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor"></path>\n' +
+                                '</svg></span>\n' +
                                 '</button>';
                         }
-
-
 
 
                     }
@@ -486,6 +510,184 @@ var project = function () {
         });
     }
 
+    var tbReportProject = function () {
+        var userAuthority = $('#roleSession').val();
+
+        if (userAuthority === 'ROLE_PROGRAMMER') {
+            console.log('masuk programmer');
+            $('#tbReportProject').DataTable({
+                "ajax": {
+                    "url": "/api/project/proses/" + 0 + "/pegawai",
+                    "headers": {"X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")}
+                },
+                "sAjaxDataProp": "",
+                "order": [[0, "asc"]],
+                "processing": true,
+                "bDestroy": true,
+                "oLanguage": {
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ada data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sLoadingRecords": "Sedang memuat...",
+                    "sProcessing": "Sedang memproses...",
+                    "sSearch": "Cari:"
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        "data": "nama",
+                        render: function (data, type, row, meta) {
+                            var jenis;
+                            switch (row.jenis) {
+                                case 1:
+                                    jenis = 'Service API';
+                                    break;
+                                case 2:
+                                    jenis = 'Mobile Apps';
+                                    break;
+                                case 3:
+                                    jenis = 'Web Apps';
+                                    break;
+                                case 4:
+                                    jenis = 'Desktop';
+                                    break;
+                            }
+
+
+                            return '<b>' + row.nama + '</b>' + '<br>' +
+                                '<b>Jenis: </b>  ' + jenis + '<br>' +
+                                '<b>ND Permintaan: </b>  ' + row.ndRequest;
+                        },
+                    },
+                    {
+                        "data": null,
+                        render: function (data, type, row, meta) {
+                            return 'Sistem Analis :' + '<b>' + row.tbPegawaiAnalis.nama + '</b>' + '<br>' + 'Tim:  ' +
+                                '<ul>' + row.tim.map(function (item) {
+                                    return '<li>' + item.tbPegawai.nama + '</li>';
+                                }).join('') + '</ul>';
+                        }
+                    },
+                    {"data": "bisnisOwner"},
+                    {"data": "versioning"},
+                    {"data": "tglNd"},
+                    {
+                        "data": "proses", "render": function (data) {
+                            if (data == 0) {
+                                return '<span class="kt-badge  kt-badge--primary kt-badge--inline kt-badge--pill"><b> DRAFT </b></span>';
+                            } else if (data == 1) {
+                                return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
+                            } else if (data == 2) {
+                                return '<span class="kt-badge  btn-warning"><b> PENGEMBANGAN </b></span>';
+                            } else if (data == 3) {
+                                return '<span class="kt-badge  btn-danger"><b> TESTING </b></span>';
+                            } else if (data == 4) {
+                                return '<span class="kt-badge btn-success"><b> DEPLOYMENT </b></span>';
+                            } else {
+                                return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> ERROR </b></span>';
+                            }
+                        }
+                    },
+
+
+                ]
+            });
+        }
+        else{
+            $('#tbReportProject').DataTable({
+                "ajax": {
+                    "url": "/api/project",
+                    "headers": {"X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")}
+                },
+                "sAjaxDataProp": "",
+                "order": [[0, "asc"]],
+                "processing": true,
+                "bDestroy": true,
+                "oLanguage": {
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ada data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sLoadingRecords": "Sedang memuat...",
+                    "sProcessing": "Sedang memproses...",
+                    "sSearch": "Cari:"
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        "data": "nama",
+                        render: function (data, type, row, meta) {
+                            var jenis;
+                            switch (row.jenis) {
+                                case 1:
+                                    jenis = 'Service API';
+                                    break;
+                                case 2:
+                                    jenis = 'Mobile Apps';
+                                    break;
+                                case 3:
+                                    jenis = 'Web Apps';
+                                    break;
+                                case 4:
+                                    jenis = 'Desktop';
+                                    break;
+                            }
+
+
+                            return '<b>' + row.nama + '</b>' + '<br>' +
+                                '<b>Jenis: </b>  ' + jenis + '<br>' +
+                                '<b>ND Permintaan: </b>  ' + row.ndRequest;
+                        },
+                    },
+                    {
+                        "data": null,
+                        render: function (data, type, row, meta) {
+                            return 'Sistem Analis :' + '<b>' + row.tbPegawaiAnalis.nama + '</b>' + '<br>' + 'Tim:  ' +
+                                '<ul>' + row.tim.map(function (item) {
+                                    return '<li>' + item.tbPegawai.nama + '</li>';
+                                }).join('') + '</ul>';
+                        }
+                    },
+                    {"data": "bisnisOwner"},
+                    {"data": "versioning"},
+                    {"data": "tglNd"},
+                    {
+                        "data": "proses", "render": function (data) {
+                            if (data == 0) {
+                                return '<span class="kt-badge  kt-badge--primary kt-badge--inline kt-badge--pill"><b> DRAFT </b></span>';
+                            } else if (data == 1) {
+                                return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> PEMBENTUKAN TIM </b></span>';
+                            } else if (data == 2) {
+                                return '<span class="kt-badge  btn-warning"><b> PENGEMBANGAN </b></span>';
+                            } else if (data == 3) {
+                                return '<span class="kt-badge  btn-danger"><b> TESTING </b></span>';
+                            } else if (data == 4) {
+                                return '<span class="kt-badge btn-success"><b> DEPLOYMENT </b></span>';
+                            } else {
+                                return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><b> ERROR </b></span>';
+                            }
+                        }
+                    },
+
+
+                ]
+            });
+        }
+
+
+    }
+
 
     return {
         init: function () {
@@ -493,6 +695,7 @@ var project = function () {
             tbListProjectAjukan();
             tbListProjectKerjakan();
             tbMonitoringProject();
+            tbReportProject();
         },
     };
 
@@ -848,10 +1051,26 @@ function generateTeam(id) {
                 },
             },
             {
+                "data": "perhitunganAlternatif"
+            },
+            {
                 "data": "perhitunganAlternatif",
                 render: function (data, type, row, meta) {
                     var color = getColor(data);
-                    return '<span style="color:' + color + ';">' + data + '</span>';
+
+                    if (data > 0.7) {
+                        return '<span style="color:' + color + ';">' + 'Sangat sesuai' + '</span>';
+                    } else if (data > 0.5 && data <= 0.7) {
+                        return '<span style="color:' + color + ';">' + 'Sesuai' + '</span>';
+                    } else if (data > 0.3 && data <= 0.5) {
+                        return '<span style="color:' + color + ';">' + 'Kurang Sesuai' + '</span>';
+                    } else if (data <= 0.3) {
+                        return '<span style="color:' + color + ';">' + 'Tidak Sesuai' + '</span>';
+                    } else {
+                        return '<span style="color:' + color + ';">' + Error + '</span>';
+                    }
+
+
                 },
             }
 
@@ -860,7 +1079,7 @@ function generateTeam(id) {
 
         columnDefs: [
             {
-                targets: 5,
+                targets: 6,
                 render: function (data, type, row, meta) {
                     return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input class="CheckBox" type="checkbox" id="idCbGenerate" value="' + row.idPegawai + '"/><span></span></label>';
                 },
@@ -907,6 +1126,41 @@ function generateTeam(id) {
 
 
     $('#teamProjectModal').modal('show');
+}
+
+function viewSkepTim(id) {
+
+    Swal.fire({
+        title: "Mohon Menunggu",
+        text: "Data sedang diproses...",
+        icon: "info",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false
+    });
+    Swal.showLoading();
+
+    $.ajax({
+        url: '/api/project/'+id+'/generate-skep',
+        method: 'GET',
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (data) {
+            var blob = new Blob([data], {type: 'application/pdf'});
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "surat_penugasan_tim.pdf";
+
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                $('#skepProjectModal .modal-body').html('<iframe width="100%" height="500" src="' + reader.result + '"></iframe>');
+                $('#skepProjectModal').modal('show');
+                Swal.close();
+            }
+            reader.readAsDataURL(blob);
+        }
+    });
 }
 
 function btnGenerateTeam(id, val) {

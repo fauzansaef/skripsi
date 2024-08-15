@@ -13,4 +13,5 @@ public class SKepDTO {
     private String analis;
     private String programmer;
     private String kepalaSeksi;
+    private String namaSeksi;
 }

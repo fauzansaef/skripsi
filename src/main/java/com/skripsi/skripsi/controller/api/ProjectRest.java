@@ -5,10 +5,14 @@ import com.skripsi.skripsi.entity.TbAplikasi;
 import com.skripsi.skripsi.dto.TbPerangkinganDTO;
 import com.skripsi.skripsi.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -80,6 +84,16 @@ public class ProjectRest {
     @PostMapping("/{id}/generate-tim")
     ResponseEntity<?> generateTimProject(@PathVariable int id, @RequestParam List<Integer> idPegawais) {
         return ResponseEntity.ok(projectService.generateTimProject(idPegawais, id));
+    }
+
+
+    @GetMapping("/{id}/generate-skep")
+    public byte[] download(@PathVariable int id) throws Exception {
+        byte[] fileData = projectService.generateSKep(id);
+        return fileData;
+//        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+//        response.setHeader("Content-Disposition", "attachment; filename=skep.pdf");
+//        response.getOutputStream().write(fileData);
     }
 
 

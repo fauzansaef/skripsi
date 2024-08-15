@@ -31,9 +31,16 @@ public class TbAplikasi {
     private String ndRequest;
     @Column(name = "stack")
     private String stack;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+    @Column(name = "id_approval")
+    private Integer idApproval;
     @ManyToOne
     @JoinColumn(name = "analis", insertable = false, updatable = false)
     private TbPegawai tbPegawaiAnalis;
+    @ManyToOne
+    @JoinColumn(name = "id_approval", insertable = false, updatable = false)
+    private TbPegawai tbPegawaiApproval;
 
     //    @OneToMany(mappedBy = "aplikasi", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<TrxBahasaPemrograman> bahasaPemrograman;

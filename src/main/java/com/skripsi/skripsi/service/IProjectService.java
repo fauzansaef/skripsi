@@ -26,4 +26,6 @@ public interface IProjectService {
 
     MessageResponse generateTimProject(List<Integer> idPegawais, int idAplikasi);
 
+    byte[] generateSKep(int id) throws Exception;
+
 }
