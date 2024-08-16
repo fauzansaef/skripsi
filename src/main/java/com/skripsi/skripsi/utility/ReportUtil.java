@@ -1,5 +1,6 @@
 package com.skripsi.skripsi.utility;
 
+import com.skripsi.skripsi.auth.UserDetailsImpl;
 import com.skripsi.skripsi.dto.ReportDTO;
 import com.skripsi.skripsi.dto.SKepDTO;
 import com.skripsi.skripsi.dto.TbPerangkinganDTO;
@@ -18,6 +19,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -90,15 +92,25 @@ public class ReportUtil {
     }
 
     public byte[] generateReport(List<ReportDTO> reportDTOList, LocalDate tglAwal, LocalDate tglAkhir) throws Exception {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
         Path path = Paths.get(fileDir + "REPORT_PROJECT.docx");
         InputStream fileStream = Files.newInputStream(new UrlResource(path.toUri()).getFile().toPath());
         Resource resource = new InputStreamResource(fileStream);
+
+        LocalDate date = LocalDate.now(); // current date
+        Locale locale = new Locale("id", "ID"); // Locale for Indonesian
+        String monthName = date.getMonth().getDisplayName(TextStyle.FULL, locale);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         WordprocessingMLPackage templateDoc = WordprocessingMLPackage.load(resource.getInputStream());
         Map<DataFieldName, String> variables = new HashMap<>();
         variables.put(new DataFieldName("awal"), tglAwal.format(formatter));
         variables.put(new DataFieldName("akhir"), tglAkhir.format(formatter));
+        variables.put(new DataFieldName("tanggal"), String.valueOf(date.getDayOfMonth()));
+        variables.put(new DataFieldName("bulan"), monthName);
+        variables.put(new DataFieldName("tahun"), String.valueOf(date.getYear()));
+        variables.put(new DataFieldName("jabatan"), userDetails.getPegawai().getJabatan());
+        variables.put(new DataFieldName("namaPegawai"),userDetails.getPegawai().getNama());
 
 
         // Create an instance of the ObjectFactory class
@@ -247,13 +259,22 @@ public class ReportUtil {
     }
 
     public byte[] generateReportPegawai(List<TbPerangkinganDTO> tbPerangkinganDTOList, String namaAplikasi) throws Exception {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
         Path path = Paths.get(fileDir + "REPORT_PROGRAMMER.docx");
         InputStream fileStream = Files.newInputStream(new UrlResource(path.toUri()).getFile().toPath());
         Resource resource = new InputStreamResource(fileStream);
+        LocalDate date = LocalDate.now(); // current date
+        Locale locale = new Locale("id", "ID"); // Locale for Indonesian
+        String monthName = date.getMonth().getDisplayName(TextStyle.FULL, locale);
 
         WordprocessingMLPackage templateDoc = WordprocessingMLPackage.load(resource.getInputStream());
         Map<DataFieldName, String> variables = new HashMap<>();
         variables.put(new DataFieldName("namaAplikasi"), namaAplikasi);
+        variables.put(new DataFieldName("tanggal"), String.valueOf(date.getDayOfMonth()));
+        variables.put(new DataFieldName("bulan"), monthName);
+        variables.put(new DataFieldName("tahun"), String.valueOf(date.getYear()));
+        variables.put(new DataFieldName("namaPegawai"),userDetails.getPegawai().getNama());
+        variables.put(new DataFieldName("jabatan"), userDetails.getPegawai().getJabatan());
 
         // Create an instance of the ObjectFactory class
         ObjectFactory factory = new ObjectFactory();

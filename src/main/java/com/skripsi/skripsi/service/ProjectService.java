@@ -253,12 +253,6 @@ public class ProjectService implements IProjectService {
 
             listStackPegawai.retainAll(listStackAplikasi);
 
-            System.out.println("pegawai = " + tbKriteriaPegawai.getTbPegawai().getNama());
-            System.out.println("arrayAplikasi = " + tbAplikasi.getStack());
-            System.out.println("arrayPegawai = " + tbKriteriaPegawai.getPenguasaanStack());
-            System.out.println("listStackAplikasi = " + listStackPegawai);
-            System.out.println("listStackPegawai = " + listStackPegawai.size() + "\n");
-
             //C5
             if (listStackPegawai.size() <= 1) {
                 tbKriteriaPegawaiMatrix.setStack(1);
