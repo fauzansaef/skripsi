@@ -21,7 +21,7 @@ public class ProjectController {
 
     @GetMapping("/monitoring")
     public String monitoring() {
-        return "/project/monitoring";
+        return "project/monitoring";
     }
 
     @GetMapping("/request")
@@ -29,11 +29,11 @@ public class ProjectController {
         model.addAttribute("listBahasa", referensiService.getBahasaPemrograman());
         model.addAttribute("listDatabase", referensiService.getDatabase());
         model.addAttribute("listStack",referensiService.getStack());
-        return "/project/request";
+        return "project/request";
     }
 
     @GetMapping("/report")
     public String report() {
-        return "/project/report";
+        return "project/report";
     }
 }

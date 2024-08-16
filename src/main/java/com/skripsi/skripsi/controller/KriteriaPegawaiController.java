@@ -24,7 +24,7 @@ public class KriteriaPegawaiController {
         model.addAttribute("listSkill", referensiService.getSkillProgramming());
         model.addAttribute("listStack", referensiService.getStack());
         model.addAttribute("listPelatihan", referensiService.getRefPelatihan());
-        return "/manajemen/kriteriapegawai";
+        return "manajemen/kriteriapegawai";
     }
 
 }
