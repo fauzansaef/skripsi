@@ -225,73 +225,73 @@ CREATE TABLE `trx_jenis_database` (
 
 
 
-INSERT INTO db_saw_project.tb_pegawai (active,alamat,email,gol_pangkat,nama,nip,no_hp,kantor,unit,jabatan) VALUES
-                                                                                                               (1,'jl. test alamat','pegawai1@yopmail.com','IVa','Asep Hidayat','12345678','012345671','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Kepala Seksi'),
-                                                                                                               (1,'jl. test alamat','pegawai2@yopmail.com','IIIa','Yan Suseno','12345677','012345672','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Sistem Analis'),
-                                                                                                               (1,'jl. test alamat','pegawai3@yopmail.com','IIc','Faisal','12345676','012345673','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai4@yopmail.com','IIc','Ruby','12345675','012345674','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai5@yopmail.com','IIc','Novita','1234564','012345675','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai6@yopmail.com','IIc','Erwin','12345673','012345676','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai7@yopmail.com','IIc','Teguh','12345672','012345677','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai8@yopmail.com','IIc','Natali','12345671','012345678','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai9@yopmail.com','IIc','Febri','12345670','012345679','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
-                                                                                                               (1,'jl. test alamat','pegawai10@yopmail.com','IIc','Joko','12345679','012345670','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer');
-INSERT INTO db_saw_project.tb_pegawai (active,alamat,email,gol_pangkat,nama,nip,no_hp,kantor,unit,jabatan) VALUES
-    (1,'jl. test alamat','pegawai11@yopmail.com','IIc','Vina','12345666','01234561','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer');
+INSERT INTO db_saw_project.tb_pegawai (id,active,alamat,email,gol_pangkat,nama,nip,no_hp,kantor,unit,jabatan) VALUES
+                                                                                                               (1,1,'jl. test alamat','pegawai1@yopmail.com','IVa','Asep Hidayat','12345678','012345671','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Kepala Seksi'),
+                                                                                                               (2,1,'jl. test alamat','pegawai2@yopmail.com','IIIa','Yan Suseno','12345677','012345672','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Sistem Analis'),
+                                                                                                               (3,1,'jl. test alamat','pegawai3@yopmail.com','IIc','Faisal','12345676','012345673','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (4,1,'jl. test alamat','pegawai4@yopmail.com','IIc','Ruby','12345675','012345674','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (5,1,'jl. test alamat','pegawai5@yopmail.com','IIc','Novita','1234564','012345675','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (6,1,'jl. test alamat','pegawai6@yopmail.com','IIc','Erwin','12345673','012345676','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (7,1,'jl. test alamat','pegawai7@yopmail.com','IIc','Teguh','12345672','012345677','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (8,1,'jl. test alamat','pegawai8@yopmail.com','IIc','Natali','12345671','012345678','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (9,1,'jl. test alamat','pegawai9@yopmail.com','IIc','Febri','12345670','012345679','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer'),
+                                                                                                               (10,1,'jl. test alamat','pegawai10@yopmail.com','IIc','Joko','12345679','012345670','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer');
+INSERT INTO db_saw_project.tb_pegawai (id,active,alamat,email,gol_pangkat,nama,nip,no_hp,kantor,unit,jabatan) VALUES
+    (11,1,'jl. test alamat','pegawai11@yopmail.com','IIc','Vina','12345666','01234561','Direktorat Teknologi Informasi dan Komunikasi','PSPM','Programmer');
 
 
-INSERT INTO db_saw_project.ref_bahasa_pemrograman (jenis,keterangan,nama) VALUES
-                                                                              (2,'Java (Springboot)','Java (Springboot)'),
-                                                                              (1,'ReactJS','ReactJS'),
-                                                                              (1,'AngularJS','AngularJS'),
-                                                                              (2,'PHP(Laravel)','PHP(Laravel)');
+INSERT INTO db_saw_project.ref_bahasa_pemrograman (id,jenis,keterangan,nama) VALUES
+                                                                              (1,2,'Java (Springboot)','Java (Springboot)'),
+                                                                              (2,1,'ReactJS','ReactJS'),
+                                                                              (3,1,'AngularJS','AngularJS'),
+                                                                              (4,2,'PHP(Laravel)','PHP(Laravel)');
 
 
 
-INSERT INTO db_saw_project.ref_database (jenis,keterangan,nama) VALUES
-                                                                    (1,'MySQL','MySQL'),
-                                                                    (1,'Postgresql','Postgresql'),
-                                                                    (2,'MongoDB','MongoDB'),
-                                                                    (1,'Oracle','Oracle');
+INSERT INTO db_saw_project.ref_database (id,jenis,keterangan,nama) VALUES
+                                                                    (1,1,'MySQL','MySQL'),
+                                                                    (2,1,'Postgresql','Postgresql'),
+                                                                    (3,2,'MongoDB','MongoDB'),
+                                                                    (4,1,'Oracle','Oracle');
 
-INSERT INTO db_saw_project.ref_stack (nama,keterangan,jenis) VALUES
-                                                                 ('Spring Framework','Java Framework',1),
-                                                                 ('Angular JS','JS Framework',1),
-                                                                 ('NoSQL Database','NoSQL Database (Mongo DB,etc)',2),
-                                                                 ('Oracle DB','Oracle DB',2),
-                                                                 ('Postgresql DB','Postgresql DB',2),
-                                                                 ('.Net core','.Net core',1),
-                                                                 ('DevOps','DevOps',3),
-                                                                 ('Microservice','Microservice',3),
-                                                                 ('Docker','Docker',3);
+INSERT INTO db_saw_project.ref_stack (id,nama,keterangan,jenis) VALUES
+                                                                 (1,'Spring Framework','Java Framework',1),
+                                                                 (2,'Angular JS','JS Framework',1),
+                                                                 (3,'NoSQL Database','NoSQL Database (Mongo DB,etc)',2),
+                                                                 (4,'Oracle DB','Oracle DB',2),
+                                                                 (5,'Postgresql DB','Postgresql DB',2),
+                                                                 (6,'.Net core','.Net core',1),
+                                                                 (7,'DevOps','DevOps',3),
+                                                                 (8,'Microservice','Microservice',3),
+                                                                 (9,'Docker','Docker',3);
 
-INSERT INTO db_saw_project.ref_skill_programming (bobot,keterangan,nama) VALUES
-                                                                             (1,'Novice','Novice'),
-                                                                             (2,'Advance','Advance'),
-                                                                             (3,'Competent','Competent'),
-                                                                             (4,'Proficient','Proficient'),
-                                                                             (5,'Expert','Expert');
+INSERT INTO db_saw_project.ref_skill_programming (id,bobot,keterangan,nama) VALUES
+                                                                             (1,1,'Novice','Novice'),
+                                                                             (2,2,'Advance','Advance'),
+                                                                             (3,3,'Competent','Competent'),
+                                                                             (4,4,'Proficient','Proficient'),
+                                                                             (5,5,'Expert','Expert');
 
-INSERT INTO db_saw_project.tb_pembobotan (kriteria,bobot) VALUES
-                                                              ('C1',0.35),
-                                                              ('C2',0.25),
-                                                              ('C3',0.15),
-                                                              ('C4',0.05),
-                                                              ('C5',0.2);
+INSERT INTO db_saw_project.tb_pembobotan (id,kriteria,bobot) VALUES
+                                                              (1,'C1',0.35),
+                                                              (2,'C2',0.25),
+                                                              (3,'C3',0.15),
+                                                              (4,'C4',0.05),
+                                                              (5,'C5',0.2);
 
-INSERT INTO db_saw_project.ref_role (keterangan,nama_role) VALUES
-                                                               ('ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR'),
-                                                               ('ROLE_KEPALA_SEKSI','ROLE_KEPALA_SEKSI'),
-                                                               ('ROLE_ANALIS','ROLE_ANALIS'),
-                                                               ('ROLE_PROGRAMMER','ROLE_PROGRAMMER');
+INSERT INTO db_saw_project.ref_role (id,keterangan,nama_role) VALUES
+                                                               (1,'ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR'),
+                                                               (2,'ROLE_KEPALA_SEKSI','ROLE_KEPALA_SEKSI'),
+                                                               (3,'ROLE_ANALIS','ROLE_ANALIS'),
+                                                               (4,'ROLE_PROGRAMMER','ROLE_PROGRAMMER');
 
-INSERT INTO db_saw_project.ref_pelatihan (jenis,keterangan,nama) VALUES
-                                                                     (1,'Pelatihan Framework Java Spring Boot','Pelatihan Framework Java Spring Boot'),
-                                                                     (1,'Pelatihan Frontend dengan ReactJS','Pelatihan Frontend dengan ReactJS'),
-                                                                     (3,'Pelatihan Implementasi Microservice pada Enterprise','Pelatihan Implementasi Microservice pada Enterprise'),
-                                                                     (2,'Pelatihan Oracle Basic','Pelatihan Oracle Basic'),
-                                                                     (4,'Implementasi CI/CD Training','Implementasi CI/CD Training'),
-                                                                     (1,'Dotnet Core Training','Dotnet Core Training');
+INSERT INTO db_saw_project.ref_pelatihan (id,jenis,keterangan,nama) VALUES
+                                                                     (1,1,'Pelatihan Framework Java Spring Boot','Pelatihan Framework Java Spring Boot'),
+                                                                     (2,1,'Pelatihan Frontend dengan ReactJS','Pelatihan Frontend dengan ReactJS'),
+                                                                     (3,3,'Pelatihan Implementasi Microservice pada Enterprise','Pelatihan Implementasi Microservice pada Enterprise'),
+                                                                     (4,2,'Pelatihan Oracle Basic','Pelatihan Oracle Basic'),
+                                                                     (5,4,'Implementasi CI/CD Training','Implementasi CI/CD Training'),
+                                                                     (6,1,'Dotnet Core Training','Dotnet Core Training');
 
 INSERT INTO db_saw_project.tb_user (active,id_pegawai,last_login,password,`role`,username) VALUES
                                                                                                (1,1,NULL,NULL,2,'kepalaseksi'),
