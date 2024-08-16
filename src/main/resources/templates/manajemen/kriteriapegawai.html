@@ -10,7 +10,7 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-
+    <input type="text" hidden="" id="roleSession" th:value="${session.role}"> <!-- Get Role Session -->
     <div class="toolbar mt-0" id="kt_toolbar" style="background-color: #FEC91B;">
         <div id="kt_toolbar_container" class="container-fluid d-flex ">
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="menu-item" sec:authorize="hasAuthority('ROLE_ANALIS')">
+
         <div class="card-body p-0 tab-pane fade show active">
             <div class="d-flex align-items-center">
                 <div class="card col-md-12">
@@ -44,6 +44,7 @@
                                 <!--              </div>-->
                                 <!--end::Search-->
                             </div>
+                            <div class="menu-item" sec:authorize="hasAuthority('ROLE_ANALIS')">
                             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                                 <div class="w-100 mw-150px">
                                 </div>
@@ -51,6 +52,7 @@
                                         class="fas fa-plus fs-4 me-2"></i>
                                     Add
                                 </button>
+                            </div>
                             </div>
                         </div>
                         <div class="card-body pt-0 ps-0 pe-0">
@@ -77,7 +79,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
     <th:block th:replace="manajemen/addKriteria :: modal('addKriteriaModal')">modal</th:block>
     <th:block th:replace="manajemen/editKriteria :: modal('editKriteriaModal')">modal</th:block>

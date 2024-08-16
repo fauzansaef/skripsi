@@ -414,7 +414,7 @@ public class ProjectService implements IProjectService {
                     ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setNamaAplikasi(tbAplikasi.getNama());
                     reportDTO.setNoNd(tbAplikasi.getNdRequest());
-                    reportDTO.setTanggalNd(tbAplikasi.getTglNd().toString());
+                    reportDTO.setTanggalRequest(tbAplikasi.getCreatedAt().toString());
                     switch (tbAplikasi.getProses()) {
                         case 0:
                             reportDTO.setProses("Draft");
@@ -448,7 +448,7 @@ public class ProjectService implements IProjectService {
                     ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setNamaAplikasi(tbAplikasi.getNama());
                     reportDTO.setNoNd(tbAplikasi.getNdRequest());
-                    reportDTO.setTanggalNd(tbAplikasi.getTglNd().toString());
+                    reportDTO.setTanggalRequest(tbAplikasi.getCreatedAt().toString());
                     switch (tbAplikasi.getProses()) {
                         case 0:
                             reportDTO.setProses("Draft");

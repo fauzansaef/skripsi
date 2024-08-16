@@ -189,7 +189,7 @@ public class ReportUtil {
         headerRow.getContent().add(cell3);
 
         Tc cell4 = factory.createTc();
-        cell4.getContent().add(createParagraphWithText(factory, "Tanggal ND"));
+        cell4.getContent().add(createParagraphWithText(factory, "Tanggal"));
         cell4.setTcPr(cellProperties);
         cell4.getContent().add(paragraph);
         headerRow.getContent().add(cell4);
@@ -222,7 +222,7 @@ public class ReportUtil {
             row.getContent().add(cel3);
 
             Tc cel4 = factory.createTc();
-            cel4.getContent().add(createParagraphWithText(factory, report.getTanggalNd()));
+            cel4.getContent().add(createParagraphWithText(factory, report.getTanggalRequest()));
             row.getContent().add(cel4);
 
             Tc cel5 = factory.createTc();

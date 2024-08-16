@@ -6,6 +6,6 @@ import lombok.Data;
 public class ReportDTO {
     private String namaAplikasi;
     private String noNd;
-    private String tanggalNd;
+    private String tanggalRequest;
     private String proses;
 }
