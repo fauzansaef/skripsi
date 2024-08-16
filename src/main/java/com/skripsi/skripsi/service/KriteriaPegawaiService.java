@@ -104,6 +104,11 @@ public class KriteriaPegawaiService implements IKriteriaPegawaiService {
 
     @Override
     public MessageResponse simpanKriteriaPegawai(KriteriaPegawaiDTO kriteriaPegawaiDTO) {
+        if (tbKriteriaPegawaiRepo.findByIdPegawai(kriteriaPegawaiDTO.getIdPegawai()).isPresent()) {
+            return new MessageResponse(0, "Kriteria Pegawai sudah di input", null);
+        }
+
+
         Integer projectDeploy = tbTimRepo.jumlahProjectByStatusProses(kriteriaPegawaiDTO.getIdPegawai(), 4);
         Integer projectOngoing = tbTimRepo.jumlahProjectByStatusProses(kriteriaPegawaiDTO.getIdPegawai(), 2);
 
@@ -197,7 +202,6 @@ public class KriteriaPegawaiService implements IKriteriaPegawaiService {
             }
 
 
-
             tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
         } else {
             TbKriteriaPegawaiMatrix tbKriteriaPegawaiMatrix = new TbKriteriaPegawaiMatrix();
@@ -278,7 +282,6 @@ public class KriteriaPegawaiService implements IKriteriaPegawaiService {
             } else {
                 return new MessageResponse(0, "Pilihan pelatihan tidak sesuai", null);
             }
-
 
 
             tbKriteriaPegawaiMatrixRepo.save(tbKriteriaPegawaiMatrix);
